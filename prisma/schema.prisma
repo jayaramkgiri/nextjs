@@ -1,0 +1,456 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AcuiteRatings {
+  id             BigInt    @id @default(autoincrement())
+  cin            String?   @db.VarChar
+  rationale_date DateTime? @db.Date
+  rationale_url  String?   @db.VarChar
+  local_path     String?   @db.VarChar
+  created_at     DateTime  @db.Timestamp(6)
+  updated_at     DateTime  @db.Timestamp(6)
+  search_name    String?   @db.VarChar
+  title          String?   @db.VarChar
+   @@map("acuite_ratings")
+}
+
+model ar_internal_metadata {
+  key        String   @id @db.VarChar
+  value      String?  @db.VarChar
+  created_at DateTime @db.Timestamp(6)
+  updated_at DateTime @db.Timestamp(6)
+}
+
+model bse_fg_trades {
+  id             BigInt    @id @default(autoincrement())
+  trade_date     DateTime? @db.Date
+  security_code  Int?
+  security_name  String?   @db.VarChar
+  open_price     Float?
+  high_price     Float?
+  low_price      Float?
+  close_price    Float?
+  traded_volume  Float?
+  no_of_trades   Int?
+  total_turnover Float?
+  isin           String?   @db.VarChar
+  face_value     Float?
+  coupon         Float?
+  maturity_date  DateTime? @db.Date
+  created_at     DateTime? @db.Timestamp(6)
+  updated_at     DateTime? @db.Timestamp(6)
+}
+
+model bse_icdw_trades {
+  id                     BigInt    @id @default(autoincrement())
+  security_name          String?   @db.VarChar
+  issuer_name            String?   @db.VarChar
+  coupon                 Float?
+  maturity_date          DateTime? @db.Date
+  last_traded_price      Float?
+  weighted_average_price Float?
+  weighted_average_yield Float?
+  total_turnover         Float?
+  isin                   String?   @db.VarChar
+  face_value             Float?
+  trade_date             DateTime? @db.Date
+  created_at             DateTime? @db.Timestamp(6)
+  updated_at             DateTime? @db.Timestamp(6)
+}
+
+model bse_scrip_maps {
+  id         BigInt   @id @default(autoincrement())
+  isin       String?  @db.VarChar
+  scrip_name String?  @db.VarChar
+  scrip_code Int?
+  created_at DateTime @db.Timestamp(6)
+  updated_at DateTime @db.Timestamp(6)
+}
+
+model bw_ratings {
+  id             BigInt    @id @default(autoincrement())
+  cin            String?   @db.VarChar
+  rationale_date DateTime? @db.Date
+  rationale_url  String?   @db.VarChar
+  local_path     String?   @db.VarChar
+  created_at     DateTime  @db.Timestamp(6)
+  updated_at     DateTime  @db.Timestamp(6)
+  title          String?   @db.VarChar
+  search_name    String?   @db.VarChar
+}
+
+model care_ratings {
+  id              BigInt    @id @default(autoincrement())
+  cin             String?   @db.VarChar
+  care_id         String?   @db.VarChar
+  care_name       String?   @db.VarChar
+  rationale_date  DateTime? @db.Date
+  rationale_title String?   @db.VarChar
+  rationale_id    Int?
+  rationale_url   String?   @db.VarChar
+  local_path      String?   @db.VarChar
+}
+
+model cashflows {
+  id           BigInt    @id @default(autoincrement())
+  isin         String?   @db.VarChar
+  payment_date DateTime? @db.Date
+  principal    Float?
+  interest     Float?
+  created_at   DateTime  @db.Timestamp(6)
+  updated_at   DateTime  @db.Timestamp(6)
+}
+
+model cdsl_data {
+  id                       BigInt    @id @default(autoincrement())
+  Isin                     String?   @db.VarChar
+  IssuerName               String?   @db.VarChar
+  AddressoftheIssuer       String?   @db.VarChar
+  IssuerFormerNames        String?   @db.VarChar
+  Cin                      String?   @db.VarChar
+  lei                      String?   @db.VarChar
+  TypeofIssuer             String?   @db.VarChar
+  NatureofIssuer           String?   @db.VarChar
+  BusinessSector           String?   @db.VarChar
+  GroupCompaniesDetails    String?   @db.VarChar
+  CompaniesName            String?   @db.VarChar
+  InstrumentType           String?   @db.VarChar
+  InstrumentDescription    String?   @db.VarChar
+  ISINShortDescription     String?   @db.VarChar
+  Secured                  String?   @db.VarChar
+  Guarantee                String?   @db.VarChar
+  ConvertibilityType       String?   @db.VarChar
+  Seniority                String?   @db.VarChar
+  TaxFree                  String?   @db.VarChar
+  Series                   String?   @db.VarChar
+  Tranche                  String?   @db.VarChar
+  FaceValue                Float?
+  Tenure                   String?   @db.VarChar
+  Default                  String?   @db.VarChar
+  PutOption                String?   @db.VarChar
+  PutOptionDates           String?   @db.VarChar
+  CallOption               String?   @db.VarChar
+  CallOptionDates          String?   @db.VarChar
+  RatingStatus             String?   @db.VarChar
+  Mode                     String?   @db.VarChar
+  OpeningDate              DateTime? @db.Date
+  ClosingDate              DateTime? @db.Date
+  ActualClosingDate        DateTime? @db.Date
+  Registrar                String?   @db.VarChar
+  DebentureTrustee         String?   @db.VarChar
+  allotment_date           DateTime? @db.Date
+  Debentures               String?   @db.VarChar
+  TotalAllotement          Float?
+  IssuePrice               Float?
+  IssueSize                Float?
+  GreenShoeOption          String?   @db.VarChar
+  AmountRaised             Float?
+  Object                   String?   @db.VarChar
+  CouponBasis              String?   @db.VarChar
+  CouponRate               String?   @db.VarChar
+  CouponType               String?   @db.VarChar
+  DayCountConvention       String?   @db.VarChar
+  InterestPayment          String?   @db.VarChar
+  InterestPaymentStartDate DateTime? @db.Date
+  InterestPaymentEndDate   DateTime? @db.Date
+  RedemptionType           String?   @db.VarChar
+  redemption_date          DateTime? @db.Date
+  RedemptionPremiumDetails String?   @db.VarChar
+  TotalQuantityRedeemed    Int?
+  TotalValueRedeemed       Int?
+  NetQuantity              Int?
+  MaturityType             String?   @db.VarChar
+  RatingAgency             String?   @db.VarChar
+  RatingValue              String?   @db.VarChar
+  RatingOutlook            String?   @db.VarChar
+  RatedDate                DateTime? @db.Date
+}
+
+model cin_maps {
+  id         BigInt   @id @default(autoincrement())
+  old_cin    String?  @db.VarChar
+  new_cin    String?  @db.VarChar
+  latest     String?  @db.VarChar
+  created_at DateTime @db.Timestamp(6)
+  updated_at DateTime @db.Timestamp(6)
+}
+
+model companies {
+  id           BigInt    @id @default(autoincrement())
+  cin          String?   @db.VarChar
+  company_name String?   @db.VarChar
+  created_at   DateTime  @db.Timestamp(6)
+  updated_at   DateTime  @db.Timestamp(6)
+  verified     String?   @db.VarChar
+  verified_at  DateTime? @db.Date
+  rated        String?   @db.VarChar
+  listed       String?   @db.VarChar
+}
+
+model convertible_issuances {
+  id                          BigInt    @id @default(autoincrement())
+  isin                        String?   @db.VarChar
+  cin                         String?   @db.VarChar
+  description                 String?   @db.VarChar
+  secured                     String?   @db.VarChar
+  guarantee                   String?   @db.VarChar
+  convertibility              String?   @db.VarChar
+  seniority                   String?   @db.VarChar
+  tax_free                    String?   @db.VarChar
+  face_value                  Float?
+  put_option                  String?   @db.VarChar
+  call_option                 String?   @db.VarChar
+  mode                        String?   @db.VarChar
+  allotment_date              DateTime? @db.Date
+  perpetual                   String?   @db.VarChar
+  total_allotment             Float?
+  issue_price                 Float?
+  issue_size                  Float?
+  green_shoe_option           String?   @db.VarChar
+  coupon_basis                String?   @db.VarChar
+  coupon_rate                 String?   @db.VarChar
+  coupon_type                 String?   @db.VarChar
+  day_count_convention        String?   @db.VarChar
+  interest_payment            String?   @db.VarChar
+  interest_payment_start_date DateTime? @db.Date
+  interest_payment_end_date   DateTime? @db.Date
+  redemption_type             String?   @db.VarChar
+  redemption_date             DateTime? @db.Date
+  redemption_premium          String?   @db.VarChar
+  rating_at_issuance          String?   @db.VarChar
+  rating_agency_at_issuance   String?   @db.VarChar
+  rated_date_at_issuance      DateTime? @db.Date
+  created_at                  DateTime  @db.Timestamp(6)
+  updated_at                  DateTime  @db.Timestamp(6)
+  depository                  String?   @db.VarChar
+}
+
+model crisil_ratings {
+  id            BigInt    @id @default(autoincrement())
+  cin           String?   @db.VarChar
+  company_name  String?   @db.VarChar
+  rating_date   DateTime? @db.Date
+  heading       String?   @db.VarChar
+  rationale_url String?   @db.VarChar
+  local_path    String?   @db.VarChar
+  search_name   String?   @db.VarChar
+}
+
+model icra_ratings {
+  id              BigInt    @id @default(autoincrement())
+  cin             String?   @db.VarChar
+  icra_id         Int?
+  icra_name       String?   @db.VarChar
+  rationale_date  DateTime? @db.Date
+  rationale_title String?   @db.VarChar
+  rationale_id    Int?
+  rationale_url   String?   @db.VarChar
+  local_path      String?   @db.VarChar
+}
+
+model india_ratings {
+  id                 BigInt    @id @default(autoincrement())
+  cin                String?   @db.VarChar
+  india_ratings_id   String?   @db.VarChar
+  india_ratings_name String?   @db.VarChar
+  rationale_date     DateTime? @db.Date
+  rationale_title    String?   @db.VarChar
+  rationale_id       Int?
+  rationale_url      String?   @db.VarChar
+  local_path         String?   @db.VarChar
+}
+
+model infomerics_ratings {
+  id                BigInt    @id @default(autoincrement())
+  cin               String?   @db.VarChar
+  agency_name       String?   @db.VarChar
+  rationale_date    DateTime? @db.Date
+  rationale_title   String?   @db.VarChar
+  instrument_amount String?   @db.VarChar
+  rationale_url     String?   @db.VarChar
+  local_path        String?   @db.VarChar
+  created_at        DateTime  @db.Timestamp(6)
+  updated_at        DateTime  @db.Timestamp(6)
+}
+
+model information_memorandums {
+  id   BigInt  @id @default(autoincrement())
+  Isin String? @db.VarChar
+  Url  String? @db.VarChar
+}
+
+model issuances {
+  id                          BigInt    @id @default(autoincrement())
+  isin                        String?   @db.VarChar
+  cin                         String?   @db.VarChar
+  description                 String?   @db.VarChar
+  secured                     String?   @db.VarChar
+  guarantee                   String?   @db.VarChar
+  convertibility              String?   @db.VarChar
+  seniority                   String?   @db.VarChar
+  tax_free                    String?   @db.VarChar
+  face_value                  Float?
+  put_option                  String?   @db.VarChar
+  call_option                 String?   @db.VarChar
+  mode                        String?   @db.VarChar
+  allotment_date              DateTime? @db.Date
+  perpetual                   String?   @db.VarChar
+  total_allotment             Float?
+  issue_price                 Float?
+  issue_size                  Float?
+  green_shoe_option           String?   @db.VarChar
+  coupon_basis                String?   @db.VarChar
+  coupon_rate                 String?   @db.VarChar
+  coupon_type                 String?   @db.VarChar
+  day_count_convention        String?   @db.VarChar
+  interest_payment            String?   @db.VarChar
+  interest_payment_start_date DateTime? @db.Date
+  interest_payment_end_date   DateTime? @db.Date
+  redemption_type             String?   @db.VarChar
+  redemption_date             DateTime? @db.Date
+  redemption_premium          String?   @db.VarChar
+  rating_at_issuance          String?   @db.VarChar
+  rating_agency_at_issuance   String?   @db.VarChar
+  rated_date_at_issuance      DateTime? @db.Date
+  created_at                  DateTime  @db.Timestamp(6)
+  updated_at                  DateTime  @db.Timestamp(6)
+  depository                  String?   @db.VarChar
+  coupon                      Float?
+  day_count                   String?   @db.VarChar
+  payment_frequency           String?   @db.VarChar
+}
+
+model nsdl_data {
+  id                     BigInt    @id @default(autoincrement())
+  isin                   String?   @db.VarChar
+  instrument_title       String?   @db.VarChar
+  secType                String?   @db.VarChar
+  secTypeDesc            String?   @db.VarChar
+  issuerName             String?   @db.VarChar
+  formerNameOne          String?   @db.VarChar
+  formerNameTwo          String?   @db.VarChar
+  formerNameThree        String?   @db.VarChar
+  issuerTypeNature       String?   @db.VarChar
+  businessSector         String?   @db.VarChar
+  cin                    String?   @db.VarChar
+  lei                    String?   @db.VarChar
+  macro                  String?   @db.VarChar
+  sector                 String?   @db.VarChar
+  industry               String?   @db.VarChar
+  instrumentType         String?   @db.VarChar
+  issuerDetails          String?   @db.VarChar
+  basicIndusrty          String?   @db.VarChar
+  instrumentDesc         String?   @db.VarChar
+  faceValue              Float?
+  issuePrice             Float?
+  totalIssueSize         Float?
+  amountRaised           Float?
+  greenShoeOption        String?   @db.VarChar
+  totalAllotmentQuantity Float?
+  allotment_date         DateTime? @db.Date
+  perpetualInNature      String?   @db.VarChar
+  redemption_date        DateTime? @db.Date
+  tenureYears            Int?
+  tenureMonths           Int?
+  tenureDays             Int?
+  category               String?   @db.VarChar
+  modeOfIssue            String?   @db.VarChar
+  series                 String?   @db.VarChar
+  trancheNumber          String?   @db.VarChar
+  principalProtected     String?   @db.VarChar
+  secured                String?   @db.VarChar
+  natureOfInstrument     String?   @db.VarChar
+  seniorityRepayment     String?   @db.VarChar
+  securedDetails         String?   @db.VarChar
+  taxFree                String?   @db.VarChar
+  incomeTaxSection       String?   @db.VarChar
+  infrastructureCategory String?   @db.VarChar
+  objectOfIssue          String?   @db.VarChar
+  scheduledOpeningDate   DateTime? @db.Date
+  scheduledClosingDate   DateTime? @db.Date
+  actualClosingDate      DateTime? @db.Date
+  intrumentTypeOther     String?   @db.VarChar
+  convertability         String?   @db.VarChar
+  couponBasis            String?   @db.VarChar
+  couponType             String?   @db.VarChar
+  couponRate             String?   @db.VarChar
+  created_at             DateTime? @db.Timestamp(6)
+  updated_at             DateTime? @db.Timestamp(6)
+}
+
+model nse_docs {
+  id          BigInt    @id @default(autoincrement())
+  isin        String?   @db.VarChar
+  particulars String?   @db.VarChar
+  type        String?   @db.VarChar
+  date        DateTime? @db.Date
+  file_url    String?   @db.VarChar
+  created_at  DateTime  @db.Timestamp(6)
+  updated_at  DateTime  @db.Timestamp(6)
+}
+
+model nse_trades {
+  id                     BigInt    @id @default(autoincrement())
+  trade_date             DateTime? @db.Date
+  isin                   String?   @db.VarChar
+  last_traded_price      Float?
+  last_traded_value      Float?
+  total_trade_value      Float?
+  last_traded_yield      Float?
+  weighted_average_price Float?
+  weighted_average_yield Float?
+  created_at             DateTime? @db.Timestamp(6)
+  updated_at             DateTime? @db.Timestamp(6)
+}
+
+model ratings {
+  id             BigInt    @id @default(autoincrement())
+  cin            String?   @db.VarChar
+  agency         String?   @db.VarChar
+  search_string  String?   @db.VarChar
+  rationale_date DateTime? @db.Date
+  rationale_url  String?   @db.VarChar
+  local_path     String?   @db.VarChar
+  created_at     DateTime  @db.Timestamp(6)
+  updated_at     DateTime  @db.Timestamp(6)
+}
+
+model record_dates {
+  id          BigInt    @id @default(autoincrement())
+  isin        String?   @db.VarChar
+  record_date DateTime? @db.Date
+  created_at  DateTime  @db.Timestamp(6)
+  updated_at  DateTime  @db.Timestamp(6)
+}
+
+model schema_migrations {
+  version String @id @db.VarChar
+}
+
+model trades {
+  id            BigInt    @id @default(autoincrement())
+  isin          String?   @db.VarChar
+  trade_date    DateTime? @db.Date
+  traded_value  Float?
+  traded_price  Float?
+  traded_volume Int?
+  exchange      String?   @db.VarChar
+  segment       String?   @db.VarChar
+  created_at    DateTime  @db.Timestamp(6)
+  updated_at    DateTime  @db.Timestamp(6)
+}
+
+model trust_deeds {
+  id            BigInt    @id @default(autoincrement())
+  companyName   String?   @db.VarChar
+  isin          String?   @db.VarChar
+  allotmentDate DateTime? @db.Date
+  MaturityDate  DateTime? @db.Date
+  Document      String?   @db.VarChar
+}

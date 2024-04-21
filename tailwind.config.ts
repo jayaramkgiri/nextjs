@@ -8,25 +8,44 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      gridTemplateColumns: {
-        '13': 'repeat(13, minmax(0, 1fr))',
-      },
       colors: {
-        blue: {
-          400: '#2589FE',
-          500: '#0070F3',
-          600: '#2F6FEB',
+        white: "#fff",
+        "text-primary": "#404040",
+        "color-states-common-black": "#223354",
+        indianred: "#eb5757",
+        seagreen: "#219653",
+        dimgray: "rgba(97, 97, 97, 0.9)",
+        darkgray: "#aeaeae",
+        color: "#130912",
+        whitesmoke: {
+          "100": "#f8f8f8",
+          "200": "#ebebeb",
         },
+        silver: "#c7c7c7",
+        chocolate: "rgba(231, 121, 23, 0.16)",
+      },
+      spacing: {},
+      fontFamily: {
+        "title-lg": "Inter",
+      },
+      borderRadius: {
+        "9xl": "28px",
+        lgi: "19px",
       },
     },
-    keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
-        },
-      },
+    fontSize: {
+      "5xl": "24px",
+      lg: "18px",
+      "17xl": "36px",
+      xs: "12px",
+      base: "16px",
+      xl: "20px",
+      inherit: "inherit",
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  corePlugins: {
+    preflight: false,
+  },
 };
 export default config;
+
