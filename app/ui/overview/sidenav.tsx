@@ -25,38 +25,28 @@ export default function SideNav() {
     //     </form>
     //   </div>
     // </div>
-    <div className="self-stretch flex-1 overflow-hidden flex flex-col items-start justify-start py-8 px-0 gap-[16px] text-left text-xl text-silver font-title-lg">
-      <div className="self-stretch rounded bg-chocolate h-12 overflow-hidden shrink-0 flex flex-row items-center justify-start gap-[8px] text-indianred">
-        <img
-          className="w-8 relative h-8 overflow-hidden shrink-0 object-cover"
-          alt=""
-          src="/spacedashboardfilled@2x.png"
-        />
-        <div className="self-stretch flex-1 relative leading-[155%] font-semibold flex items-center">
+    <div className="self-stretch h-[864px] overflow-hidden shrink-0 flex flex-col items-start justify-start py-8 px-0 box-border gap-[16px] text-left text-xl text-silver font-h3">
+      <button className="cursor-pointer [border:none] p-0 bg-chocolate self-stretch rounded overflow-hidden flex flex-row items-center justify-start gap-[8px]">
+        <div className="flex flex-row items-center justify-start py-3 px-2">
+          <img className="h-6 w-6 relative" alt="" src="/vector.svg" />
+        </div>
+        <div className="h-12 flex-1 relative text-xl leading-[155%] font-semibold font-h3 text-indianred text-left flex items-center mq450:text-base mq450:leading-[25px]">
           Overview
         </div>
-      </div>
-      <div className="self-stretch h-12 flex flex-row items-center justify-start gap-[8px]">
-        <div className="w-8 h-8 overflow-hidden shrink-0 flex flex-row items-end justify-start p-1.5 box-border">
-          <img
-            className="self-stretch w-[17.1px] relative max-h-full object-cover"
-            alt=""
-            src="/group-70@2x.png"
-          />
+      </button>
+      <div className="self-stretch flex flex-row items-center justify-start gap-[8px]">
+        <div className="flex flex-row items-center justify-start py-3 px-2">
+          <img className="h-6 w-6 relative" alt="" src="/vector1.svg" />
         </div>
-        <div className="self-stretch w-[154.9px] relative leading-[155%] font-semibold flex items-center shrink-0">
+        <div className="h-12 flex-1 relative leading-[155%] font-semibold flex items-center mq450:text-base mq450:leading-[25px]">
           Market
         </div>
       </div>
-      <div className="self-stretch h-12 flex flex-row items-start justify-start gap-[8px]">
-        <div className="self-stretch bg-white overflow-hidden flex flex-row items-center justify-start">
-          <img
-            className="w-8 relative h-8 overflow-hidden shrink-0 object-cover"
-            alt=""
-            src="/searchfilled@2x.png"
-          />
+      <div className="flex flex-row items-start justify-start py-0 pr-[107px] pl-0 gap-[8px]">
+        <div className="overflow-hidden flex flex-row items-center justify-start py-3 px-2">
+          <img className="h-6 w-6 relative" alt="" src="/vector2.svg" />
         </div>
-        <div className="self-stretch w-[73px] relative leading-[155%] font-semibold flex items-center shrink-0">
+        <div className="h-12 relative leading-[155%] font-semibold flex items-center min-w-[73px]">
           Explore
         </div>
       </div>
