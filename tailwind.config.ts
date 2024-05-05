@@ -21,7 +21,10 @@ const config: Config = {
           "100": "#f8f8f8",
           "200": "#ebebeb",
         },
-        silver: "#c7c7c7",
+        silver: {
+          "100": "#c7c7c7",
+          "200": "rgba(196, 202, 205, 0.4)",
+        },
         chocolate: "rgba(231, 121, 23, 0.16)",
       },
       spacing: {},

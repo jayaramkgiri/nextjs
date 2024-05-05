@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
+import { UpdateInvoice, DeleteInvoice } from '@/app/ui/market/buttons';
+import InvoiceStatus from '@/app/ui/market/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
 
@@ -14,6 +14,10 @@ export default async function InvoicesTable({
   // const invoices = await fetchFilteredInvoices(query, currentPage);
   const invoices = [
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },{id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
   ];
 
   return (

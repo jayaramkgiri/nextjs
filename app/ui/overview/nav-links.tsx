@@ -8,17 +8,17 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import { MdDashboard } from "react-icons/md";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { MdOutlineExplore } from "react-icons/md";
+import React, { useState, useEffect } from 'react';
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  { name: 'Overview', href: '/overview', icon: MdDashboard },
+  { name: 'Market', href: '/market', icon: BsGraphUpArrow },
+  { name: 'Explore', href: '/explore', icon: MdOutlineExplore }
 ];
 
 export default function NavLinks() {
@@ -31,13 +31,9 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className={clsx("flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-            {
-              'bg-sky-100 text-blue-600': pathname === link.href,
-            },
-            )}
+            className={`flex h-[48px] grow no-underline items-center justify-center gap-2 rounded-md text-xl font-medium hover:bg-chocolate hover:text-indianred md:flex-none md:justify-start md:p-2 md:px-3 ${pathname === link.href ? "text-indianred bg-chocolate" : "text-silver-100"}`}
           >
-            <LinkIcon className="w-6" />
+            <LinkIcon className="md:w-6 md:h-5 h-6 w-7" />
             <p className="hidden md:block">{link.name}</p>
           </Link>
         );
