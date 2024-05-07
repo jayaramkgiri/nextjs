@@ -6,7 +6,7 @@ import { PowerIcon } from '@heroicons/react/24/outline';
 export default function SideNav() {
   return (
       
-      <div className="flex h-full flex-col px-3 py-4 md:px-2">
+      <div className="flex h-full w-full  flex-col py-4">
       {/* <div className="w-full h-[982px] relative rounded-2xl bg-neutral-white overflow-hidden flex flex-row items-start justify-start leading-[normal] tracking-[normal] mq825:h-auto"> */}
        
       {/* <Link
@@ -14,7 +14,7 @@ export default function SideNav() {
         href="/"
       > */}
       {/* <div className="h-[982px] w-[276px] bg-neutral-white overflow-y-auto shrink-0 flex flex-col items-start justify-start py-8 px-6 box-border gap-[16px] mq450:pt-5 mq450:pb-5 mq450:box-border mq825:pt-[21px] mq825:pb-[21px] mq825:box-border"> */}
-      <div className="text-white w-64 mx-auto">
+      <div className="text-white md:w-[90%] mx-auto">
         <UnoBondsLogo
           logoImageLogo="/logo@2x.png"
           logoIconHeight="80px"
@@ -22,7 +22,7 @@ export default function SideNav() {
         />
       </div>
       {/* </Link> */}
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+      <div className="flex grow flex-row w-4/5 justify-between mx-auto space-x-2 md:flex-col md:space-x-0 md:space-y-3 md:w-11/12">
         <NavLinks />
         <div className="hidden h-auto w-full grow md:block"></div>
       </div>

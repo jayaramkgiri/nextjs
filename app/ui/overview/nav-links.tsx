@@ -28,14 +28,16 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
+          <div className='w-full'>
           <Link
             key={link.name}
             href={link.href}
-            className={`flex h-[48px] grow no-underline items-center justify-center gap-2 rounded-md text-xl font-medium hover:bg-chocolate hover:text-indianred md:flex-none md:justify-start md:p-2 md:px-3 ${pathname === link.href ? "text-indianred bg-chocolate" : "text-silver-100"}`}
+            className={`flex h-6 grow no-underline items-center justify-center gap-2 rounded-md text-lg font-medium hover:bg-chocolate hover:text-indianred md:flex-none md:justify-start p-2 ${pathname === link.href ? "text-indianred bg-chocolate" : "text-silver-100"}`}
           >
             <LinkIcon className="md:w-6 md:h-5 h-6 w-7" />
             <p className="hidden md:block">{link.name}</p>
           </Link>
+          </div>
         );
       })}
     </>

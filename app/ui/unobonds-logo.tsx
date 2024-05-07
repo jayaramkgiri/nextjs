@@ -18,7 +18,7 @@ export default function UnoBondsLogo( {logoImageLogo,
   return (
     <div className="flex flex-row leading-none text-white">
     <img
-      className="max-w-half overflow-hidden h-[170px] object-cover self-stretch"
+      className="max-w-half overflow-hidden h-2 object-contain self-stretch"
       alt=""
       src={logoImageLogo}
       style={logoIconStyle}
