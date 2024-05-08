@@ -52,7 +52,7 @@ export default async function InvoicesTable({
               </div>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          <table className="hidden w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
@@ -70,6 +70,39 @@ export default async function InvoicesTable({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
                 </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                  Customer
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Email
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Amount
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Date
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white">
@@ -79,16 +112,52 @@ export default async function InvoicesTable({
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
                     {invoice.email}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatCurrency(invoice.amount)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(invoice.date)}
+                    {invoice.date}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={invoice.status} />
+                    {invoice.status}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.email}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {formatCurrency(invoice.amount)}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.date}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
+                  </td>                  <td className="whitespace-nowrap px-3 py-3">
+                    {invoice.status}
                   </td>
                 </tr>
               ))}

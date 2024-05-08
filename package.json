@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
+    "@nextui-org/pagination": "^2.0.30",
+    "@nextui-org/react": "^2.3.6",
     "@prisma/client": "^5.12.1",
     "@tailwindcss/forms": "^0.5.7",
     "@types/node": "20.5.7",
@@ -22,7 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^5.2.0",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "3.4.3",
     "typescript": "5.2.2",
     "use-debounce": "^10.0.0",
     "zod": "^3.22.2"
