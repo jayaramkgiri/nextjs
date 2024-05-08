@@ -17,7 +17,9 @@ export default async function InvoicesTable({
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
-    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },{id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
   ];
 
   return (
@@ -28,18 +30,11 @@ export default async function InvoicesTable({
             {invoices?.map((invoice) => (
               <div
                 key={invoice.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
+                className="mb-2 rounded-md bg-white p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      {/* <Image
-                        src={invoice.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${invoice.name}'s profile picture`}
-                      /> */}
                       <p>{invoice.name}</p>
                     </div>
                     <p className="text-sm text-gray-500">{invoice.email}</p>
@@ -74,9 +69,6 @@ export default async function InvoicesTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
-                </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
-                  <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
