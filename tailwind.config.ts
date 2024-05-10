@@ -12,6 +12,7 @@ const config: Config = {
         white: "#fff",
         "text-primary": "#404040",
         "color-states-common-black": "#223354",
+        "text-secondary": '#35353A',
         indianred: "#eb5757",
         seagreen: "#219653",
         dimgray: "rgba(97, 97, 97, 0.9)",

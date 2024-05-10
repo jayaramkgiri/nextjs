@@ -25,7 +25,7 @@ export default async function InvoicesTable({
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg p-2 bg-chocolate md:pt-0">
+        <div className="rounded-lg p-2 md:pt-0">
           <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
@@ -52,10 +52,10 @@ export default async function InvoicesTable({
               </div>
             ))}
           </div>
-          <table className="hidden w-full text-gray-900 md:table overflow-x-auto">
-            <thead className="rounded-lg text-left text-sm font-normal">
+          <table className="hidden w-full  md:table overflow-x-auto border-collapse ml-0 scroll-smooth">
+            <thead className="rounded-lg text-left text-darkgray text-sm font-normal">
               <tr>
-                <th scope="col" className="px-4 sticky bg-white left-0 py-5 font-medium sm:pl-6">
+                <th scope="col" className="px-4 sticky  bg-white left-0 py-5 font-medium sm:pl-6">
                   Customer
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
@@ -72,11 +72,14 @@ export default async function InvoicesTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
-                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                </th>                
+                <th scope="col" className="px-3 py-5 font-medium">
                   Status
-                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                </th>                
+                <th scope="col" className="px-3 py-5 font-medium">
                   Status
-                </th>                <th scope="col" className="px-3 py-5 font-medium">
+                </th>                
+                <th scope="col" className="px-3 py-5 font-medium">
                   Status
                 </th>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
@@ -105,25 +108,25 @@ export default async function InvoicesTable({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white overflow-x-auto">
+            <tbody className="bg-white overflow-x-auto text-secondary divide-y">
               {invoices?.map((invoice) => (
                 <tr
                   key={invoice.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="whitespace-nowrap bg-white sticky left-0 px-3 py-3">
+                  <td className="whitespace-nowrap border-l-0 border-spacing-x-1 shadow-r-inner border border-solid border-gray-200 bg-white sticky left-0 px-3 py-3 mx-0">
                     {invoice.name}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 border border-solid border-gray-200">
                     {invoice.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 border border-solid border-gray-200">
                     {formatCurrency(invoice.amount)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 border border-solid border-gray-200">
                     {invoice.date}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap px-3 py-3 border border-solid border-gray-200">
                     {invoice.status}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
