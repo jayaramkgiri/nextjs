@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
@@ -74,13 +75,13 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 items-center justify-center text-sm border',
+    'flex h-10 w-10 items-center justify-center no-underline text-sm ',
     {
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
-      'z-10 bg-blue-600 border-blue-600 text-white': isActive,
-      'hover:bg-gray-100': !isActive && position !== 'middle',
-      'text-gray-300': position === 'middle',
+      'z-10 bg-chocolate text-indianred': isActive,
+      'hover:bg-chocolate hover:text-indianred': !isActive && position !== 'middle',
+      'text-silver-100': !isActive,
     },
   );
 
@@ -105,8 +106,8 @@ function PaginationArrow({
   const className = clsx(
     'flex h-10 w-10 items-center justify-center rounded-md border',
     {
-      'pointer-events-none text-gray-300': isDisabled,
-      'hover:bg-gray-100': !isDisabled,
+      'hover:bg-chocolate text-indianred ': !isDisabled,
+      'pointer-events-none text-silver-100': isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },
@@ -114,9 +115,9 @@ function PaginationArrow({
 
   const icon =
     direction === 'left' ? (
-      <ArrowLeftIcon className="w-4" />
+      <IoIosArrowBack  className="w-4" />
     ) : (
-      <ArrowRightIcon className="w-4" />
+      <IoIosArrowForward className="w-4" />
     );
 
   return isDisabled ? (

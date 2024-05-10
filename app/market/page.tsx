@@ -1,8 +1,4 @@
-import {
-  Pagination,
-  PaginationItem,
-  PaginationCursor,
-} from '@nextui-org/pagination';
+import Pagination from '@/app/ui/market/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/market/table';
 import { CreateInvoice } from '@/app/ui/market/buttons';
@@ -33,21 +29,14 @@ export default async function Page({
         </div>
         <div className="mt-4 flex my-auto">
           <Search placeholder="Search" />
-          <Pagination
-            total={10}
-            classNames={{
-              wrapper:
-                'gap-1 overflow-visible h-10 rounded border border-divider text-gray-500',
-              item: 'w-8 h-8 text-small rounded-lg bg-transparent border border-solid border-gray-200',
-              cursor:
-                "bg-gradient-to-b shadow-lg from-default-500 to-default-800 dark:from-default-300 dark:to-default-100 text-white font-bold",
-            }}
-          />
         </div>
       </section>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={10} />
+      </div>
     </>
   );
 }
