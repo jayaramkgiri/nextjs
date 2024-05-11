@@ -72,7 +72,7 @@ export default function Stepper(  {rupee,
   }, [propMinWidth3]);
 
   return (
-    <div className="flex-1 rounded-lgi bg-white shadow-[0px_16px_24px_rgba(0,_0,_0,_0.06),_0px_2px_6px_rgba(0,_0,_0,_0.04),_0px_0px_1px_rgba(0,_0,_0,_0.04)] h-[480px] flex flex-col items-start justify-start text-left text-base text-dimgray font-title-lg">
+    <div className="flex-1 rounded-lgi bg-white shadow-[0px_16px_24px_rgba(0,_0,_0,_0.06),_0px_2px_6px_rgba(0,_0,_0,_0.04),_0px_0px_1px_rgba(0,_0,_0,_0.04)] h-[480px] flex flex-col items-start justify-start text-left col-span-2 text-base text-dimgray font-title-lg">
       <div className="self-stretch flex-1 flex flex-col items-start justify-start p-4 gap-[16px]">
         <div className="self-stretch h-12 flex flex-col items-start justify-start text-5xl text-color">
           <h3

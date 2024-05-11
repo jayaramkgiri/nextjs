@@ -20,11 +20,54 @@ export default async function InvoicesTable({
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
     {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
+    {id: "1", name: "test", status: "true", email: "test", amount: 100, date: '10/2/2024', },
   ];
 
   return (
-    <div className="mt-6 flow-root">
-      <div className="inline-block min-w-full align-middle">
+    <div className="pt-6 flow-root">
+      <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg p-2 md:pt-0">
           <div className="md:hidden">
             {invoices?.map((invoice) => (
@@ -52,52 +95,52 @@ export default async function InvoicesTable({
               </div>
             ))}
           </div>
-          <table className="hidden w-full  md:table overflow-x-auto border-collapse ml-0 scroll-smooth">
-            <thead className="rounded-lg text-left text-darkgray text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 sticky  bg-white left-0 py-5 font-medium sm:pl-6">
+          <table className="hidden relative w-full md:table overflow-auto border-collapse ml-0 scroll-smooth">
+            <thead className="rounded-lg relative text-left text-darkgray text-sm font-normal">
+              <tr className='sticky top-[152px] bg-white z-10'>
+                <th scope="col" className="px-3 z-10 bg-white sticky left-0 top-[142px] py-5 font-medium">
                   Customer
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky" >
                   Amount
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky ">
                   Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>                
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>                
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>                
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                <th scope="col" className="px-4 py-5 font-medium sticky  ">
                   Customer
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Email
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Amount
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Date
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-medium sticky  ">
                   Status
                 </th>                <th scope="col" className="px-3 py-5 font-medium">
                   Status

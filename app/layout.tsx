@@ -18,14 +18,14 @@ export default function RootLayout({
           </div>
           <div className="hidden md:block h-screen w-0.5 relative bg-whitesmoke-100" />
           <div className="hidden md:block h-screen w-0.5 relative bg-whitesmoke-200" />
-          <div className="h-auto md:hidden h-auto w-full overflow-hidden shrink-0 flex flex-row items-center justify-start">
+          <div className="md:hidden h-auto w-full overflow-hidden shrink-0 flex flex-row items-center justify-start">
             <Cards rupee="/rupee-40.svg" totalBid="Total Bids" />
             <Cards rupee="/rupee-41.svg" totalBid="Total Asks" propColor="#eb5757" />
           </div>
-          <div className="grow p-6 md:overflow-y-auto md:mx-10 md:px-0">{children}</div>
+          <div className="grow md:overflow-auto md:ml-10 h-[92%]">{children}</div>
           <div className="h-screen w-0.5 relative bg-whitesmoke-100" />
           <div className="h-screen w-0.5 relative bg-whitesmoke-200" />
-          <div className="h-auto hidden md:block h-screen md:w-1/5 overflow-hidden shrink-0 flex flex-col items-start justify-start mx-auto box-border space-y-4">
+          <div className="hidden md:block h-screen md:w-1/5 overflow-hidden shrink-0 flex flex-col items-start justify-start mx-auto box-border space-y-4">
             <Cards totalBid="Total Bids" />
             <Cards totalBid="Total Asks" propColor="#eb5757" />
           </div>
