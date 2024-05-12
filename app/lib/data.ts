@@ -65,8 +65,8 @@ export async function fetchCardData() {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
-    const numberOfInvoices = await prisma.acuite_ratings.count();
-    return numberOfInvoices;
+    const numberOfCompanies = await prisma.company.count();
+    return numberOfCompanies;
 
   } catch (error) {
     console.error('Database Error:', error);

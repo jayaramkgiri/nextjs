@@ -1,6 +1,6 @@
 
 import { useMemo, type CSSProperties } from "react";
-// import { fetchCardData } from '@/app/lib/data';
+import { fetchCardData } from '@/app/lib/data';
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
 export default async  function Cards({ totalBid, propColor }: {
@@ -17,7 +17,7 @@ export default async  function Cards({ totalBid, propColor }: {
   }, [propColor]);
 
   return (
-    <div className="self-stretch shadow-lg rounded-3xl flex flex-col gap-3 h-auto w-1/2 items-start font-h3 md:w-5/12 md:h-1/5 mx-6 py-2 px-6 my-8">
+    <div className="self-stretch shadow-lg rounded-3xl flex flex-col gap-3 h-auto w-auto items-start font-h3 md:h-1/5 mx-6 py-2 px-6 my-8">
       <div className="text-xl font-semibold text-primary overflow-hidden">
         <p>
           {totalBid}
@@ -29,7 +29,7 @@ export default async  function Cards({ totalBid, propColor }: {
           62.71 Cr
         </div>
         <div className="text-dimgray">
-          83526 units
+         {fetchCardData()} units
         </div>
       </div>
     </div> 

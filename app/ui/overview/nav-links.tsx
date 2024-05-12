@@ -28,7 +28,7 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <div className='w-full'>
+          <div key={link.name} className='w-full'>
           <Link
             key={link.name}
             href={link.href}
