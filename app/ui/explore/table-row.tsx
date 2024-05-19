@@ -1,6 +1,5 @@
 'use client';
 
-import { trace } from 'console';
 import { useRouter } from 'next/navigation';
 
 // const useOpenInNewTab = () => {
@@ -25,7 +24,7 @@ export default function TableRow({
     <tr
       key={row.id}
       className="text-sm w-full border-b py-3 last-of-type:border-none hover:cursor-pointer hover:bg-slate-50 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-      onClick={() => router.push(target: '_blank', href: '/overview')}
+      onClick={() => router.push('/overview')}
     >
       {cells?.map((cell) => {
         return (
