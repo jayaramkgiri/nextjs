@@ -1,14 +1,17 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
-import UnoBondsLogo from '@/app/ui/unobonds-logo';
 import SideNav from '@/app/ui/overview/sidenav';
-import Cards from "@/app/ui/overview/cards";
+import Cards from '@/app/ui/overview/cards';
+import { headers } from 'next/headers';
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const header = headers();
+  const pathname = header.get('next-url');
+  console.log(pathname);
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
@@ -16,18 +19,18 @@ export default function RootLayout({
           <div className="w-full flex-none md:w-1/6">
             <SideNav />
           </div>
-          <div className="hidden md:block h-screen w-0.5 relative bg-whitesmoke-100" />
-          <div className="hidden md:block h-screen w-0.5 relative bg-whitesmoke-200" />
-          <div className="md:hidden h-auto w-full overflow-hidden shrink-0 flex flex-row items-center justify-start">
+          <div className="relative hidden h-screen w-0.5 bg-whitesmoke-100 md:block" />
+          <div className="relative hidden h-screen w-0.5 bg-whitesmoke-200 md:block" />
+          <div className="flex h-auto w-full shrink-0 flex-row items-center justify-start overflow-hidden md:hidden">
             <Cards rupee="/rupee-40.svg" totalBid="Total Bids" />
-            <Cards rupee="/rupee-41.svg" totalBid="Total Asks" propColor="#eb5757" />
+            <Cards
+              rupee="/rupee-41.svg"
+              totalBid="Total Asks"
+              propColor="#eb5757"
+            />
           </div>
-          <div className="grow md:overflow-auto md:ml-10 h-[92%]">{children}</div>
-          <div className="h-screen w-0.5 relative bg-whitesmoke-100" />
-          <div className="h-screen w-0.5 relative bg-whitesmoke-200" />
-          <div className="hidden md:block h-screen md:w-1/5 overflow-hidden shrink-0 flex flex-col items-start justify-start mx-auto box-border space-y-4">
-            <Cards totalBid="Total Bids" />
-            <Cards totalBid="Total Asks" propColor="#eb5757" />
+          <div className="h-[92%] grow md:ml-10 md:overflow-auto">
+            {children}
           </div>
         </div>
       </body>

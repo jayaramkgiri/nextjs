@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Company" (
+CREATE TABLE IF NOT EXISTS "Company" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6),
