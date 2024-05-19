@@ -13,16 +13,18 @@ import { useRouter } from 'next/navigation';
 // };
 
 export default function TableRow({
+  key,
   row,
   cells,
 }: {
+  key: number;
   row: object;
   cells: string[];
 }) {
   const router = useRouter();
   return (
     <tr
-      key={row.id}
+      key={key}
       className="text-sm w-full border-b py-3 last-of-type:border-none hover:cursor-pointer hover:bg-slate-50 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
       onClick={() => router.push('/overview')}
     >

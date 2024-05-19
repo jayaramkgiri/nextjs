@@ -50,7 +50,11 @@ export default async function CompaniesTable({
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
               {companies?.map((company) => (
-                <TableRow row={company} cells={['name', 'cin']} />
+                <TableRow
+                  key={company.id}
+                  row={company}
+                  cells={['name', 'cin']}
+                />
                 // <tr
                 //   key={company.id}
                 //   className="text-sm w-full border-b py-3 last-of-type:border-none hover:cursor-pointer hover:bg-slate-50 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
