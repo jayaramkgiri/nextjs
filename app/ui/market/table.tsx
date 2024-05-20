@@ -2,9 +2,15 @@ import { fetchCompanies } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
 
 interface Company {
-  id: number,
-  name: string,
-  cin: string
+  id: number;
+  createdAt: Date;
+  updatedAt: Date | null;
+  cin: string | null;
+  name: string | null;
+  verified: boolean | null;
+  verifiedAt: Date | null;
+  rated: boolean | null;
+  listed: boolean | null;
 }
 
 export default async function CompaniesTable({
