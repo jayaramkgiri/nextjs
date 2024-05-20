@@ -1,6 +1,12 @@
 import { fetchCompanies } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
 
+interface Company {
+  id: number,
+  name: string,
+  cin: string
+}
+
 export default async function CompaniesTable({
   query,
   currentPage,
@@ -15,7 +21,7 @@ export default async function CompaniesTable({
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg p-2 md:pt-0">
           <div className="md:hidden">
-            {companies?.map((company) => (
+            {companies?.map((company: Company) => (
               <div key={company.id} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
@@ -49,7 +55,7 @@ export default async function CompaniesTable({
               </tr>
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {companies?.map((company) => (
+              {companies?.map((company: Company) => (
                 <TableRow
                   key={company.id}
                   row={company}

@@ -19,3 +19,44 @@ model Company {
   rated      Boolean?
   listed     Boolean?
 }
+
+model Issuance {
+  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
+  createdAt                DateTime  @db.Timestamp(6)
+  updatedAt                DateTime  @db.Timestamp(6)
+  isin                     String?   @db.VarChar
+  cin                      String?   @db.VarChar
+  description              String?   @db.VarChar
+  secured                  String?   @db.VarChar
+  guarantee                String?   @db.VarChar
+  convertibility           String?   @db.VarChar
+  seniority                String?   @db.VarChar
+  taxFree                  String?   @db.VarChar
+  faceValue                Float?
+  putOption                String?   @db.VarChar
+  callOption               String?   @db.VarChar
+  mode                     String?   @db.VarChar
+  allotmentDate            DateTime? @db.Date
+  perpetual                String?   @db.VarChar
+  totalAllotment           Float?
+  issuePrice               Float?
+  issueSize                Float?
+  greenShoeOption          String?   @db.VarChar
+  couponBasis              String?   @db.VarChar
+  couponRate               String?   @db.VarChar
+  couponType               String?   @db.VarChar
+  dayCountConvention       String?   @db.VarChar
+  interestPayment          String?   @db.VarChar
+  interestPaymentStartDate DateTime? @db.Date
+  interestPaymentEndDate   DateTime? @db.Date
+  redemptionType           String?   @db.VarChar
+  redemptionDate           DateTime? @db.Date
+  redemptionPremium        String?   @db.VarChar
+  ratingAtIssuance         String?   @db.VarChar
+  ratingAgencyAtIssuance   String?   @db.VarChar
+  ratedDateAtIssuance      DateTime? @db.Date
+  depository               String?   @db.VarChar
+  coupon                   Float?
+  dayCount                 String?   @db.VarChar
+  paymentFrequency         String?   @db.VarChar
+}

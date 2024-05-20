@@ -1,32 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
-// const useOpenInNewTab = () => {
-//   const router = useRouter();
-
-//   const openInNewTab = (href: any) => {
-//     router.push(href, { target: '_blank' });
-//   };
-
-//   return openInNewTab;
-// };
-
 export default function TableRow({
   key,
   row,
   cells,
 }: {
   key: number;
-  row: object;
+  row: Record<string, any>;
   cells: string[];
 }) {
-  const router = useRouter();
   return (
     <tr
       key={key}
       className="text-sm w-full border-b py-3 last-of-type:border-none hover:cursor-pointer hover:bg-slate-50 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-      onClick={() => router.push('/overview')}
+      onClick={() => window.open(`/explore?cin=${row.cin}`, '_blank')}
     >
       {cells?.map((cell, index) => {
         return (
@@ -38,6 +25,12 @@ export default function TableRow({
           </td>
         );
       })}
+      <td className="whitespace-nowrap border border-solid border-gray-200 px-3 py-3">
+        {'AAA'}
+      </td>
+      <td className="whitespace-nowrap border border-solid border-gray-200 px-3 py-3">
+        {4}
+      </td>
     </tr>
   );
 }

@@ -13,7 +13,7 @@
     "@heroicons/react": "^2.0.18",
     "@nextui-org/pagination": "^2.0.30",
     "@nextui-org/react": "^2.3.6",
-    "@prisma/client": "^5.12.1",
+    "@prisma/client": "^5.14.0",
     "@tailwindcss/forms": "^0.5.7",
     "@types/node": "20.5.7",
     "@vercel/postgres": "^0.5.1",
@@ -44,7 +44,7 @@
     "eslint-config-prettier": "9.0.0",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "0.5.4",
-    "prisma": "^5.13.0"
+    "prisma": "^5.14.0"
   },
   "engines": {
     "node": ">=18.17.0"
