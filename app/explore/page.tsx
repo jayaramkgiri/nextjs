@@ -1,11 +1,16 @@
 import Pagination from '@/app/ui/market/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/market/table';
-import { CreateInvoice } from '@/app/ui/market/buttons';
-import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
-import { fetchInvoicesPages } from '@/app/lib/data';
 import { Suspense } from 'react';
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button,
+} from '@nextui-org/react';
 
 export default async function Page({
   searchParams,
@@ -21,19 +26,45 @@ export default async function Page({
   const totalPages = 10;
   return (
     <>
-      <section className='sticky top-0 left-0 z-20 bg-white pb-3 '>
+      <section className="sticky left-0 top-0 z-20 bg-white pb-3 ">
         <div className="flex flex-col items-start justify-start self-stretch overflow-hidden py-0 pl-0 pr-5">
-          <h1 className="text-brand-primary mt-5 text-left font-bold text-15xl">
-            Explore
-          </h1>
+          <Navbar position="static">
+            <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+              <NavbarItem>
+                <Link color="foreground" href="#">
+                  Features
+                </Link>
+              </NavbarItem>
+              <NavbarItem isActive>
+                <Link href="#" aria-current="page">
+                  Customers
+                </Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link color="foreground" href="#">
+                  Integrations
+                </Link>
+              </NavbarItem>
+            </NavbarContent>
+            <NavbarContent justify="end">
+              <NavbarItem className="hidden lg:flex">
+                <Link href="#">Login</Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Button as={Link} color="primary" href="#" variant="flat">
+                  Sign Up
+                </Button>
+              </NavbarItem>
+            </NavbarContent>
+          </Navbar>
         </div>
-        <div className="flex justify-center my-auto">
+        <div className="my-auto flex justify-center">
           <Search placeholder="Search" />
           <Pagination totalPages={10} />
         </div>
       </section>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-          <Table query={query} currentPage={currentPage} />
+        <Table query={query} currentPage={currentPage} />
       </Suspense>
     </>
   );
