@@ -18,7 +18,7 @@ export default async function Page({
   const totalPages = 10;
   return (
     <>
-      <section className="sticky left-0 top-0 z-20 bg-white pb-3 ">
+      <section className="sticky left-0 top-[64px] z-20 w-[90%] bg-white pb-3">
         <div className="my-auto flex justify-center">
           <Search placeholder="Search" />
           <Pagination totalPages={10} />

@@ -23,9 +23,9 @@ export default async function CompaniesTable({
   const companies = await fetchCompanies(currentPage);
 
   return (
-    <div className="flow-root pt-6">
+    <div className="flow-root pt-0">
       <div className="inline-block max-w-full align-middle">
-        <div className="rounded-lg p-2 md:pt-0">
+        <div className="rounded-lg ">
           <div className="md:hidden">
             {companies?.map((company: Company) => (
               <div key={company.id} className="mb-2 rounded-md bg-white p-4">
@@ -42,7 +42,7 @@ export default async function CompaniesTable({
           </div>
           <table className="relative ml-0 hidden w-full border-collapse overflow-auto scroll-smooth md:table">
             <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
-              <tr className="sticky top-[152px] z-10 bg-white">
+              <tr className="sticky top-[136px] z-10 bg-white">
                 <th
                   scope="col"
                   className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"

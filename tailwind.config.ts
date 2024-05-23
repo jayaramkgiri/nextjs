@@ -42,6 +42,7 @@ const config: Config = {
       lg: "18px",
       "17xl": "36px",
       "15xl": "32px",
+      "13xl": "28px",
       xs: "12px",
       base: "16px",
       xl: "20px",
