@@ -9,7 +9,10 @@ CREATE TABLE "Company" (
     "verifiedAt" TIMESTAMP(6),
     "rated" BOOLEAN,
     "listed" BOOLEAN,
+    "latestRating" VARCHAR(255),
+    "ratingAgency" VARCHAR(255),
+    "ratingDate" DATE,
+    "rationale_url" VARCHAR(255),
 
     CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
 );
-

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -9,15 +10,16 @@ datasource db {
 }
 
 model Company {
-  id         Int       @id @default(autoincrement())
-  createdAt  DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime? @db.Timestamp(6)
-  cin        String?   @db.VarChar(255)
-  name       String?   @db.VarChar(255)
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime?  @db.Timestamp(6)
+  cin        String?    @unique(map: "UQ_Company_Cin") @db.VarChar(255)
+  name       String?    @db.VarChar(255)
   verified   Boolean?
-  verifiedAt DateTime? @db.Timestamp(6)
+  verifiedAt DateTime?  @db.Timestamp(6)
   rated      Boolean?
   listed     Boolean?
+  issuances  Issuance[]
 }
 
 model Issuance {
@@ -59,4 +61,5 @@ model Issuance {
   coupon                   Float?
   dayCount                 String?   @db.VarChar
   paymentFrequency         String?   @db.VarChar
+  company                  Company?  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
 }

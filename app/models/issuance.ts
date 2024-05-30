@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const ITEMS_PER_PAGE = 30;
-export async function fetchCompanies(
+export async function fetchIssuances(
   // query: string,
   currentPage: number
 ) {
@@ -13,20 +13,17 @@ export async function fetchCompanies(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
 
-    const companies = await prisma.company.findMany({
+    const issuances = await prisma.issuance.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
-      orderBy: [
-        {name: 'asc'}
-      ],
       include: {
-        _count: {
-          select: { issuances: true },
+        company: true
         },
-      },
-    });
-
-    return companies;
+      orderBy: {
+        company: {name: 'asc'}
+      }
+      });
+    return issuances;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch Companies.');

@@ -1,18 +1,6 @@
 import { fetchCompanies } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
 
-interface Company {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date | null;
-  cin: string | null;
-  name: string | null;
-  verified: boolean | null;
-  verifiedAt: Date | null;
-  rated: boolean | null;
-  listed: boolean | null;
-}
-
 export default async function CompaniesTable({
   query,
   currentPage,
@@ -27,7 +15,7 @@ export default async function CompaniesTable({
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {companies?.map((company: Company) => (
+            {companies?.map((company, index) => (
               <div key={company.id} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
@@ -47,13 +35,16 @@ export default async function CompaniesTable({
                   scope="col"
                   className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
                 >
-                  Name
+                  S.No
+                </th>
+                <th
+                  scope="col"
+                  className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
+                >
+                  Issuer Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Cin
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium">
-                  Latest Rating
                 </th>
                 <th scope="col" className="sticky px-3 py-5 font-medium ">
                   Active Debentures
@@ -61,30 +52,17 @@ export default async function CompaniesTable({
               </tr>
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {companies?.map((company: Company) => (
-                <TableRow
-                  key={company.id}
-                  row={company}
-                  cells={['name', 'cin']}
-                />
-                // <tr
-                //   key={company.id}
-                //   className="text-sm w-full border-b py-3 last-of-type:border-none hover:cursor-pointer hover:bg-slate-50 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-                // >
-                //   <td className="shadow-r-inner sticky left-0 mx-0 border-spacing-x-1 whitespace-nowrap border border-l-0 border-solid border-gray-200 bg-auto px-3 py-3">
-                //     {company.name}
-                //   </td>
-                //   <td className="whitespace-nowrap border border-solid border-gray-200 px-3 py-3">
-                //     {company.cin}
-                //   </td>
-                //   <td className="whitespace-nowrap border border-solid border-gray-200 px-3 py-3">
-                //     {'AAA'}
-                //   </td>
-                //   <td className="whitespace-nowrap border border-solid border-gray-200 px-3 py-3">
-                //     {4}
-                //   </td>
-                // </tr>
-              ))}
+              {companies?.map((company: any, index) => {
+                company['issuanceCount'] = company._count['issuances'];
+                return (
+                  <TableRow
+                    key={company.id}
+                    row={company}
+                    sno={index}
+                    cells={['name', 'cin', 'issuanceCount']}
+                  />
+                );
+              })}
             </tbody>
           </table>
         </div>
