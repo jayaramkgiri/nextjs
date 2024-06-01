@@ -15,7 +15,7 @@ export default async function CompaniesTable({
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {companies?.map((company, index) => (
+            {companies?.map((company: any, index: number) => (
               <div key={company.id} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
@@ -52,7 +52,7 @@ export default async function CompaniesTable({
               </tr>
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {companies?.map((company: any, index) => {
+              {companies?.map((company: any, index: number) => {
                 company['issuanceCount'] = company._count['issuances'];
                 return (
                   <TableRow

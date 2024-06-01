@@ -30,10 +30,10 @@ export default function TableRow({
           >
             {row[cell] instanceof Date
               ? row[cell].toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
               : row[cell]}
           </td>
         );

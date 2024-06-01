@@ -19,18 +19,18 @@ export default async function Page() {
           </h1>
         </div>
       </section>
-      <section className="grid w-[90%] gap-6 p-4 lg:grid-cols-4">
+      <section className="grid w-[90%] gap-10 p-4 lg:grid-cols-4">
         <Suspense fallback={<CardsSkeleton />}>
-          <YieldTable />
+          <YieldTable rating='AAA' />
         </Suspense>
         <Suspense fallback={<CardsSkeleton />}>
-          <YieldTable />
+          <YieldTable rating='AA' />
         </Suspense>
         <Suspense fallback={<CardsSkeleton />}>
-          <YieldTable />
+          <YieldTable rating='A' />
         </Suspense>
         <Suspense fallback={<CardsSkeleton />}>
-          <YieldTable />
+          <YieldTable rating='BBB' />
         </Suspense>
       </section>
     </>
