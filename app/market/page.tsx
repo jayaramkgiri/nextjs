@@ -25,8 +25,8 @@ export default async function Page({
             Market
           </h1>
           <div className="my-0 flex h-auto shrink-0 flex-row items-end justify-start gap-4 overflow-hidden py-0">
-            <Cards totalBid="Total Bids" />
-            <Cards totalBid="Total Asks" propColor="#eb5757" />
+            <Cards cardType="bid" />
+            <Cards cardType="ask" />
           </div>
         </div>
         <div className="my-auto flex w-[90%] justify-center">

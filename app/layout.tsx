@@ -22,12 +22,8 @@ export default function RootLayout({
           <div className="relative hidden h-screen w-0.5 bg-whitesmoke-100 md:block" />
           <div className="relative hidden h-screen w-0.5 bg-whitesmoke-200 md:block" />
           <div className="flex h-auto w-full shrink-0 flex-row items-center justify-start overflow-hidden md:hidden">
-            <Cards rupee="/rupee-40.svg" totalBid="Total Bids" />
-            <Cards
-              rupee="/rupee-41.svg"
-              totalBid="Total Asks"
-              propColor="#eb5757"
-            />
+            <Cards cardType="bid" />
+            <Cards cardType="ask" />
           </div>
           <div className="h-[92%] grow md:ml-10 md:overflow-auto">
             {children}
