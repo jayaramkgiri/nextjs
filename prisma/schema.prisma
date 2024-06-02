@@ -23,7 +23,7 @@ model Company {
 }
 
 model Issuance {
-'  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
+  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
   createdAt                DateTime  @db.Timestamp(6)
   updatedAt                DateTime  @db.Timestamp(6)
   isin                     String?   @db.VarChar
