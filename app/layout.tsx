@@ -33,6 +33,11 @@ export default function RootLayout({
             {children}
           </div>
         </div>
+        <footer className="sticky bottom-0 m-4 rounded-lg">
+          <div className="text-sm  mx-auto w-full max-w-screen-xl flex-row p-4 text-gray-500 sm:text-center md:flex md:items-center md:justify-center dark:text-gray-400">
+            © 2024{' FirstDigit LLP'}. All Rights Reserved.
+          </div>
+        </footer>
       </body>
     </html>
   );
