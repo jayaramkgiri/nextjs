@@ -23,7 +23,7 @@ model Company {
 }
 
 model Issuance {
-  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
+'  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
   createdAt                DateTime  @db.Timestamp(6)
   updatedAt                DateTime  @db.Timestamp(6)
   isin                     String?   @db.VarChar
@@ -60,6 +60,6 @@ model Issuance {
   depository               String?   @db.VarChar
   coupon                   Float?
   dayCount                 String?   @db.VarChar
-  paymentFrequency         String?   @db.VarChar
-  company                  Company?  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
+  paymentFrequency         String?   @db.VarChar'
+  company                  Company  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
 }

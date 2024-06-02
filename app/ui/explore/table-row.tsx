@@ -9,7 +9,7 @@ export default function TableRow({
   key: number;
   row: Record<string, any>;
   sno: number;
-  cells: string[];
+  cells: any[];
 }) {
   return (
     <tr
@@ -28,13 +28,13 @@ export default function TableRow({
             key={index}
             className="shadow-r-inner sticky left-0 mx-0 border-spacing-x-1 whitespace-nowrap border border-l-0 border-solid border-gray-200 bg-auto px-3 py-3"
           >
-            {row[cell] instanceof Date
-              ? row[cell].toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })
-              : row[cell]}
+            {cell instanceof Date
+              ? cell.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })
+              : cell}
           </td>
         );
       })}

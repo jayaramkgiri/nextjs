@@ -1,7 +1,7 @@
 import { fetchIssuances } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
 
-export default async function DenenturesTable({
+export default async function DebenturesTable({
   query,
   currentPage,
 }: {
@@ -15,7 +15,7 @@ export default async function DenenturesTable({
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {issuances?.map((issuance, index) => (
+            {issuances.map((issuance, index) => (
               <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
@@ -67,22 +67,21 @@ export default async function DenenturesTable({
               </tr>
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {issuances?.map((issuance: any, index) => {
-                issuance['companyName'] = issuance.company.name;
+              {issuances?.map((issuance, index) => {
                 return (
                   <TableRow
-                    key={issuance.id}
+                    key={Number(issuance.id)}
                     row={issuance}
                     sno={index}
                     cells={[
-                      'companyName',
-                      'isin',
-                      'faceValue',
-                      'allotmentDate',
-                      'redemptionDate',
-                      'couponBasis',
-                      'couponRate',
-                      'paymentFrequency',
+                      issuance.company.name,
+                      issuance.isin,
+                      issuance.faceValue,
+                      issuance.allotmentDate,
+                      issuance.redemptionDate,
+                      issuance.couponBasis,
+                      issuance.couponRate,
+                      issuance.paymentFrequency,
                     ]}
                   />
                 );

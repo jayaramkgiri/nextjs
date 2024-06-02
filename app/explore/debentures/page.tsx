@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/market/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/explore/debentures/table';
+import Table from '@/app/ui/explore/issuances/table';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 

@@ -1,4 +1,3 @@
-import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { PrismaClient } from '@prisma/client'
 

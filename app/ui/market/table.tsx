@@ -1,28 +1,28 @@
-import { fetchCompanies } from '@/app/models/company';
+import { fetchIssuances } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
 
-export default async function CompaniesTable({
+export default async function ({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const companies = await fetchCompanies(currentPage);
+  const issuances = await fetchIssuances(currentPage);
 
   return (
     <div className="flow-root pt-0">
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {companies?.map((company, index) => (
-              <div key={company.id} className="mb-2 rounded-md bg-white p-4">
+            {issuances.map((issuance, index) => (
+              <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{company.name}</p>
+                      <p>{issuance.description}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{company.cin}</p>
+                    <p className="text-sm text-gray-500">{issuance.isin}</p>
                   </div>
                 </div>
               </div>
@@ -44,25 +44,43 @@ export default async function CompaniesTable({
                   Issuer Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Cin
+                  ISIN
                 </th>
                 <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Active Debentures
+                  Face Value
+                </th>
+                <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  Allotment Date
+                </th>
+                <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  Redemption / Maturity
+                </th>
+                <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  Coupon Basis
+                </th>
+                <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  Coupon Rate
+                </th>
+                <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  Payment Frequency
                 </th>
               </tr>
             </thead>
             <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {companies?.map((company: any, index: number) => {
-                company['issuanceCount'] = company._count['issuances'];
+              {issuances?.map((issuance, index) => {
                 return (
                   <TableRow
-                    key={company.id}
-                    row={company}
+                    key={Number(issuance.id)}
+                    row={issuance}
                     sno={index}
                     cells={[
-                      company.name,
-                      company.cin,
-                      company._count['issuances'],
+                      issuance.isin,
+                      issuance.faceValue,
+                      issuance.allotmentDate,
+                      issuance.redemptionDate,
+                      issuance.couponBasis,
+                      issuance.couponRate,
+                      issuance.paymentFrequency,
                     ]}
                   />
                 );
