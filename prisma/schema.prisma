@@ -60,6 +60,6 @@ model Issuance {
   depository               String?   @db.VarChar
   coupon                   Float?
   dayCount                 String?   @db.VarChar
-  paymentFrequency         String?   @db.VarChar'
-  company                  Company  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
+  paymentFrequency         String?   @db.VarChar
+  company                  Company   @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
 }
