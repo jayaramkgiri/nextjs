@@ -116,10 +116,7 @@ export default function Stepper({ rating }: { rating: string }) {
   }, []);
 
   return (
-    <div
-      key={rating}
-      className="col-span-2 flex h-[480px] flex-1 flex-col items-start justify-start rounded-lgi bg-white text-left font-title-lg text-base text-dimgray shadow-lg"
-    >
+    <div className="col-span-2 flex h-[480px] flex-1 flex-col items-start justify-start rounded-lgi bg-white text-left font-title-lg text-base text-dimgray shadow-lg">
       <div className="flex flex-1 flex-col items-start justify-start self-stretch p-4 ">
         <div className="flex h-12 flex-col items-start justify-start self-stretch pb-2 text-5xl text-color">
           <h3 className="m-0 flex flex-1  items-center self-stretch text-inherit font-semibold">
@@ -142,7 +139,10 @@ export default function Stepper({ rating }: { rating: string }) {
         </div>
         {tenor.map((t) => {
           return (
-            <div className="flex h-12 flex-1 flex-row items-start justify-between self-stretch">
+            <div
+              key={t}
+              className="flex h-12 flex-1 flex-row items-start justify-between self-stretch"
+            >
               <div className="relative inline-block w-16 shrink-0 self-stretch">
                 {t} Y
               </div>
