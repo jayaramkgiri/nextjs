@@ -28,66 +28,68 @@ export default async function DebenturesTable({
               </div>
             ))}
           </div>
-          <table className="relative ml-0 hidden w-full border-collapse overflow-auto scroll-smooth md:table">
-            <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
-              <tr className="sticky top-[136px] z-10 bg-white">
-                <th
-                  scope="col"
-                  className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
-                >
-                  S.No
-                </th>
-                <th
-                  scope="col"
-                  className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
-                >
-                  Issuer Name
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  ISIN
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Face Value
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Allotment Date
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Redemption / Maturity
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Coupon Basis
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Coupon Rate
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Payment Frequency
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {issuances?.map((issuance, index) => {
-                return (
-                  <TableRow
-                    key={Number(issuance.id)}
-                    row={issuance}
-                    sno={index}
-                    cells={[
-                      issuance.company.name,
-                      issuance.isin,
-                      issuance.faceValue,
-                      issuance.allotmentDate,
-                      issuance.redemptionDate,
-                      issuance.couponBasis,
-                      issuance.couponRate,
-                      issuance.paymentFrequency,
-                    ]}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="mx-auto h-[450px] w-[1100px] overflow-auto">
+            <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
+              <thead className="text-sm rounded-lg text-left font-normal text-darkgray">
+                <tr className="sticky top-0 z-20 bg-white">
+                  <th
+                    scope="col"
+                    className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
+                  >
+                    S.No
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky left-[59px] top-0 z-20 bg-white px-3 py-5 font-medium"
+                  >
+                    Issuer Name
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    ISIN
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Face Value
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Allotment Date
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Redemption / Maturity
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Coupon Basis
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Coupon Rate
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Payment Frequency
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
+                {issuances?.map((issuance, index) => {
+                  return (
+                    <TableRow
+                      key={Number(issuance.id)}
+                      sno={index}
+                      currentPage={currentPage}
+                      cells={[
+                        issuance.company.name,
+                        issuance.isin,
+                        issuance.faceValue,
+                        issuance.allotmentDate,
+                        issuance.redemptionDate,
+                        issuance.couponBasis,
+                        issuance.couponRate,
+                        issuance.paymentFrequency,
+                      ]}
+                    />
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

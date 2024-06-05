@@ -29,3 +29,16 @@ export async function fetchIssuances(
     throw new Error('Failed to fetch Companies.');
   }
 }
+
+export async function noOfPages(
+) {
+  noStore();
+  try {
+
+    const issuancesCount = await prisma.issuance.count();
+    return Math.floor(issuancesCount/ITEMS_PER_PAGE) + 1;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch Companies.');
+  }
+}

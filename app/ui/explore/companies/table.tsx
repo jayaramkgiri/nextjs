@@ -28,47 +28,49 @@ export default async function CompaniesTable({
               </div>
             ))}
           </div>
-          <table className="relative ml-0 hidden w-full border-collapse overflow-auto scroll-smooth md:table">
-            <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
-              <tr className="sticky top-[136px] z-10 bg-white">
-                <th
-                  scope="col"
-                  className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
-                >
-                  S.No
-                </th>
-                <th
-                  scope="col"
-                  className="sticky left-0 top-[142px] z-10 bg-white px-3 py-5 font-medium"
-                >
-                  Issuer Name
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Cin
-                </th>
-                <th scope="col" className="sticky px-3 py-5 font-medium ">
-                  Active Debentures
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-              {companies?.map((company: any, index: number) => {
-                company['issuanceCount'] = company._count['issuances'];
-                return (
-                  <TableRow
-                    key={company.id}
-                    row={company}
-                    sno={index}
-                    cells={[
-                      company.name,
-                      company.cin,
-                      company._count['issuances'],
-                    ]}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="mx-auto h-[450px] w-[1100px] overflow-auto">
+            <table className="relative ml-0 hidden w-full border-collapse overflow-auto scroll-smooth md:table">
+              <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
+                <tr className="sticky top-0 z-10 bg-white">
+                  <th
+                    scope="col"
+                    className="sticky left-0 top-0 z-10 bg-white px-3 py-5 font-medium"
+                  >
+                    S.No
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky left-0 top-0 z-10 bg-white px-3 py-5 font-medium"
+                  >
+                    Issuer Name
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Cin
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Active Debentures
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
+                {companies?.map((company: any, index: number) => {
+                  company['issuanceCount'] = company._count['issuances'];
+                  return (
+                    <TableRow
+                      key={company.id}
+                      currentPage={currentPage}
+                      sno={index}
+                      cells={[
+                        company.name,
+                        company.cin,
+                        company._count['issuances'],
+                      ]}
+                    />
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

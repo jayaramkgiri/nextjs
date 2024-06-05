@@ -6,7 +6,7 @@ import { CardsSkeleton } from '@/app/ui/skeletons';
 export default async function Page() {
   return (
     <>
-      <section className="sticky left-0 top-0 z-20 bg-white pb-8 ">
+      <section className="sticky left-0 top-0 z-20  bg-white pb-8">
         <div className="flex flex-row items-start justify-between self-stretch overflow-hidden py-0 pl-0 pr-5">
           <h1 className="text-brand-primary mt-5 pl-4 text-left text-15xl font-bold">
             Overview
@@ -17,7 +17,7 @@ export default async function Page() {
           </div>
         </div>
       </section>
-      <section className="grid w-[90%] gap-10 p-4 lg:grid-cols-4">
+      <section className="grid h-[450px] w-[94%] gap-10 overflow-auto p-4 pr-12 lg:grid-cols-4">
         <Suspense fallback={<CardsSkeleton />}>
           <YieldTable rating="AAA" />
         </Suspense>
