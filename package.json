@@ -10,7 +10,11 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@heroicons/react": "^2.0.18",
+    "@mui/material": "^5.15.19",
+    "@mui/x-data-grid": "^7.6.2",
     "@nextui-org/pagination": "^2.0.30",
     "@nextui-org/react": "^2.3.6",
     "@prisma/client": "^5.14.0",

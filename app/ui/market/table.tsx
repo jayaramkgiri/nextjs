@@ -1,5 +1,74 @@
 import { fetchIssuances } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
+import Box from '@mui/material/Box';
+import {
+  DataGrid,
+  GridColDef,
+  GridColumnGroupingModel,
+} from '@mui/x-data-grid';
+
+const columns: GridColDef<any>[] = [
+  {
+    field: 'issuerName',
+    headerName: 'Issuer name',
+  },
+  {
+    field: 'isin',
+    headerName: 'ISIN',
+    flex: 1,
+    minWidth: 136,
+  },
+  {
+    field: 'faceValue',
+    headerName: 'Face Value',
+    flex: 1,
+    minWidth: 120,
+  },
+  {
+    field: 'allotmentDate',
+    headerName: 'Allotment Date',
+    type: 'date',
+    flex: 1,
+    minWidth: 120,
+  },
+  {
+    field: 'redemptionDate',
+    headerName: 'Redemption Date',
+    type: 'date',
+    flex: 1,
+    minWidth: 160,
+  },
+  {
+    field: 'couponBasis',
+    headerName: 'Coupon Basis',
+    flex: 1,
+    minWidth: 120,
+  },
+  {
+    field: 'couponRate',
+    headerName: 'Coupon Rate',
+    flex: 1,
+    minWidth: 120,
+  },
+  {
+    field: 'paymentFrequency',
+    headerName: 'Payment Frequency',
+    flex: 1,
+    minWidth: 160,
+  },
+];
+
+const columnGroupingModel: GridColumnGroupingModel = [
+  {
+    groupId: 'BSE',
+    description: '',
+    children: [{ field: 'issuerName' }, { field: 'isin' }],
+  },
+  {
+    groupId: 'NSE',
+    children: [{ field: 'couponBasis' }, { field: 'couponRate' }],
+  },
+];
 
 export default async function DebenturesTable({
   query,
@@ -29,66 +98,25 @@ export default async function DebenturesTable({
             ))}
           </div>
           <div className="mx-auto h-[450px] w-[1100px] overflow-auto">
-            <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-sm rounded-lg text-left font-normal text-darkgray">
-                <tr className="sticky top-0 z-20 bg-white">
-                  <th
-                    scope="col"
-                    className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
-                  >
-                    S.No
-                  </th>
-                  <th
-                    scope="col"
-                    className="sticky left-[59px] top-0 z-20 bg-white px-3 py-5 font-medium"
-                  >
-                    Issuer Name
-                  </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
-                    ISIN
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Face Value
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Allotment Date
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Redemption / Maturity
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Coupon Basis
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Coupon Rate
-                  </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Payment Frequency
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-                {issuances?.map((issuance, index) => {
-                  return (
-                    <TableRow
-                      key={Number(issuance.id)}
-                      sno={index}
-                      currentPage={currentPage}
-                      cells={[
-                        issuance.company.name,
-                        issuance.isin,
-                        issuance.faceValue,
-                        issuance.allotmentDate,
-                        issuance.redemptionDate,
-                        issuance.couponBasis,
-                        issuance.couponRate,
-                        issuance.paymentFrequency,
-                      ]}
-                    />
-                  );
-                })}
-              </tbody>
-            </table>
+            <DataGrid
+              rows={issuances}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 30,
+                  },
+                },
+              }}
+              pageSizeOptions={[5]}
+              autosizeOptions={{
+                includeOutliers: true,
+                includeHeaders: false,
+                columns: ['issuerName'],
+              }}
+              autosizeOnMount
+              columnGroupingModel={columnGroupingModel}
+            />
           </div>
         </div>
       </div>

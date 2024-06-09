@@ -23,6 +23,7 @@ export async function fetchIssuances(
         company: {name: 'asc'}
       }
       });
+      issuances.forEach((iss) => iss['issuerName'] = iss.company.name )
     return issuances;
   } catch (error) {
     console.error('Database Error:', error);
