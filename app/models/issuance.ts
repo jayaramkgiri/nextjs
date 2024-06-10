@@ -18,16 +18,16 @@ export async function fetchIssuances(
       take: ITEMS_PER_PAGE,
       include: {
         company: true
-        },
+      },
       orderBy: {
-        company: {name: 'asc'}
+        company: { name: 'asc' }
       }
-      });
-      issuances.forEach((iss) => iss['issuerName'] = iss.company.name )
+    });
+    issuances.forEach((iss: any) => iss['issuerName'] = iss.company.name)
     return issuances;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch Companies.');
+    throw new Error('Failed to fetch Issuances.');
   }
 }
 
@@ -37,7 +37,7 @@ export async function noOfPages(
   try {
 
     const issuancesCount = await prisma.issuance.count();
-    return Math.floor(issuancesCount/ITEMS_PER_PAGE) + 1;
+    return Math.floor(issuancesCount / ITEMS_PER_PAGE) + 1;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch Companies.');

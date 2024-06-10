@@ -1,6 +1,4 @@
 import { fetchIssuances } from '@/app/models/issuance';
-import TableRow from '@/app/ui/explore/table-row';
-import Box from '@mui/material/Box';
 import {
   DataGrid,
   GridColDef,
