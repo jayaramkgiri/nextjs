@@ -99,14 +99,6 @@ export default async function DebenturesTable({
             <DataGrid
               rows={issuances}
               columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 30,
-                  },
-                },
-              }}
-              pageSizeOptions={[5]}
               autosizeOptions={{
                 includeOutliers: true,
                 includeHeaders: false,
@@ -114,6 +106,7 @@ export default async function DebenturesTable({
               }}
               autosizeOnMount
               columnGroupingModel={columnGroupingModel}
+              hideFooter={true}
             />
           </div>
         </div>
