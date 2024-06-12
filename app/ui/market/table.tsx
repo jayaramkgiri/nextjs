@@ -34,6 +34,12 @@ export default async function DebenturesTable({
                 <tr className="">
                   <th
                     scope="col"
+                    colSpan={2}
+                    className="sticky left-0 top-0 z-20 w-6 bg-white font-medium"
+                  >
+                  </th>
+                  <th
+                    scope="col"
                     colSpan={3}
                     className=" font-medium"
                   >
@@ -41,7 +47,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    colSpan={4}
+                    colSpan={3}
                     className=" font-medium"
                   >
                     NSE
@@ -52,16 +58,31 @@ export default async function DebenturesTable({
                     scope="col"
                     className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
                   >
-                    S.No
+                    ISIN
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[59px] top-0 z-20 bg-white px-3 py-5 font-medium"
+                    className="px-3 py-5 font-medium"
                   >
                     Issuer Name
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    ISIN
+                    Scrip Name
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Bids
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Asks
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Scrip Name
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Bids
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Asks
                   </th>
                   <th scope="col" className="sticky px-3 py-5 font-medium ">
                     Face Value
@@ -89,10 +110,17 @@ export default async function DebenturesTable({
                     <TableRow
                       key={Number(issuance.id)}
                       sno={index}
+                      showSno={false}
                       currentPage={currentPage}
                       cells={[
-                        issuance.company.name,
                         issuance.isin,
+                        issuance.company.name,
+                        "Test",
+                        "Test",
+                        "Test",
+                        "Test",
+                        "Test",
+                        "Test",
                         issuance.faceValue,
                         issuance.allotmentDate,
                         issuance.redemptionDate,
