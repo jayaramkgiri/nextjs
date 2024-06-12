@@ -28,8 +28,8 @@ export default async function CompaniesTable({
               </div>
             ))}
           </div>
-          <div className="mx-auto h-[450px] w-[1100px] overflow-auto">
-            <table className="relative ml-0 hidden w-full border-collapse overflow-auto scroll-smooth md:table">
+          <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
+            <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
                 <tr className="sticky top-0 z-10 bg-white">
                   <th
