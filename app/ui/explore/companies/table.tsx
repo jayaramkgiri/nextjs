@@ -58,6 +58,7 @@ export default async function CompaniesTable({
                   return (
                     <TableRow
                       key={company.id}
+                      showSno={true}
                       currentPage={currentPage}
                       sno={index}
                       cells={[
