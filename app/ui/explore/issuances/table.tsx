@@ -74,6 +74,7 @@ export default async function DebenturesTable({
                       key={Number(issuance.id)}
                       sno={index}
                       currentPage={currentPage}
+                      showSno={true}
                       cells={[
                         issuance.company.name,
                         issuance.isin,
