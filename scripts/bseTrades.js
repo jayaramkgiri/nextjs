@@ -4,42 +4,47 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-function calculateWeightedAveragePrice(data) {
-  // Calculate total buy quantity and weighted sum of buy prices
-  let totalBQty = 0;
-  let weightedBPriceSum = 0;
+function formattedStringToNumber(str) {
+  // Remove commas from the string
+  const numberStr = str.replace(/,/g, '').replace(/-/g, '');
+  // Convert the resulting string to a number
+  let number = null;
+  if (numberStr.length > 0) {
+    number = parseFloat(numberStr);
+  }
+  return number;
+}
 
+function findHighestLowestPrices(data) {
+  let highestBPrice = null;
+  let lowestSPrice = null;
+
+  // Find the highest buy price
   for (let i = 1; i <= 5; i++) {
-    const bQty = data[`BQty${i}`];
-    const bPrice = data[`BPrice${i}`];
-
-    if (bQty != null && bPrice != null) {
-      totalBQty += bQty;
-      weightedBPriceSum += bPrice * bQty;
+    const bPriceStr = data[`BPrice${i}`];
+    if (bPriceStr != null) {
+      const bPrice = formattedStringToNumber(bPriceStr)
+      if ((highestBPrice === null || bPrice > highestBPrice)) {
+        highestBPrice = bPrice;
+      }
     }
   }
 
-  const weightedAvgBPrice = totalBQty > 0 ? weightedBPriceSum / totalBQty : null;
-
-  // Calculate total sell quantity and weighted sum of sell prices
-  let totalSQty = 0;
-  let weightedSPriceSum = 0;
-
+  // Find the lowest sell price
   for (let i = 1; i <= 5; i++) {
-    const sQty = data[`SQty${i}`];
-    const sPrice = data[`SPrice${i}`];
+    const sPriceStr = data[`SPrice${i}`];
 
-    if (sQty != null && sPrice != null) {
-      totalSQty += sQty;
-      weightedSPriceSum += sPrice * sQty;
+    if (sPriceStr != null) {
+      const sPrice = formattedStringToNumber(sPriceStr)
+      if ((lowestSPrice === null || sPrice < lowestSPrice)) {
+        lowestSPrice = sPrice;
+      }
     }
   }
-
-  const weightedAvgSPrice = totalSQty > 0 ? weightedSPriceSum / totalSQty : null;
 
   return {
-    weightedAvgBPrice,
-    weightedAvgSPrice
+    highestBPrice,
+    lowestSPrice
   };
 }
 
@@ -79,11 +84,12 @@ async function fetchBondData() {
         let config = {
           method: 'get',
           maxBodyLength: Infinity,
-          url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${cells[1].textContent?.trim()}`,
+          url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${cells[0].textContent?.trim()}`,
+          // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=973883`,
           headers: marketHeaders
         };
         const marketDepth = await axios.request(config);
-        const wap = calculateWeightedAveragePrice(marketDepth)
+        const price = findHighestLowestPrices(marketDepth)
         const marketData = {
           securityCode: cells[0].textContent?.trim() || '',
           securityName: cells[1].textContent?.trim() || '',
@@ -98,9 +104,9 @@ async function fetchBondData() {
           totalVolume: parseInt(cells[10].textContent?.trim() || '0', 10),
           totalTurnover: parseFloat(cells[11].textContent?.trim() || '0'),
           totalBids: marketDepth.data['TotalBQty'],
-          weightedAvgBPrice: wap['weightedAvgBPrice'],
-          weightedAvgSPrice: wap['weightedAvgSPrice'],
-          totalAsks: marketDepth.data['TotalSQty']
+          highestBPrice: price['highestBPrice'],
+          lowestSPrice: price['lowestSPrice'],
+          totalAsks: marketDepth.data['TotalSQty'],
         };
         bondData.push(marketData);
       }
