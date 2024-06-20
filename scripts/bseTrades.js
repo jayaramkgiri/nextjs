@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { JSDOM } = require('jsdom');
+const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
@@ -54,6 +54,9 @@ async function fetchBondData() {
   const page = await browser.newPage();
   await page.goto('https://www.bseindia.com/markets/debt/debt_corporate_EOD.aspx');
   await page.setViewport({ width: 1200, height: 768 });
+  const pageTableSelector = '#ContentPlaceHolder1_GridViewrcdsFC'
+  await page.waitForSelector(pageTableSelector);
+  const pageCount = await page.evaluate((selector) => document.querySelector(selector).childNodes[1].lastElementChild.querySelector('table').firstElementChild.firstElementChild.lastElementChild.textContent, pageTableSelector);
 
   const bondData = [];
   const tableSelector = 'table#ContentPlaceHolder1_GridViewrcdsFC';
@@ -78,7 +81,7 @@ async function fetchBondData() {
       "sec-fetch-site": "same-site",
       "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     }
-
+    for(let pageNo=2; pageNo<pageCount; pageNo++) {
     let index = 0;
 
     for (let row of rows) {
@@ -115,15 +118,15 @@ async function fetchBondData() {
           return marketData;
         }
       } catch (e) {
-        console.log(index);
+        console.log(`Error Parsing row-${index} Page-${pageNo}`);
       }
       index = index + 1;
     }
-  });
 
-  page.evaluate(`__doPostBack('ctl00$ContentPlaceHolder1$GridViewrcdsFC','Page$2')`);
+  page.evaluate(() => {__doPostBack('ctl00$ContentPlaceHolder1$GridViewrcdsFC',`Page$${pageNo}`)});
   await new Promise(resolve => setTimeout(resolve, 3000));
   bondData = bondData.concat(tableData);
+});
   console.log(bondData);
   await browser.close();
   return bondData;
