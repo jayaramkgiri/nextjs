@@ -36,20 +36,11 @@ export default async function DebenturesTable({
                     scope="col"
                     colSpan={2}
                     className="sticky left-0 top-0 z-20 w-6 bg-white font-medium"
-                  >
-                  </th>
-                  <th
-                    scope="col"
-                    colSpan={3}
-                    className=" font-medium"
-                  >
+                  ></th>
+                  <th scope="col" colSpan={3} className=" font-medium">
                     BSE
                   </th>
-                  <th
-                    scope="col"
-                    colSpan={3}
-                    className=" font-medium"
-                  >
+                  <th scope="col" colSpan={3} className=" font-medium">
                     NSE
                   </th>
                 </tr>
@@ -60,10 +51,7 @@ export default async function DebenturesTable({
                   >
                     ISIN
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-5 font-medium"
-                  >
+                  <th scope="col" className="px-3 py-5 font-medium">
                     Issuer Name
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
@@ -114,13 +102,13 @@ export default async function DebenturesTable({
                       currentPage={currentPage}
                       cells={[
                         issuance.isin,
-                        issuance.company.name,
-                        "Test",
-                        "Test",
-                        "Test",
-                        "Test",
-                        "Test",
-                        "Test",
+                        issuance.company!.name,
+                        'Test',
+                        'Test',
+                        'Test',
+                        'Test',
+                        'Test',
+                        'Test',
                         issuance.faceValue,
                         issuance.allotmentDate,
                         issuance.redemptionDate,
