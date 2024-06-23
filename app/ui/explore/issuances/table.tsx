@@ -68,26 +68,28 @@ export default async function DebenturesTable({
                 </tr>
               </thead>
               <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-                {issuances?.map((issuance, index) => {
-                  return (
-                    <TableRow
-                      key={Number(issuance.id)}
-                      sno={index}
-                      currentPage={currentPage}
-                      showSno={true}
-                      cells={[
-                        issuance.company.name,
-                        issuance.isin,
-                        issuance.faceValue,
-                        issuance.allotmentDate,
-                        issuance.redemptionDate,
-                        issuance.couponBasis,
-                        issuance.couponRate,
-                        issuance.paymentFrequency,
-                      ]}
-                    />
-                  );
-                })}
+                {issuances &&
+                  issuances.length > 0 &&
+                  issuances.map((issuance, index) => {
+                    return (
+                      <TableRow
+                        key={Number(issuance.id)}
+                        sno={index}
+                        currentPage={currentPage}
+                        showSno={true}
+                        cells={[
+                          issuance.company!.name,
+                          issuance.isin,
+                          issuance.faceValue,
+                          issuance.allotmentDate,
+                          issuance.redemptionDate,
+                          issuance.couponBasis,
+                          issuance.couponRate,
+                          issuance.paymentFrequency,
+                        ]}
+                      />
+                    );
+                  })}
               </tbody>
             </table>
           </div>
