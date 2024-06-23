@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+
 import { unstable_noStore as noStore } from 'next/cache';
 import { PrismaClient } from '@prisma/client'
 
@@ -9,7 +9,7 @@ export async function fetchIssuances(
   // query: string,
   currentPage: number
 ) {
-  noStore();
+  // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
 
@@ -33,7 +33,7 @@ export async function fetchIssuances(
 
 export async function noOfPages(
 ) {
-  noStore();
+  // noStore();
   try {
 
     const issuancesCount = await prisma.issuance.count();

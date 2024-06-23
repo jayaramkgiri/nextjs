@@ -8,7 +8,8 @@
     "start": "next start",
     "seed": "node -r dotenv/config ./scripts/seed.js",
     "postinstall": "prisma generate",
-    "bse": "node -r dotenv/config ./scripts/bseTrades.js"
+    "bse": "node -r dotenv/config ./scripts/bseTrades.js",
+    "nse": "node -r dotenv/config ./scripts/nseTrades.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

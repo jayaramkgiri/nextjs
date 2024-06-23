@@ -8,7 +8,7 @@ export async function fetchCompanies(
   // query: string,
   currentPage: number
 ) {
-  noStore();
+  // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
 
@@ -34,7 +34,7 @@ export async function fetchCompanies(
 
 export async function noOfPages(
 ) {
-  noStore();
+  // noStore();
   try {
 
     const issuancesCount = await prisma.company.count();

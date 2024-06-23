@@ -19,13 +19,12 @@ function findHighestLowestPrices({ data }) {
   let highestBPrice = null;
   let lowestSPrice = null;
 
-
   // Find the highest buy price
   for (let i = 1; i <= 5; i++) {
     const bPriceStr = data[`BPrice${i}`];
     if (bPriceStr != null) {
-      const bPrice = formattedStringToNumber(bPriceStr)
-      if ((highestBPrice === null || bPrice > highestBPrice)) {
+      const bPrice = formattedStringToNumber(bPriceStr);
+      if (highestBPrice === null || bPrice > highestBPrice) {
         highestBPrice = bPrice;
       }
     }
@@ -36,8 +35,8 @@ function findHighestLowestPrices({ data }) {
     const sPriceStr = data[`SPrice${i}`];
 
     if (sPriceStr != null) {
-      const sPrice = formattedStringToNumber(sPriceStr)
-      if ((lowestSPrice === null || sPrice < lowestSPrice)) {
+      const sPrice = formattedStringToNumber(sPriceStr);
+      if (lowestSPrice === null || sPrice < lowestSPrice) {
         lowestSPrice = sPrice;
       }
     }
@@ -45,96 +44,174 @@ function findHighestLowestPrices({ data }) {
 
   return {
     highestBPrice,
-    lowestSPrice
+    lowestSPrice,
   };
+}
+
+async function fetchPageData(selector, page) {
+  await page.waitForSelector(selector);
+  const tableData = await page.evaluate((selector) => {
+    const rows = document.querySelector(selector).querySelectorAll('tr');
+    let pageData = [];
+    for (let row of rows) {
+      const cells = row.querySelectorAll('td.TTRow, td.TTRow_right');
+      if (cells && cells.length > 1) {
+        const marketData = {
+          securityCode: cells[0].textContent?.trim() || '',
+          securityName: cells[1].textContent?.trim() || '',
+          group: cells[2].textContent?.trim() || '',
+          ltpClose: parseFloat(cells[3].textContent?.trim() || '0'),
+          change: parseFloat(cells[4].textContent?.trim() || '0'),
+          changePercent: parseFloat(cells[5].textContent?.trim() || '0'),
+          ytmAtLtp: parseFloat(cells[6].textContent?.trim() || '0'),
+          openPrice: parseFloat(cells[7].textContent?.trim() || '0'),
+          highPrice: parseFloat(cells[8].textContent?.trim() || '0'),
+          lowPrice: parseFloat(cells[9].textContent?.trim() || '0'),
+          totalVolume: parseInt(cells[10].textContent?.trim() || '0', 10),
+          totalTurnover: parseFloat(cells[11].textContent?.trim() || '0'),
+        };
+        pageData.push(marketData);
+      }
+    }
+    return pageData;
+  }, selector);
+  return tableData;
 }
 
 async function fetchBondData() {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
-  await page.goto('https://www.bseindia.com/markets/debt/debt_corporate_EOD.aspx');
+  const response = await Promise.all([
+    page.goto('https://www.bseindia.com/markets/debt/debt_corporate_EOD.aspx'),
+    page.waitForResponse((response) =>
+      response.url().includes('markets/debt/debt_corporate_EOD.aspx'),
+    ),
+  ]);
+
   await page.setViewport({ width: 1200, height: 768 });
-  const pageTableSelector = '#ContentPlaceHolder1_GridViewrcdsFC'
+  const pageTableSelector = '#ContentPlaceHolder1_GridViewrcdsFC';
   await page.waitForSelector(pageTableSelector);
-  const pageCount = await page.evaluate((selector) => document.querySelector(selector).childNodes[1].lastElementChild.querySelector('table').firstElementChild.firstElementChild.lastElementChild.textContent, pageTableSelector);
-
-  const bondData = [];
+  // const pageCount = await page.evaluate(
+  //   (selector) =>
+  //     document
+  //       .querySelector(selector)
+  //       .childNodes[1].lastElementChild.querySelector('table').firstElementChild
+  //       .firstElementChild.lastElementChild.textContent,
+  //   pageTableSelector,
+  // );
+  let pageLoad = response[1].status();
+  let bondData = [];
   const tableSelector = 'table#ContentPlaceHolder1_GridViewrcdsFC';
-  await page.waitForSelector(tableSelector);
-  let tableData = await page.evaluate((selector) => {
 
-    const rows = document.querySelector(selector).querySelectorAll('tr');
-    const marketHeaders = {
-      "accept": "application/json, text/plain, */*",
-      "accept-encoding": "gzip, deflate, br, zstd",
-      "accept-language": "en-US,en;q=0.9,ta;q=0.8,en-GB;q=0.7",
-      "cache-control": "no-cache",
-      "origin": "https://www.bseindia.com",
-      "pragma": "no-cache",
-      "priority": "u=1, i",
-      "referer": "https://www.bseindia.com/",
-      "sec-ch-ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"",
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": "\"macOS\"",
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "same-site",
-      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    }
-    for(let pageNo=2; pageNo<pageCount; pageNo++) {
-    let index = 0;
+  let pageNo = 1;
+  let tableData, resp;
+  function switchPage(pageNo) {
+    __doPostBack('ctl00$ContentPlaceHolder1$GridViewrcdsFC', `Page$${pageNo}`);
+  }
 
-    for (let row of rows) {
-      try {
-        const cells = row.querySelectorAll('td.TTRow, td.TTRow_right');
-        if (cells && cells.length > 1) {
-          let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${cells[0].textContent?.trim()}`,
-            // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=973883`,
-            headers: marketHeaders
-          };
-          const marketDepth = await axios.request(config);
-          const price = findHighestLowestPrices(marketDepth)
-          const marketData = {
-            securityCode: cells[0].textContent?.trim() || '',
-            securityName: cells[1].textContent?.trim() || '',
-            group: cells[2].textContent?.trim() || '',
-            ltpClose: parseFloat(cells[3].textContent?.trim() || '0'),
-            change: parseFloat(cells[4].textContent?.trim() || '0'),
-            changePercent: parseFloat(cells[5].textContent?.trim() || '0'),
-            ytmAtLtp: parseFloat(cells[6].textContent?.trim() || '0'),
-            openPrice: parseFloat(cells[7].textContent?.trim() || '0'),
-            highPrice: parseFloat(cells[8].textContent?.trim() || '0'),
-            lowPrice: parseFloat(cells[9].textContent?.trim() || '0'),
-            totalVolume: parseInt(cells[10].textContent?.trim() || '0', 10),
-            totalTurnover: parseFloat(cells[11].textContent?.trim() || '0'),
-            totalBids: marketDepth.data['TotalBQty'],
-            highestBPrice: price['highestBPrice'],
-            lowestSPrice: price['lowestSPrice'],
-            totalAsks: marketDepth.data['TotalSQty'],
-          };
-          return marketData;
-        }
-      } catch (e) {
-        console.log(`Error Parsing row-${index} Page-${pageNo}`);
-      }
-      index = index + 1;
-    }
+  while (pageLoad == 200) {
+    tableData = await fetchPageData(tableSelector, page);
+    bondData = bondData.concat(tableData);
+    pageNo = pageNo + 1;
+    resp = await Promise.all([
+      page.evaluate(switchPage, pageNo),
+      page.waitForResponse((response) =>
+        response.url().includes('markets/debt/debt_corporate_EOD.aspx'),
+      ),
+    ]);
+    pageLoad = resp[1].status();
+  }
 
-  page.evaluate(() => {__doPostBack('ctl00$ContentPlaceHolder1$GridViewrcdsFC',`Page$${pageNo}`)});
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  bondData = bondData.concat(tableData);
-});
-  console.log(bondData);
   await browser.close();
   return bondData;
+}
+
+async function fetchMarketDepth(bondData) {
+  const marketHeaders = {
+    accept: 'application/json, text/plain, */*',
+    'accept-encoding': 'gzip, deflate, br, zstd',
+    'accept-language': 'en-US,en;q=0.9,ta;q=0.8,en-GB;q=0.7',
+    'cache-control': 'no-cache',
+    origin: 'https://www.bseindia.com',
+    pragma: 'no-cache',
+    priority: 'u=1, i',
+    referer: 'https://www.bseindia.com/',
+    'sec-ch-ua':
+      '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'user-agent':
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  };
+  let config = {};
+  let marketDepthList = [];
+  let errorList = [];
+  for (const bond of bondData) {
+    config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
+      url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=939447`,
+      headers: marketHeaders,
+    };
+    try {
+      const marketDepth = await axios.request(config);
+      if (marketDepth.status == 200) {
+        marketDepthList.push(marketDepth.data);
+      } else {
+        errorList.push(bond.securityCode);
+        console.log(`Error fetching marketData for ${bond.securityCode}`);
+      }
+    } catch (_e) {
+      console.log(`Error fetching marketData for ${bond.securityCode}`);
+      errorList.push(bond.securityCode);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  return { marketDepth: marketDepthList, errors: errorList };
+}
+
+async function fetchSecurityInfo(scripCode) {
+  headers = {
+    accept: 'application/json, text/plain, */*',
+    'accept-encoding': 'gzip, deflate, br, zstd',
+    'accept-language': 'en-US,en;q=0.9,ta;q=0.8,en-GB;q=0.7',
+    'cache-control': 'no-cache',
+    origin: 'https://www.bseindia.com',
+    pragma: 'no-cache',
+    priority: 'u=1, i',
+    referer: 'https://www.bseindia.com/',
+    'sec-ch-ua':
+      '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'user-agent':
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  };
+  config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
+    url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
+    headers: headers,
+  };
+  info = await axios.request(config);
+  info.data.Table[0];
 }
 
 async function migrateBondData() {
   try {
     const bondData = await fetchBondData();
+    console.log(bondData.length);
+    const { marketDepth, errors } = await fetchMarketDepth(bondData);
+    console.log(marketDepth.length);
+    console.log(errors.length);
 
     // for (const bond of bondData) {
     //   await prisma.bond.upsert({
@@ -143,7 +220,6 @@ async function migrateBondData() {
     //     create: bond,
     //   });
     // }
-    console.log(bondData);
     console.log('Bond data migration completed.');
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);
@@ -153,37 +229,3 @@ async function migrateBondData() {
 }
 
 migrateBondData();
-
-
-
-const puppeteer = require('puppeteer');
-
-
-
-(async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 250
-  });
-
-  const page = await browser.newPage();
-
-  await page.goto(
-    'https://www.ftrac.co.in/CP_PRI_MEM_TRAD_MARK_WATC_VIEW.aspx',
-  );
-
-
-  await page.waitForSelector('#ctl00_SuperMainContent_txtFrmDealDate');
-
-  await page.$eval('#ctl00_SuperMainContent_txtFrmDealDate', el => el.value = '01/01/2020');
-
-  await page.waitForSelector('#ctl00_SuperMainContent_txtToDealDate');
-
-  await page.$eval('#ctl00_SuperMainContent_txtToDealDate', el => el.value = '07/01/2020');
-
-  await page.waitForSelector('#ctl00_SuperMainContent_btnExprtExcel');
-  await page.click('#ctl00_SuperMainContent_btnExprtExcel');
-
-  await browser.close();
-
-});
