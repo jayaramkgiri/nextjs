@@ -147,20 +147,20 @@ async function fetchMarketDepth(bondData) {
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   };
   let config = {};
-  let marketDepthList = [];
+  let marketDepthList = {};
   let errorList = [];
   for (const bond of bondData) {
     config = {
       method: 'get',
       maxBodyLength: Infinity,
-      // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
-      url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=939447`,
+      url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
+      // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=939447`,
       headers: marketHeaders,
     };
     try {
       const marketDepth = await axios.request(config);
       if (marketDepth.status == 200) {
-        marketDepthList.push(marketDepth.data);
+        marketDepthList[bond.securityCode] = marketDepth.data;
       } else {
         errorList.push(bond.securityCode);
         console.log(`Error fetching marketData for ${bond.securityCode}`);
@@ -174,7 +174,7 @@ async function fetchMarketDepth(bondData) {
   return { marketDepth: marketDepthList, errors: errorList };
 }
 
-async function fetchSecurityInfo(scripCode) {
+async function fetchSecurityInfo(bondData) {
   headers = {
     accept: 'application/json, text/plain, */*',
     'accept-encoding': 'gzip, deflate, br, zstd',
@@ -194,32 +194,57 @@ async function fetchSecurityInfo(scripCode) {
     'user-agent':
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   };
-  config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
-    url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
-    headers: headers,
-  };
-  info = await axios.request(config);
-  info.data.Table[0];
+
+  let config = {};
+  let securityInfoList = {};
+  let errorList = [];
+
+  for (const bond of bondData) {
+    config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: `https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=${bond.securityCode}`,
+      // url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
+      headers: headers,
+    };
+
+    try {
+      const info = await axios.request(config);
+      if (info.status == 200) {
+        securityInfoList[bond.securityCode] = info.data.Table[0];
+      } else {
+        errorList.push(bond.securityCode);
+        console.log(`Error fetching marketData for ${bond.securityCode}`);
+      }
+    } catch (_e) {
+      console.log(`Error fetching marketData for ${bond.securityCode}`);
+      errorList.push(bond.securityCode);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  return { securityInfo: securityInfoList, errors: errorList };
 }
 
 async function migrateBondData() {
   try {
     const bondData = await fetchBondData();
-    console.log(bondData.length);
-    const { marketDepth, errors } = await fetchMarketDepth(bondData);
-    console.log(marketDepth.length);
-    console.log(errors.length);
-
-    // for (const bond of bondData) {
-    //   await prisma.bond.upsert({
-    //     where: { securityCode: bond.securityCode },
-    //     update: bond,
-    //     create: bond,
-    //   });
-    // }
+    if (bondData.length > 0) {
+      const { marketDepth, errors } = await fetchMarketDepth(bondData);
+      const { securityInfo, infoErrors } = await fetchSecurityInfo(bondData);
+      if (errors.length > 0 || infoErrors.length > 0) {
+        console.log(`Error occured while fetching marketdepth for ${errors}`);
+        console.log(`Error occured while fetching marketdepth for ${infoErrors}`);
+      }
+      for (const bond of bondData) {
+        await prisma.bseOrderBook.create({
+          data: {
+            isin: securityInfo[bond.securityCode].ISSebiIsin,
+            scripName:
+              scripCode:
+          }
+        });
+      }
+    }
     console.log('Bond data migration completed.');
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);

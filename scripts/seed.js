@@ -5,10 +5,10 @@ async function createBseOrderBook(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS bseOrderBook (
+      CREATE TABLE IF NOT EXISTS "BseOrderBook" (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        createdAt DATE NOT NULL,
-        updatedAt DATE NOT NULL,
+        'createdAt' DATE NOT NULL,
+        'updatedAt' DATE NOT NULL,
         seqNo INT NOT NULL,
         isin VARCHAR(255) NOT NULL,
         scripName VARCHAR(255) NOT NULL,
@@ -39,8 +39,7 @@ async function createBseOrderBook(client) {
 async function createNseOrderBook(client) {
   try {
     const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS n
-      seOrderBook (
+      CREATE TABLE IF NOT EXISTS "NseOrderBook" (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         createdAt DATE NOT NULL,
         updatedAt DATE NOT NULL,
