@@ -1,4 +1,4 @@
-const { db } = require('@vercel/postgres');
+const { db } = require("@vercel/postgres");
 
 async function createBseOrderBook(client) {
   try {
@@ -7,23 +7,23 @@ async function createBseOrderBook(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS "BseOrderBook" (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        'createdAt' DATE NOT NULL,
-        'updatedAt' DATE NOT NULL,
-        seqNo INT NOT NULL,
+        "createdAt" DateTime @default(now()),
+        "updatedAt" DateTime @updatedAt,
+        "seqNo" INT NOT NULL,
         isin VARCHAR(255) NOT NULL,
-        scripName VARCHAR(255) NOT NULL,
-        scripCode VARCHAR(255) NOT NULL,
-        faceValue DOUBLE PRECISION,
-        maturityDate Date,
-        creditRating VARCHAR(255),
-        close DOUBLE PRECISION,
-        open DOUBLE PRECISION,
-        high DOUBLE PRECISION,
-        low DOUBLE PRECISION,
-        totalBuyQty INT,
-        totalSellQty INT,
-        buyPrice DOUBLE PRECISION,
-        sellPrice DOUBLE PRECISION
+        "scripName" VARCHAR(255) NOT NULL,
+        "scripCode" VARCHAR(255) NOT NULL,
+        "faceValue" DOUBLE PRECISION,
+        "maturityDate" Date,
+        "creditRating" VARCHAR(255),
+        "close" DOUBLE PRECISION,
+        "open" DOUBLE PRECISION,
+        "high" DOUBLE PRECISION,
+        "low" DOUBLE PRECISION,
+        "totalBuyQty" INT,
+        "totalSellQty" INT,
+        "buyPrice" DOUBLE PRECISION,
+        "sellPrice" DOUBLE PRECISION
       );
     `;
 
@@ -31,7 +31,7 @@ async function createBseOrderBook(client) {
 
     return createTable;
   } catch (error) {
-    console.error('Error creating bseOrderBook:', error);
+    console.error("Error creating bseOrderBook:", error);
     throw error;
   }
 }
@@ -41,22 +41,22 @@ async function createNseOrderBook(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS "NseOrderBook" (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        createdAt DATE NOT NULL,
-        updatedAt DATE NOT NULL,
-        seqNo INT NOT NULL,
+        "createdAt" DATE NOT NULL,
+        "updatedAt" DATE NOT NULL,
+        "seqNo" INT NOT NULL,
         isin VARCHAR(255) NOT NULL,
-        scripName VARCHAR(255) NOT NULL,
-        faceValue DOUBLE PRECISION,
-        maturityDate Date,
-        creditRating VARCHAR(255),
-        close DOUBLE PRECISION,
-        open DOUBLE PRECISION,
-        high DOUBLE PRECISION,
-        low DOUBLE PRECISION,
-        totalBuyQty INT,
-        totalSellQty INT,
-        buyPrice DOUBLE PRECISION,
-        sellPrice DOUBLE PRECISION
+        "scripName" VARCHAR(255) NOT NULL,
+        "faceValue" DOUBLE PRECISION,
+        "maturityDate" Date,
+        "creditRating" VARCHAR(255),
+        "close" DOUBLE PRECISION,
+        "open" DOUBLE PRECISION,
+        "high" DOUBLE PRECISION,
+        "low" DOUBLE PRECISION,
+        "totalBuyQty" INT,
+        "totalSellQty" INT,
+        "buyPrice" DOUBLE PRECISION,
+        "sellPrice" DOUBLE PRECISION
       );
     `;
 
@@ -64,7 +64,7 @@ async function createNseOrderBook(client) {
 
     return createTable;
   } catch (error) {
-    console.error('Error creating bseOrderBook:', error);
+    console.error("Error creating bseOrderBook:", error);
     throw error;
   }
 }
@@ -80,7 +80,7 @@ async function main() {
 
 main().catch((err) => {
   console.error(
-    'An error occurred while attempting to seed the database:',
+    "An error occurred while attempting to seed the database:",
     err,
   );
 });

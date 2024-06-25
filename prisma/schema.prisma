@@ -12,7 +12,7 @@ datasource db {
 model Company {
   id         Int        @id @default(autoincrement())
   createdAt  DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime?  @db.Timestamp(6)
+  updatedAt  DateTime   @updatedAt
   cin        String?    @unique(map: "UQ_Company_Cin") @db.VarChar(255)
   name       String?    @db.VarChar(255)
   verified   Boolean?
@@ -24,8 +24,8 @@ model Company {
 
 model Issuance {
   id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
-  createdAt                DateTime  @db.Timestamp(6)
-  updatedAt                DateTime  @db.Timestamp(6)
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
   isin                     String?   @db.VarChar
   cin                      String?   @db.VarChar
   description              String?   @db.VarChar
@@ -64,43 +64,43 @@ model Issuance {
   company                  Company?  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
 }
 
-model bseorderbook {
+model BseOrderBook {
   id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdat    DateTime  @db.Date
-  updatedat    DateTime  @db.Date
-  seqno        Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  seqNo        Int
   isin         String    @db.VarChar(255)
-  scripname    String    @db.VarChar(255)
-  scripcode    String    @db.VarChar(255)
-  facevalue    Float?
-  maturitydate DateTime? @db.Date
-  creditrating String?   @db.VarChar(255)
+  scripName    String    @db.VarChar(255)
+  scripCode    String    @db.VarChar(255)
+  faceValue    Float?
+  maturityDate DateTime? @db.Date
+  creditRating String?   @db.VarChar(255)
   close        Float?
   open         Float?
   high         Float?
   low          Float?
-  totalbuyqty  Int?
-  totalsellqty Int?
-  buyprice     Float?
-  sellprice    Float?
+  totalBuyQty  Int?
+  totalSellQty Int?
+  buyPrice     Float?
+  sellPrice    Float?
 }
 
-model nseorderbook {
+model NseOrderBook {
   id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdat    DateTime  @db.Date
-  updatedat    DateTime  @db.Date
-  seqno        Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  seqNo        Int
   isin         String    @db.VarChar(255)
-  scripname    String    @db.VarChar(255)
-  facevalue    Float?
-  maturitydate DateTime? @db.Date
-  creditrating String?   @db.VarChar(255)
+  scripName    String    @db.VarChar(255)
+  faceValue    Float?
+  maturityDate DateTime? @db.Date
+  creditRating String?   @db.VarChar(255)
   close        Float?
   open         Float?
   high         Float?
   low          Float?
-  totalbuyqty  Int?
-  totalsellqty Int?
-  buyprice     Float?
-  sellprice    Float?
+  totalBuyQty  Int?
+  totalSellQty Int?
+  buyPrice     Float?
+  sellPrice    Float?
 }

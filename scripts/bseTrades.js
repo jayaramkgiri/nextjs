@@ -239,8 +239,17 @@ async function migrateBondData() {
         await prisma.bseOrderBook.create({
           data: {
             isin: securityInfo[bond.securityCode].ISSebiIsin,
-            scripName:
-              scripCode:
+            scripName: bond.securityName,
+            scripCode: bond.securityCode,
+            faceValue: securityInfo[bond.securityCode].ISFaceValue,
+            maturityDate: new Date(securityInfo[bond.securityCode].ISMaturityDate),
+            creditRating: securityInfo[bond.securityCode].ISCreditRating,
+            close: bond.ltpClose,
+            open: bond.openPrice,
+            high: bond.highPrice,
+            low: bond.lowPrice,
+            totalBuyQty: parseInt(marketDepth[bond.securityCode].TotalBQty.replace(/,/g, '')),
+            totalSellQty: parseInt(marketDepth[bond.securityCode].TotalSQty.replace(/,/g, '')),
           }
         });
       }
