@@ -233,6 +233,27 @@ async function fetchSecurityInfo(bondData) {
   return { securityInfo: securityInfoList, infoErrors: errorList };
 }
 
+async function deleteEarliestVersion() {
+  const minSeqNo = await prisma.bseOrderBook.aggregate({
+    _min: {
+      seqNo: true,
+    },
+  });
+  const seqNo = minSeqNo._min.seqNo;
+  if (seqNo && seqNo > 0) {
+    try {
+      await prisma.bseOrderBook.deleteMany({
+        where: {
+          seqNo: seqNo
+        },
+      });
+      console.log(`Deleted version ${seqNo}`);
+    } catch (e) {
+      console.log(`Error deleting version ${seqNo}`);
+    }
+  }
+}
+
 async function migrateBondData() {
   try {
     console.log('Fetching Bond Data');
@@ -293,6 +314,7 @@ async function migrateBondData() {
       });
     }
     console.log('Bond data migration completed.');
+    await deleteEarliestVersion();
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);
   } finally {

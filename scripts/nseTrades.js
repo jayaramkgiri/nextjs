@@ -1,6 +1,6 @@
 const axios = require('axios');
-qs = require('querystring');
 require('any-date-parser');
+const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
@@ -22,7 +22,7 @@ function formattedStringToNumber(str) {
 
 function dateFormatter(str) {
   let dateStr = null;
-  if (str && str.length > 0) {
+  if (str && str.length > 3) {
     dateStr = Date.fromString(str);
   }
   return dateStr;
@@ -50,31 +50,13 @@ function fetchFaceValue(trade, market) {
 }
 
 async function getCookie() {
-  headers = {
-    accept: '*/*',
-    'accept-encoding': 'gzip, deflate, br, zstd',
-    'accept-language': 'en-US,en;q=0.9,ta;q=0.8,en-GB;q=0.7',
-    'cache-control': 'no-cache',
-    'user-agent':
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-  };
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+  await page.goto('https://www.nseindia.com/market-data/bonds-traded-in-capital-market')
 
-  let config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: 'https://www.nseindia.com/market-data/bonds-traded-in-capital-market',
-    headers: headers,
-  };
-  let cookie = null;
-  try {
-    resp = await axios.request(config);
-    appId = qs.decode(resp.headers['set-cookie'].join(';'), ';').nseappid;
-    nsit = qs.decode(resp.headers['set-cookie'].join(';'), ';').nsit;
-    cookie = `nsit=${nsit}; nseappid=${appId};`;
-  } catch (e) {
-    console.log('Error fetching Cookies', e);
-  }
-  return cookie;
+  cookies = await page.cookies();
+  await browser.close();
+  return `nsit=${cookies.find((c) => (c.name === 'nsit')).value}; nseappid=${cookies.find((c) => (c.name === 'nseappid')).value}`;
 }
 
 async function fetchTradeList(cookie) {
@@ -164,6 +146,27 @@ async function fetchMarketDepth(cookie, symbolList) {
   return { marketDepth: marketDepthList, errors: errorList };
 }
 
+async function deleteEarliestVersion() {
+  const minSeqNo = await prisma.nseOrderBook.aggregate({
+    _min: {
+      seqNo: true,
+    },
+  });
+  const seqNo = minSeqNo._min.seqNo;
+  if (seqNo && seqNo > 0) {
+    try {
+      await prisma.nseOrderBook.deleteMany({
+        where: {
+          seqNo: seqNo
+        },
+      });
+      console.log(`Deleted version ${seqNo}`);
+    } catch (e) {
+      console.log(`Error deleting version ${seqNo}`);
+    }
+  }
+}
+
 async function migrateNseTrades() {
   try {
     console.log('Fetching Cookie');
@@ -230,6 +233,7 @@ async function migrateNseTrades() {
           });
         }
         console.log('Bond data migration completed.');
+        await deleteEarliestVersion();
       }
     }
   } catch (error) {
