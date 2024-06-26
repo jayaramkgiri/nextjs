@@ -15,6 +15,14 @@ function formattedStringToNumber(str) {
   return number;
 }
 
+function dateFormatter(str) {
+  let dateStr = null;
+  if (str && str.length > 0) {
+    dateStr = new Date(str);
+  }
+  return dateStr;
+}
+
 function findHighestLowestPrices({ data }) {
   let highestBPrice = null;
   let lowestSPrice = null;
@@ -222,37 +230,67 @@ async function fetchSecurityInfo(bondData) {
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
-  return { securityInfo: securityInfoList, errors: errorList };
+  return { securityInfo: securityInfoList, infoErrors: errorList };
 }
 
 async function migrateBondData() {
   try {
+    console.log('Fetching Bond Data');
     const bondData = await fetchBondData();
+    console.log('Completed Fetching Bond Data');
+
     if (bondData.length > 0) {
+      console.log('Fetching Market Depth');
       const { marketDepth, errors } = await fetchMarketDepth(bondData);
+      console.log('Completed Fetching Market Depth');
+
+      console.log('Fetching Security Info');
       const { securityInfo, infoErrors } = await fetchSecurityInfo(bondData);
+      console.log('Completed Fetching Security Info');
+
       if (errors.length > 0 || infoErrors.length > 0) {
         console.log(`Error occured while fetching marketdepth for ${errors}`);
-        console.log(`Error occured while fetching marketdepth for ${infoErrors}`);
+        console.log(
+          `Error occured while fetching marketdepth for ${infoErrors}`,
+        );
       }
+      const maxSeqNo = await prisma.bseOrderBook.aggregate({
+        _max: {
+          seqNo: true,
+        },
+      });
+      const seqNo = maxSeqNo._max.seqNo + 1;
+      let dataList = [];
       for (const bond of bondData) {
-        await prisma.bseOrderBook.create({
-          data: {
+        if (securityInfo[bond.securityCode] && marketDepth[bond.securityCode]) {
+          const data = {
             isin: securityInfo[bond.securityCode].ISSebiIsin,
+            seqNo: seqNo,
             scripName: bond.securityName,
             scripCode: bond.securityCode,
             faceValue: securityInfo[bond.securityCode].ISFaceValue,
-            maturityDate: new Date(securityInfo[bond.securityCode].ISMaturityDate),
+            maturityDate: dateFormatter(
+              securityInfo[bond.securityCode].ISMaturityDate,
+            ),
             creditRating: securityInfo[bond.securityCode].ISCreditRating,
             close: bond.ltpClose,
             open: bond.openPrice,
             high: bond.highPrice,
             low: bond.lowPrice,
-            totalBuyQty: parseInt(marketDepth[bond.securityCode].TotalBQty.replace(/,/g, '')),
-            totalSellQty: parseInt(marketDepth[bond.securityCode].TotalSQty.replace(/,/g, '')),
-          }
-        });
+            totalBuyQty: formattedStringToNumber(
+              marketDepth[bond.securityCode].TotalBQty,
+            ),
+            totalSellQty: formattedStringToNumber(
+              marketDepth[bond.securityCode].TotalSQty,
+            ),
+          };
+          dataList.push(data);
+        }
       }
+      console.log('Pushing Date to DB');
+      await prisma.bseOrderBook.createMany({
+        data: dataList,
+      });
     }
     console.log('Bond data migration completed.');
   } catch (error) {
