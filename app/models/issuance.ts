@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 
 const ITEMS_PER_PAGE = 30;
 export async function fetchIssuances(
-  // query: string,
-  currentPage: number
+  query: object = {},
+  currentPage: number = 1
 ) {
   // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -16,6 +16,7 @@ export async function fetchIssuances(
     const issuances = await prisma.issuance.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
+      where: query,
       include: {
         company: true
       },
@@ -25,6 +26,22 @@ export async function fetchIssuances(
     });
     issuances.forEach((iss: any) => iss['issuerName'] = iss.company.name)
     return issuances;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch Issuances.');
+  }
+}
+
+export async function fetchAllIsins(
+) {
+  // noStore();
+  try {
+    const issuances = await prisma.issuance.findMany({
+      select: {
+        isin: true,
+      },
+    });
+    return issuances.map((i) => i.isin);
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch Issuances.');
