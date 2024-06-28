@@ -4,12 +4,12 @@ import { fetchAllIsins } from '@/app/models/issuance';
 const prisma = new PrismaClient()
 const ITEMS_PER_PAGE = 30;
 
-export async function fetchLatestOrders(
+export async function fetchBseLatestOrders(
     currentPage: number = 1
 ) {
     try {
         const seqNo = await latestSeqNo();
-        const isins = fetchAllIsins();
+        const isins = await fetchAllIsins();
         const offset = (currentPage - 1) * ITEMS_PER_PAGE;
         const orders = await prisma.bseOrderBook.findMany({
             skip: offset,
@@ -32,16 +32,17 @@ export async function fetchLatestOrders(
         throw new Error('Failed to fetch Companies.');
     }
 }
+
 async function latestSeqNo() {
     const maxSeqNo = await prisma.bseOrderBook.aggregate({
         _max: {
             seqNo: true,
         },
     });
-    return maxSeqNo._max.seqNo + 1;
+    return maxSeqNo._max.seqNo;
 }
 
-export async function noOfPages(
+export async function bseOrdersNoOfPages(
 ) {
     // noStore();
     try {

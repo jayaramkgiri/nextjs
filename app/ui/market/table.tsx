@@ -1,5 +1,15 @@
 import { fetchIssuances } from '@/app/models/issuance';
+import { fetchBseLatestOrders } from '@/app/models/bseOrderBook';
+
 import TableRow from '@/app/ui/explore/table-row';
+
+function formatIssuances(issuances) {
+  let formatted = {};
+  for (let i = 0; i < issuances.length; i++) {
+    formatted[issuances[i].isin] = issuances[i];
+  }
+  return formatted;
+}
 
 export default async function DebenturesTable({
   query,
@@ -8,21 +18,25 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances(currentPage);
+  const latestBseOrders = await fetchBseLatestOrders(currentPage);
+  const latestIsins = latestBseOrders.map((o) => o.isin);
+  const issuances = formatIssuances(
+    await fetchIssuances({ isin: { in: latestIsins } }),
+  );
 
   return (
     <div className="flow-root pt-0">
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {issuances.map((issuance, index) => (
-              <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
+            {latestBseOrders.map((order, index) => (
+              <div key={order.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{issuance.description}</p>
+                      <p>{order.scripName}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{issuance.isin}</p>
+                    <p className="text-sm text-gray-500">{order.isin}</p>
                   </div>
                 </div>
               </div>
@@ -93,7 +107,9 @@ export default async function DebenturesTable({
                 </tr>
               </thead>
               <tbody className="text-secondary divide-y overflow-x-auto bg-white">
-                {issuances?.map((issuance, index) => {
+                {latestBseOrders?.map((order, index) => {
+                  const issuance = issuances[order.isin];
+                  console.log(`${order.isin} in ${issuance}`);
                   return (
                     <TableRow
                       key={Number(issuance.id)}
@@ -103,9 +119,9 @@ export default async function DebenturesTable({
                       cells={[
                         issuance.isin,
                         issuance.company!.name,
-                        'Test',
-                        'Test',
-                        'Test',
+                        order.scripName,
+                        order.totalBuyQty,
+                        order.totalSellQty,
                         'Test',
                         'Test',
                         'Test',

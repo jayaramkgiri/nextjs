@@ -32,8 +32,7 @@ export async function fetchIssuances(
   }
 }
 
-export async function fetchAllIsins(
-) {
+export async function fetchAllIsins() {
   // noStore();
   try {
     const issuances = await prisma.issuance.findMany({
