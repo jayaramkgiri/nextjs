@@ -3,50 +3,44 @@ require('any-date-parser');
 const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
+const { formattedStringToNumber,
+  dateFormatter,
+  fetchSeriesInfo,
+  fetchFaceValue
+} = require('./lib/helpers');
+
 const prisma = new PrismaClient();
 
-function formattedStringToNumber(str) {
-  if (typeof str == 'string') {
-    // Remove commas from the string
-    const numberStr = str.replace(/,/g, '').replace(/-/g, '');
-    // Convert the resulting string to a number
-    let number = null;
-    if (numberStr.length > 0) {
-      number = parseFloat(numberStr);
+function highestBuyPrices(orderBook) {
+  let highestBPrice = null;
+
+  let bid = orderBook.bid
+  // Find the highest buy price
+  for (let i = 0; i < bid.length; i++) {
+    if ((bid[i] != null) && (typeof (bid[i].price) === 'number')) {
+      if (highestBPrice === null || bid[i].price > highestBPrice) {
+        highestBPrice = bid[i].price;
+      }
     }
-    return number;
-  } else {
-    return str;
   }
+
+  return highestBPrice;
 }
 
-function dateFormatter(str) {
-  let dateStr = null;
-  if (str && str.length > 3) {
-    dateStr = Date.fromString(str);
-  }
-  return dateStr;
-}
+function lowestSellPrice(orderBook) {
+  let lowestSPrice = null;
 
-function fetchSeriesInfo(data, series) {
-  let info = data[0];
-  let index = 0;
-  while (info.allSecurities.series !== series) {
-    index = index + 1;
-    info = data[index];
+  let ask = orderBook.ask
+  // Find the highest buy price
+  for (let i = 0; i < ask.length; i++) {
+    if ((ask[i] != null) && (typeof (ask[i].price) === 'number')) {
+      if (lowestSPrice === null || ask[i].price < lowestSPrice) {
+        lowestSPrice = ask[i].price;
+      }
+    }
   }
-  return info;
-}
 
-function fetchFaceValue(trade, market) {
-  let faceValue = null;
-  if (trade.face_value) {
-    faceValue = formattedStringToNumber(trade.face_value);
-  } else {
-    faceValue = fetchSeriesInfo(market.data, trade.series).securityInfo
-      .faceValue;
-  }
-  return faceValue;
+  return lowestSPrice;
 }
 
 async function getCookie() {
@@ -146,28 +140,7 @@ async function fetchMarketDepth(cookie, symbolList) {
   return { marketDepth: marketDepthList, errors: errorList };
 }
 
-async function deleteEarliestVersion() {
-  const minSeqNo = await prisma.nseOrderBook.aggregate({
-    _min: {
-      seqNo: true,
-    },
-  });
-  const seqNo = minSeqNo._min.seqNo;
-  if (seqNo && seqNo > 0) {
-    try {
-      await prisma.nseOrderBook.deleteMany({
-        where: {
-          seqNo: seqNo
-        },
-      });
-      console.log(`Deleted version ${seqNo}`);
-    } catch (e) {
-      console.log(`Error deleting version ${seqNo}`);
-    }
-  }
-}
-
-async function migrateNseTrades() {
+module.exports.migrateNseMarketData = async function (seqNo) {
   try {
     console.log('Fetching Cookie');
     const cookie = await getCookie();
@@ -191,17 +164,12 @@ async function migrateNseTrades() {
           console.log('Error Fetching Market Depth');
         } else {
           console.log('Completed Fetching Market Depth');
-          const maxSeqNo = await prisma.nseOrderBook.aggregate({
-            _max: {
-              seqNo: true,
-            },
-          });
-          const seqNo = (maxSeqNo._max.seqNo || 0) + 1;
           let dataList = [];
           for (const trade of tradeList) {
             if (marketDepth[trade.symbol]) {
               try {
                 const data = {
+                  exchange: 'nse',
                   isin: trade.meta.isin,
                   seqNo: seqNo,
                   scripName: `${trade.symbol}-${trade.series}`,
@@ -220,6 +188,8 @@ async function migrateNseTrades() {
                     marketDepth[trade.symbol].data,
                     trade.series,
                   ).marketDeptOrderBook.totalSellQuantity,
+                  buyPrice: highestBuyPrices(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook),
+                  sellPrice: lowestSellPrice(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook)
                 };
                 dataList.push(data);
               } catch (e) {
@@ -228,12 +198,11 @@ async function migrateNseTrades() {
             }
           }
           console.log('Pushing Date to DB');
-          await prisma.nseOrderBook.createMany({
+          await prisma.orderBook.createMany({
             data: dataList,
           });
         }
         console.log('Bond data migration completed.');
-        await deleteEarliestVersion();
       }
     }
   } catch (error) {
@@ -242,5 +211,3 @@ async function migrateNseTrades() {
     await prisma.$disconnect();
   }
 }
-
-migrateNseTrades();

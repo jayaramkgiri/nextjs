@@ -69,11 +69,47 @@ async function createNseOrderBook(client) {
   }
 }
 
+async function createOrderBook(client) {
+  try {
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS "orderBook" (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        "createdAt" DATE NOT NULL,
+        "updatedAt" DATE NOT NULL,
+        "exchange" VARCHAR(255) NOT NULL,
+        "seqNo" INT NOT NULL,
+        isin VARCHAR(255) NOT NULL,
+        "scripName" VARCHAR(255) NOT NULL,
+        "scripCode" VARCHAR(255) NOT NULL,
+        "faceValue" DOUBLE PRECISION,
+        "maturityDate" Date,
+        "creditRating" VARCHAR(255),
+        "close" DOUBLE PRECISION,
+        "open" DOUBLE PRECISION,
+        "high" DOUBLE PRECISION,
+        "low" DOUBLE PRECISION,
+        "totalBuyQty" INT,
+        "totalSellQty" INT,
+        "buyPrice" DOUBLE PRECISION,
+        "sellPrice" DOUBLE PRECISION
+      );
+    `;
+
+    console.log(`Created "orderBook" table`);
+
+    return createTable;
+  } catch (error) {
+    console.error("Error creating bseOrderBook:", error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
-  await createBseOrderBook(client);
-  await createNseOrderBook(client);
+  // await createBseOrderBook(client);
+  // await createNseOrderBook(client);
+  await createOrderBook(client);
 
   await client.end();
 }

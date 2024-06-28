@@ -8,7 +8,7 @@ export async function fetchBseLatestOrders(
     currentPage: number = 1
 ) {
     try {
-        const seqNo = await latestSeqNo();
+        const seqNo = await latestSeqNo() || 0;
         const isins = await fetchAllIsins();
         const offset = (currentPage - 1) * ITEMS_PER_PAGE;
         const orders = await prisma.bseOrderBook.findMany({

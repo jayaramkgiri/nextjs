@@ -3,58 +3,11 @@ const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-
-function formattedStringToNumber(str) {
-  // Remove commas from the string
-  const numberStr = str.replace(/,/g, '').replace(/-/g, '');
-  // Convert the resulting string to a number
-  let number = null;
-  if (numberStr.length > 0) {
-    number = parseFloat(numberStr);
-  }
-  return number;
-}
-
-function dateFormatter(str) {
-  let dateStr = null;
-  if (str && str.length > 0) {
-    dateStr = new Date(str);
-  }
-  return dateStr;
-}
-
-function findHighestLowestPrices({ data }) {
-  let highestBPrice = null;
-  let lowestSPrice = null;
-
-  // Find the highest buy price
-  for (let i = 1; i <= 5; i++) {
-    const bPriceStr = data[`BPrice${i}`];
-    if (bPriceStr != null) {
-      const bPrice = formattedStringToNumber(bPriceStr);
-      if (highestBPrice === null || bPrice > highestBPrice) {
-        highestBPrice = bPrice;
-      }
-    }
-  }
-
-  // Find the lowest sell price
-  for (let i = 1; i <= 5; i++) {
-    const sPriceStr = data[`SPrice${i}`];
-
-    if (sPriceStr != null) {
-      const sPrice = formattedStringToNumber(sPriceStr);
-      if (lowestSPrice === null || sPrice < lowestSPrice) {
-        lowestSPrice = sPrice;
-      }
-    }
-  }
-
-  return {
-    highestBPrice,
-    lowestSPrice,
-  };
-}
+const { formattedStringToNumber,
+  dateFormatter,
+  highestBuyPrices,
+  lowestSellPrice
+} = require('./lib/helpers');
 
 async function fetchPageData(selector, page) {
   await page.waitForSelector(selector);
@@ -233,28 +186,7 @@ async function fetchSecurityInfo(bondData) {
   return { securityInfo: securityInfoList, infoErrors: errorList };
 }
 
-async function deleteEarliestVersion() {
-  const minSeqNo = await prisma.bseOrderBook.aggregate({
-    _min: {
-      seqNo: true,
-    },
-  });
-  const seqNo = minSeqNo._min.seqNo;
-  if (seqNo && seqNo > 0) {
-    try {
-      await prisma.bseOrderBook.deleteMany({
-        where: {
-          seqNo: seqNo
-        },
-      });
-      console.log(`Deleted version ${seqNo}`);
-    } catch (e) {
-      console.log(`Error deleting version ${seqNo}`);
-    }
-  }
-}
-
-async function migrateBondData() {
+module.exports.migrateBseMarketData = async function (seqNo) {
   try {
     console.log('Fetching Bond Data');
     const bondData = await fetchBondData();
@@ -275,16 +207,11 @@ async function migrateBondData() {
           `Error occured while fetching marketdepth for ${infoErrors}`,
         );
       }
-      const maxSeqNo = await prisma.bseOrderBook.aggregate({
-        _max: {
-          seqNo: true,
-        },
-      });
-      const seqNo = maxSeqNo._max.seqNo + 1;
       let dataList = [];
       for (const bond of bondData) {
         if (securityInfo[bond.securityCode] && marketDepth[bond.securityCode]) {
           const data = {
+            exchange: 'bse',
             isin: securityInfo[bond.securityCode].ISSebiIsin,
             seqNo: seqNo,
             scripName: bond.securityName,
@@ -304,17 +231,19 @@ async function migrateBondData() {
             totalSellQty: formattedStringToNumber(
               marketDepth[bond.securityCode].TotalSQty,
             ),
+            buyPrice: highestBuyPrices(marketDepth[bond.securityCode]),
+            sellPrice: lowestSellPrice(marketDepth[bond.securityCode])
           };
           dataList.push(data);
         }
       }
       console.log('Pushing Date to DB');
-      await prisma.bseOrderBook.createMany({
+      await prisma.orderBook.createMany({
         data: dataList,
       });
     }
     console.log('Bond data migration completed.');
-    await deleteEarliestVersion();
+    // await deleteEarliestVersion();
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);
   } finally {
@@ -322,4 +251,3 @@ async function migrateBondData() {
   }
 }
 
-migrateBondData();

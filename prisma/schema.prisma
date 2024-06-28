@@ -104,3 +104,25 @@ model NseOrderBook {
   buyPrice     Float?
   sellPrice    Float?
 }
+
+model orderBook {
+  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  exchange     String    @db.VarChar(255)
+  seqNo        Int
+  isin         String    @db.VarChar(255)
+  scripName    String    @db.VarChar(255)
+  scripCode    String    @db.VarChar(255)
+  faceValue    Float?
+  maturityDate DateTime? @db.Date
+  creditRating String?   @db.VarChar(255)
+  close        Float?
+  open         Float?
+  high         Float?
+  low          Float?
+  totalBuyQty  Int?
+  totalSellQty Int?
+  buyPrice     Float?
+  sellPrice    Float?
+}
