@@ -9,17 +9,18 @@ export async function fetchBseLatestOrders(
 ) {
     try {
         const seqNo = await latestSeqNo() || 0;
-        const isins = await fetchAllIsins() || [];
+        const isins = await fetchAllIsins() ;
         const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+        let query :{seqNo: number, isin: object}={seqNo: seqNo, isin: {in: []}};
+        if(isins && isins.length > 0) {
+            query['isin'] = { in: isins };
+        } 
+
         const orders = await prisma.bseOrderBook.findMany({
             skip: offset,
             take: ITEMS_PER_PAGE,
-            where: {
-                seqNo: seqNo,
-                isin: {
-                    in: isins,
-                },
-            },
+            where: query,
             orderBy: [
                 { totalSellQty: 'desc' }
             ],

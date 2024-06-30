@@ -7,7 +7,7 @@ import { FaArrowDown } from 'react-icons/fa';
 import TableRow from '@/app/ui/explore/table-row';
 
 function formatIssuances(issuances: any) {
-  let formatted: { [key: string]: string } = {};
+  let formatted: any = {};
   for (let i = 0; i < issuances.length; i++) {
     formatted[issuances[i].isin] = issuances[i];
   }
@@ -185,7 +185,7 @@ export default async function DebenturesTable({
               </thead>
               <tbody className="text-secondary divide-y  bg-white">
                 {latestBseOrders?.map((order, index) => {
-                  const issuance = issuances[order.isin];
+                  const issuance: any = issuances[order.isin];
                   console.log(`${order.isin} in ${issuance}`);
                   return (
                     <TableRow
