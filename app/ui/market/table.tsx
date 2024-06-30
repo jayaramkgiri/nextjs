@@ -1,14 +1,57 @@
 import { fetchIssuances } from '@/app/models/issuance';
 import { fetchBseLatestOrders } from '@/app/models/bseOrderBook';
+import { FaIndianRupeeSign } from 'react-icons/fa6';
+import { FaArrowUp } from 'react-icons/fa';
+import { FaArrowDown } from 'react-icons/fa';
 
 import TableRow from '@/app/ui/explore/table-row';
 
-function formatIssuances(issuances) {
-  let formatted = {};
+function formatIssuances(issuances: any) {
+  let formatted: { [key: string]: string } = {};
   for (let i = 0; i < issuances.length; i++) {
     formatted[issuances[i].isin] = issuances[i];
   }
   return formatted;
+}
+
+function upArrow() {
+  return (
+    <div className="h-auto p-[2px] text-seagreen">
+      <FaArrowUp />
+    </div>
+  );
+}
+
+function downArrow() {
+  return (
+    <div className="h-auto p-[2px] text-indianred">
+      <FaArrowDown />
+    </div>
+  );
+}
+
+function bidAskCell(
+  units: number,
+  price: number,
+  closePrice: number,
+  exchange: string,
+) {
+  const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
+  return {
+    value: (
+      <div className="flex flex-col gap-1 ">
+        <div className="flex flex-row">
+          {closePrice < price ? upArrow() : downArrow()}
+          <div className="h-auto p-[2px] font-light">
+            <FaIndianRupeeSign />
+          </div>
+          {price}
+        </div>
+        <div className="text-xs text-dimgray">{units} units</div>
+      </div>
+    ),
+    classNames: classNames,
+  };
 }
 
 export default async function DebenturesTable({
@@ -19,7 +62,7 @@ export default async function DebenturesTable({
   currentPage: number;
 }) {
   const latestBseOrders = await fetchBseLatestOrders(currentPage);
-  const latestIsins = latestBseOrders.map((o) => o.isin);
+  const latestIsins = latestBseOrders.map((o: { isin: string }) => o.isin);
   const issuances = formatIssuances(
     await fetchIssuances({ isin: { in: latestIsins } }),
   );
@@ -45,68 +88,102 @@ export default async function DebenturesTable({
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="text-sm rounded-lg text-left font-normal text-darkgray">
-                <tr className="">
+                <tr className="sticky top-0 z-20 w-6  bg-white font-medium">
                   <th
                     scope="col"
-                    colSpan={2}
-                    className="sticky left-0 top-0 z-20 w-6 bg-white font-medium"
+                    className="sticky left-0 top-0 z-20 bg-white px-3 py-3"
                   ></th>
-                  <th scope="col" colSpan={3} className=" font-medium">
+                  <th
+                    scope="col"
+                    className=" bg-white  px-3 py-3 font-medium "
+                  ></th>
+                  <th
+                    scope="col"
+                    colSpan={3}
+                    className="bg-neutral-100 px-3 py-3 text-center font-medium"
+                  >
                     BSE
                   </th>
-                  <th scope="col" colSpan={3} className=" font-medium">
-                    NSE
-                  </th>
-                </tr>
-                <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
-                    className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
+                    colSpan={3}
+                    className="bg-orange-100 px-3 py-3 text-center font-medium"
+                  >
+                    NSE
+                  </th>
+                  <th
+                    scope="col"
+                    colSpan={6}
+                    className="bg-white px-3 py-3 text-center font-medium"
+                  ></th>
+                </tr>
+                <tr className="sticky top-10 z-20 border-b border-solid border-gray-200 bg-white">
+                  <th
+                    scope="col"
+                    className="sticky left-0 top-10 z-20 w-4 bg-white px-3 py-3 font-medium"
                   >
                     ISIN
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th scope="col" className="px-3 py-3 font-medium">
                     Issuer Name
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-neutral-100 px-3 py-3 font-medium"
+                  >
                     Scrip Name
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-neutral-100 px-3 py-3 font-medium"
+                  >
                     Bids
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-neutral-100 px-3 py-3 font-medium"
+                  >
                     Asks
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-orange-100 px-3 py-3 font-medium"
+                  >
                     Scrip Name
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-orange-100 px-3 py-3 font-medium"
+                  >
                     Bids
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th
+                    scope="col"
+                    className="bg-orange-100 px-3 py-3 font-medium"
+                  >
                     Asks
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Face Value
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Allotment Date
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Redemption / Maturity
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Coupon Basis
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Coupon Rate
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Payment Frequency
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
+              <tbody className="text-secondary divide-y  bg-white">
                 {latestBseOrders?.map((order, index) => {
                   const issuance = issuances[order.isin];
                   console.log(`${order.isin} in ${issuance}`);
@@ -119,12 +196,15 @@ export default async function DebenturesTable({
                       cells={[
                         issuance.isin,
                         issuance.company!.name,
-                        order.scripName,
-                        order.totalBuyQty,
-                        order.totalSellQty,
-                        'Test',
-                        'Test',
-                        'Test',
+                        {
+                          value: order.scripName,
+                          classNames: 'bg-neutral-100',
+                        },
+                        bidAskCell(63726372, 1000036.26, 1000036.89, 'bse'),
+                        bidAskCell(63726372, 1000036.36, 1000036, 'bse'),
+                        { value: order.scripName, classNames: 'bg-orange-100' },
+                        bidAskCell(63726372, 1000036.26, 1000036.89, 'nse'),
+                        bidAskCell(63726372, 1000036.36, 1000036, 'nse'),
                         issuance.faceValue,
                         issuance.allotmentDate,
                         issuance.redemptionDate,

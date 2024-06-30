@@ -31,23 +31,23 @@ export default async function CompaniesTable({
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
-                <tr className="sticky top-0 z-10 bg-white">
+                <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
-                    className="sticky left-0 top-0 z-10 bg-white px-3 py-5 font-medium"
+                    className="sticky left-0 top-0 z-20 bg-white px-3 py-3 font-medium"
                   >
                     S.No
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-0 top-0 z-10 bg-white px-3 py-5 font-medium"
+                    className="sticky left-0 top-0 z-20 bg-white px-3 py-3 font-medium"
                   >
                     Issuer Name
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
+                  <th scope="col" className="px-3 py-3 font-medium">
                     Cin
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Active Debentures
                   </th>
                 </tr>

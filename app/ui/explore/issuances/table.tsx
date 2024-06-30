@@ -8,7 +8,7 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances(currentPage);
+  const issuances = await fetchIssuances({}, currentPage);
 
   return (
     <div className="flow-root pt-0">
