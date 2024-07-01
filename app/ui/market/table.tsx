@@ -31,9 +31,9 @@ function downArrow() {
 }
 
 function bidAskCell(
-  units: number,
-  price: number,
-  closePrice: number,
+  units: number | null,
+  price: number | null,
+  closePrice: number | null,
   exchange: string,
 ) {
   const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
@@ -41,13 +41,14 @@ function bidAskCell(
     value: (
       <div className="flex flex-col gap-1 ">
         <div className="flex flex-row">
-          {closePrice < price ? upArrow() : downArrow()}
-          <div className="h-auto p-[2px] font-light">
-            <FaIndianRupeeSign />
-          </div>
-          {price}
+          {closePrice && price && (closePrice < price ? upArrow() : downArrow())}
+          {price && units &&
+            (<div className="h-auto p-[2px] font-light">
+              <FaIndianRupeeSign />
+            </div>)}
+          {price || '-'}
         </div>
-        <div className="text-xs text-dimgray">{units} units</div>
+        <div className="text-xs text-dimgray">{units || 0} units</div>
       </div>
     ),
     classNames: classNames,
@@ -200,10 +201,10 @@ export default async function DebenturesTable({
                           value: order.scripName,
                           classNames: 'bg-neutral-100',
                         },
-                        bidAskCell(63726372, 1000036.26, 1000036.89, 'bse'),
-                        bidAskCell(63726372, 1000036.36, 1000036, 'bse'),
+                        bidAskCell(order.totalBuyQty, order.buyPrice, order.close, 'bse'),
+                        bidAskCell(order.totalSellQty, order.sellPrice, order.close, order.exchange),
                         { value: order.scripName, classNames: 'bg-orange-100' },
-                        bidAskCell(63726372, 1000036.26, 1000036.89, 'nse'),
+                        bidAskCell(order.totalSellQty, order.sellPrice, order.close, order.exchange),
                         bidAskCell(63726372, 1000036.36, 1000036, 'nse'),
                         issuance.faceValue,
                         issuance.allotmentDate,

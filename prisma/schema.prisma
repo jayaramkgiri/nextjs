@@ -113,7 +113,7 @@ model orderBook {
   seqNo        Int
   isin         String    @db.VarChar(255)
   scripName    String    @db.VarChar(255)
-  scripCode    String    @db.VarChar(255)
+  scripCode    String?    @db.VarChar(255)
   faceValue    Float?
   maturityDate DateTime? @db.Date
   creditRating String?   @db.VarChar(255)

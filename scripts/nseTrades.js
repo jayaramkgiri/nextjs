@@ -134,6 +134,7 @@ async function fetchMarketDepth(cookie, symbolList) {
       const marketDepth = await axios.request(config);
       marketDepthList[symbol] = marketDepth.data;
     } catch (_e) {
+      console.log(`Error fetching Market data for ${symbol}`, e);
       errorList.push(symbol);
     }
   }

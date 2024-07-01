@@ -37,7 +37,7 @@ async function migrateMarketData() {
 
     await migrateBseMarketData(seqNo);
     await migrateNseMarketData(seqNo);
-    await deleteEarliestVersion();
+    // await deleteEarliestVersion();
 }
 
 
