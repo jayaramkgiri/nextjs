@@ -7,6 +7,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
+  relationMode = "prisma"
 }
 
 model Company {
@@ -61,7 +62,9 @@ model Issuance {
   coupon                   Float?
   dayCount                 String?   @db.VarChar
   paymentFrequency         String?   @db.VarChar
-  company                  Company?  @relation(fields: [cin], references: [cin], onDelete: NoAction, onUpdate: NoAction, map: "company_foreign_key")
+  company                  Company?  @relation(fields: [cin], references: [cin])
+  bseOrderBook             BseOrderBook[] @relation(fields: [isin], references: [isin])
+  nseOrderBook             NseOrderBook[] @relation(fields: [isin], references: [isin])
 }
 
 model BseOrderBook {
@@ -83,6 +86,7 @@ model BseOrderBook {
   totalSellQty Int?
   buyPrice     Float?
   sellPrice    Float?
+  issuance     Issuance @relation(fields: [isin], references: [isin])
 }
 
 model NseOrderBook {
@@ -103,6 +107,7 @@ model NseOrderBook {
   totalSellQty Int?
   buyPrice     Float?
   sellPrice    Float?
+  issuance     Issuance @relation(fields: [isin], references: [isin])
 }
 
 model orderBook {
