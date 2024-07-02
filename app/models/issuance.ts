@@ -32,6 +32,61 @@ export async function fetchIssuances(
   }
 }
 
+async function latestBseSeqNo() {
+  const maxSeqNo = await prisma.bseOrderBook.aggregate({
+      _max: {
+          seqNo: true,
+      },
+  });
+  return maxSeqNo._max.seqNo;
+}
+
+async function latestNseSeqNo() {
+  const maxSeqNo = await prisma.nseOrderBook.aggregate({
+      _max: {
+          seqNo: true,
+      },
+  });
+  return maxSeqNo._max.seqNo;
+}
+
+export async function fetchMarket(
+  currentPage: number = 1
+) {
+  // noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  try {
+
+    const bseSeqNo = await latestBseSeqNo() || 0;
+    const nseSeqNo = await latestNseSeqNo() || 0;
+    const issuances = await prisma.issuance.findMany({
+      skip: offset,
+      take: ITEMS_PER_PAGE,
+      where: {
+        OR: [       
+          {
+            bseOrderBook: { some: {}, every: {seqNo: bseSeqNo }}
+          },
+          {
+            nseOrderBook: { some: {}, every: {seqNo: nseSeqNo }}
+          }
+        ]
+      },
+      include: {
+        bseOrderBook: {orderBy: {totalSellQty: 'desc'}},
+        nseOrderBook: {orderBy: {totalSellQty: 'desc'}},
+        company: true
+      },
+    });
+
+    issuances.forEach((iss: any) => iss['issuerName'] = iss.company.name)
+    return issuances;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch Issuances.');
+  }
+}
+
 export async function fetchAllIsins() {
   // noStore();
   try {

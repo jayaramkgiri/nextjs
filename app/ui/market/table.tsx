@@ -1,4 +1,4 @@
-import { fetchIssuances } from '@/app/models/issuance';
+import { fetchMarket } from '@/app/models/issuance';
 import { fetchBseLatestOrders } from '@/app/models/bseOrderBook';
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { FaArrowUp } from 'react-icons/fa';
@@ -41,11 +41,14 @@ function bidAskCell(
     value: (
       <div className="flex flex-col gap-1 ">
         <div className="flex flex-row">
-          {closePrice && price && (closePrice < price ? upArrow() : downArrow())}
-          {price && units &&
-            (<div className="h-auto p-[2px] font-light">
+          {closePrice &&
+            price &&
+            (closePrice < price ? upArrow() : downArrow())}
+          {price && units && (
+            <div className="h-auto p-[2px] font-light">
               <FaIndianRupeeSign />
-            </div>)}
+            </div>
+          )}
           {price || '-'}
         </div>
         <div className="text-xs text-dimgray">{units || 0} units</div>
@@ -62,25 +65,21 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const latestBseOrders = await fetchBseLatestOrders(currentPage);
-  const latestIsins = latestBseOrders.map((o: { isin: string }) => o.isin);
-  const issuances = formatIssuances(
-    await fetchIssuances({ isin: { in: latestIsins } }),
-  );
+  const issuances = await fetchMarket(currentPage);
 
   return (
     <div className="flow-root pt-0">
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {latestBseOrders.map((order, index) => (
-              <div key={order.isin} className="mb-2 rounded-md bg-white p-4">
+            {issuances.map((issuance, index) => (
+              <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{order.scripName}</p>
+                      <p>{issuance.bseOrderBook[0].scripName}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{order.isin}</p>
+                    <p className="text-sm text-gray-500">{issuance.isin}</p>
                   </div>
                 </div>
               </div>
@@ -185,9 +184,7 @@ export default async function DebenturesTable({
                 </tr>
               </thead>
               <tbody className="text-secondary divide-y  bg-white">
-                {latestBseOrders?.map((order, index) => {
-                  const issuance: any = issuances[order.isin];
-                  console.log(`${order.isin} in ${issuance}`);
+                {issuances?.map((issuance, index) => {
                   return (
                     <TableRow
                       key={Number(issuance.id)}
@@ -198,14 +195,37 @@ export default async function DebenturesTable({
                         issuance.isin,
                         issuance.company!.name,
                         {
-                          value: order.scripName,
+                          value: issuance.bseOrderBook[0]?.scripName,
                           classNames: 'bg-neutral-100',
                         },
-                        bidAskCell(order.totalBuyQty, order.buyPrice, order.close, 'bse'),
-                        bidAskCell(order.totalSellQty, order.sellPrice, order.close, order.exchange),
-                        { value: order.scripName, classNames: 'bg-orange-100' },
-                        bidAskCell(order.totalSellQty, order.sellPrice, order.close, order.exchange),
-                        bidAskCell(63726372, 1000036.36, 1000036, 'nse'),
+                        bidAskCell(
+                          issuance.bseOrderBook[0]?.totalBuyQty,
+                          issuance.bseOrderBook[0]?.buyPrice,
+                          issuance.bseOrderBook[0]?.close,
+                          'bse',
+                        ),
+                        bidAskCell(
+                          issuance.bseOrderBook[0]?.totalSellQty,
+                          issuance.bseOrderBook[0]?.sellPrice,
+                          issuance.bseOrderBook[0]?.close,
+                          'bse',
+                        ),
+                        {
+                          value: issuance.nseOrderBook[0]?.scripName,
+                          classNames: 'bg-orange-100',
+                        },
+                        bidAskCell(
+                          issuance.nseOrderBook[0]?.totalBuyQty,
+                          issuance.nseOrderBook[0]?.buyPrice,
+                          issuance.nseOrderBook[0]?.close,
+                          'nse',
+                        ),
+                        bidAskCell(
+                          issuance.nseOrderBook[0]?.totalSellQty,
+                          issuance.nseOrderBook[0]?.sellPrice,
+                          issuance.nseOrderBook[0]?.close,
+                          'nse',
+                        ),
                         issuance.faceValue,
                         issuance.allotmentDate,
                         issuance.redemptionDate,
