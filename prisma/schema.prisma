@@ -27,7 +27,7 @@ model Issuance {
   id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
   createdAt                DateTime  @default(now())
   updatedAt                DateTime  @updatedAt
-  isin                     String?   @db.VarChar
+  isin                     String?    @unique(map: "Issuance_index_2") @db.VarChar(255)
   cin                      String?   @db.VarChar
   description              String?   @db.VarChar
   secured                  String?   @db.VarChar
@@ -63,8 +63,8 @@ model Issuance {
   dayCount                 String?   @db.VarChar
   paymentFrequency         String?   @db.VarChar
   company                  Company?  @relation(fields: [cin], references: [cin])
-  bseOrderBook             BseOrderBook[] @relation(fields: [isin], references: [isin])
-  nseOrderBook             NseOrderBook[] @relation(fields: [isin], references: [isin])
+  bseOrderBook             BseOrderBook[] 
+  nseOrderBook             NseOrderBook[] 
 }
 
 model BseOrderBook {
