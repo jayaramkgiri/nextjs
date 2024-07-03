@@ -133,15 +133,36 @@ async function fetchMarketDepth(cookie, symbolList) {
     try {
       const marketDepth = await axios.request(config);
       marketDepthList[symbol] = marketDepth.data;
-    } catch (_e) {
+    } catch (e) {
       console.log(`Error fetching Market data for ${symbol}`, e);
       errorList.push(symbol);
     }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
   return { marketDepth: marketDepthList, errors: errorList };
 }
+async function deleteEarliestVersion() {
+  const minSeqNo = await prisma.nseOrderBook.aggregate({
+    _min: {
+      seqNo: true,
+    },
+  });
+  const seqNo = minSeqNo._min.seqNo;
+  if (seqNo && seqNo > 0) {
+    try {
+      await prisma.nseOrderBook.deleteMany({
+        where: {
+          seqNo: seqNo
+        },
+      });
+      console.log(`Deleted version ${seqNo}`);
+    } catch (e) {
+      console.log(`Error deleting version ${seqNo}`);
+    }
+  }
+}
 
-module.exports.migrateNseMarketData = async function (seqNo) {
+module.exports.migrateNseMarketData = async function () {
   try {
     console.log('Fetching Cookie');
     const cookie = await getCookie();
@@ -161,49 +182,52 @@ module.exports.migrateNseMarketData = async function (seqNo) {
           cookie,
           symbolList,
         );
-        if (errors.length > 0) {
-          console.log('Error Fetching Market Depth');
-        } else {
-          console.log('Completed Fetching Market Depth');
-          let dataList = [];
-          for (const trade of tradeList) {
-            if (marketDepth[trade.symbol]) {
-              try {
-                const data = {
-                  exchange: 'nse',
-                  isin: trade.meta.isin,
-                  seqNo: seqNo,
-                  scripName: `${trade.symbol}-${trade.series}`,
-                  faceValue: fetchFaceValue(trade, marketDepth[trade.symbol]),
-                  maturityDate: dateFormatter(trade.maturity_date),
-                  creditRating: trade.credit_rating,
-                  close: formattedStringToNumber(trade.close),
-                  open: formattedStringToNumber(trade.open),
-                  high: formattedStringToNumber(trade.high),
-                  low: formattedStringToNumber(trade.low),
-                  totalBuyQty: fetchSeriesInfo(
-                    marketDepth[trade.symbol].data,
-                    trade.series,
-                  ).marketDeptOrderBook.totalBuyQuantity,
-                  totalSellQty: fetchSeriesInfo(
-                    marketDepth[trade.symbol].data,
-                    trade.series,
-                  ).marketDeptOrderBook.totalSellQuantity,
-                  buyPrice: highestBuyPrices(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook),
-                  sellPrice: lowestSellPrice(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook)
-                };
-                dataList.push(data);
-              } catch (e) {
-                console.log(`Error packing ${trade.symbol} ${trade.series}`, e);
-              }
+
+        const maxSeqNo = await prisma.orderBook.aggregate({
+          _max: {
+            seqNo: true,
+          },
+        });
+        const seqNo = (maxSeqNo._max.seqNo || 0) + 1;
+        console.log('Completed Fetching Market Depth');
+        let dataList = [];
+        for (const trade of tradeList) {
+          if (marketDepth[trade.symbol]) {
+            try {
+              const data = {
+                isin: trade.meta.isin,
+                seqNo: seqNo,
+                scripName: `${trade.symbol}-${trade.series}`,
+                faceValue: fetchFaceValue(trade, marketDepth[trade.symbol]),
+                maturityDate: dateFormatter(trade.maturity_date),
+                creditRating: trade.credit_rating,
+                close: formattedStringToNumber(trade.close),
+                open: formattedStringToNumber(trade.open),
+                high: formattedStringToNumber(trade.high),
+                low: formattedStringToNumber(trade.low),
+                totalBuyQty: fetchSeriesInfo(
+                  marketDepth[trade.symbol].data,
+                  trade.series,
+                ).marketDeptOrderBook.totalBuyQuantity,
+                totalSellQty: fetchSeriesInfo(
+                  marketDepth[trade.symbol].data,
+                  trade.series,
+                ).marketDeptOrderBook.totalSellQuantity,
+                buyPrice: highestBuyPrices(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook),
+                sellPrice: lowestSellPrice(fetchSeriesInfo(marketDepth[trade.symbol].data, trade.series).marketDeptOrderBook)
+              };
+              dataList.push(data);
+            } catch (e) {
+              console.log(`Error packing ${trade.symbol} ${trade.series}`, e);
             }
           }
-          console.log('Pushing Date to DB');
-          await prisma.orderBook.createMany({
-            data: dataList,
-          });
         }
+        console.log('Pushing Date to DB');
+        await prisma.nseOrderBook.createMany({
+          data: dataList,
+        });
         console.log('Bond data migration completed.');
+        await deleteEarliestVersion();
       }
     }
   } catch (error) {

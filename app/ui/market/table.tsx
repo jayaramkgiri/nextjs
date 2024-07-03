@@ -1,5 +1,6 @@
+
 import { fetchMarket } from '@/app/models/issuance';
-import { fetchBseLatestOrders } from '@/app/models/bseOrderBook';
+
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa';

@@ -186,7 +186,28 @@ async function fetchSecurityInfo(bondData) {
   return { securityInfo: securityInfoList, infoErrors: errorList };
 }
 
-module.exports.migrateBseMarketData = async function (seqNo) {
+async function deleteEarliestVersion() {
+  const minSeqNo = await prisma.bseOrderBook.aggregate({
+    _min: {
+      seqNo: true,
+    },
+  });
+  const seqNo = minSeqNo._min.seqNo;
+  if (seqNo && seqNo > 0) {
+    try {
+      await prisma.bseOrderBook.deleteMany({
+        where: {
+          seqNo: seqNo
+        },
+      });
+      console.log(`Deleted version ${seqNo}`);
+    } catch (e) {
+      console.log(`Error deleting version ${seqNo}`);
+    }
+  }
+}
+
+module.exports.migrateBseMarketData = async function () {
   try {
     console.log('Fetching Bond Data');
     const bondData = await fetchBondData();
@@ -208,10 +229,16 @@ module.exports.migrateBseMarketData = async function (seqNo) {
         );
       }
       let dataList = [];
+      const maxSeqNo = await prisma.bseOrderBook.aggregate({
+        _max: {
+          seqNo: true,
+        },
+      });
+      const seqNo = (maxSeqNo._max.seqNo || 0) + 1;
+
       for (const bond of bondData) {
         if (securityInfo[bond.securityCode] && marketDepth[bond.securityCode]) {
           const data = {
-            exchange: 'bse',
             isin: securityInfo[bond.securityCode].ISSebiIsin,
             seqNo: seqNo,
             scripName: bond.securityName,
@@ -238,12 +265,12 @@ module.exports.migrateBseMarketData = async function (seqNo) {
         }
       }
       console.log('Pushing Date to DB');
-      await prisma.orderBook.createMany({
+      await prisma.bseOrderBook.createMany({
         data: dataList,
       });
     }
     console.log('Bond data migration completed.');
-    // await deleteEarliestVersion();
+    await deleteEarliestVersion();
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);
   } finally {
