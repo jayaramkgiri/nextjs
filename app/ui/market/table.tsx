@@ -78,7 +78,7 @@ export default async function DebenturesTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{issuance.bseOrderBook[0].scripName}</p>
+                      <p>{issuance.bseOrderBook[0]?.scripName}</p>
                     </div>
                     <p className="text-sm text-gray-500">{issuance.isin}</p>
                   </div>
