@@ -1,7 +1,7 @@
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 // import { useState, useEffect } from 'react';
 
-export default function Cards({ cardType, marketSummary }: { cardType: string, marketSummary: object }) {
+export default function Cards({ cardType, marketSummary }: { cardType: string, marketSummary: { totalBuyQty: number, totalSellQty: number, totalBuyVolume: string, totalSellVolume: string } }) {
   // const [units, setUnits] = useState<number>();
   // const [value, setValue] = useState<string>();
 

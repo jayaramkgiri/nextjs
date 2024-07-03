@@ -10,31 +10,31 @@ export async function fetchMarketSummary() {
 
         const bseSeqNo = await latestBseSeqNo() || 0;
         const nseSeqNo = await latestNseSeqNo() || 0;
-        const bseTotalBuyQty = await prisma.bseOrderBook.aggregate({
+        const bseTotalBuyQty = (await prisma.bseOrderBook.aggregate({
             _sum: { totalBuyQty: true },
             where: { seqNo: bseSeqNo },
-        });
-        const bseTotalBuyVolume = await prisma.$queryRaw`Select SUM("BseOrderBook"."totalBuyQty" * "BseOrderBook"."buyPrice") As "buyVolume" from "BseOrderBook" where "BseOrderBook"."seqNo"=${bseSeqNo}`
-        const nseTotalBuyQty = await prisma.nseOrderBook.aggregate({
+        }))._sum.totalBuyQty || 0;
+        const bseTotalBuyVolume: any[] = await prisma.$queryRaw`Select SUM("BseOrderBook"."totalBuyQty" * "BseOrderBook"."buyPrice") As "buyVolume" from "BseOrderBook" where "BseOrderBook"."seqNo"=${bseSeqNo}`
+        const nseTotalBuyQty = (await prisma.nseOrderBook.aggregate({
             _sum: { totalBuyQty: true },
             where: { seqNo: nseSeqNo },
-        });
-        const nseTotalBuyVolume = await prisma.$queryRaw`Select SUM("NseOrderBook"."totalBuyQty" * "NseOrderBook"."buyPrice") As "buyVolume" from "NseOrderBook"  where "NseOrderBook"."seqNo"=${nseSeqNo}`
+        }))._sum.totalBuyQty || 0;
+        const nseTotalBuyVolume: any[] = await prisma.$queryRaw`Select SUM("NseOrderBook"."totalBuyQty" * "NseOrderBook"."buyPrice") As "buyVolume" from "NseOrderBook"  where "NseOrderBook"."seqNo"=${nseSeqNo}`;
 
 
-        const bseTotalSellQty = await prisma.bseOrderBook.aggregate({
+        const bseTotalSellQty = (await prisma.bseOrderBook.aggregate({
             _sum: { totalSellQty: true },
             where: { seqNo: bseSeqNo },
-        });
-        const bseTotalSellVolume = await prisma.$queryRaw`Select SUM("BseOrderBook"."totalSellQty" * "BseOrderBook"."sellPrice") As "sellVolume" from "BseOrderBook" where "BseOrderBook"."seqNo"=${bseSeqNo}`
-        const nseTotalSellQty = await prisma.nseOrderBook.aggregate({
+        }))._sum.totalSellQty || 0;
+        const bseTotalSellVolume: any[] = await prisma.$queryRaw`Select SUM("BseOrderBook"."totalSellQty" * "BseOrderBook"."sellPrice") As "sellVolume" from "BseOrderBook" where "BseOrderBook"."seqNo"=${bseSeqNo}`
+        const nseTotalSellQty = (await prisma.nseOrderBook.aggregate({
             _sum: { totalSellQty: true },
             where: { seqNo: nseSeqNo },
-        });
-        const nseTotalSellVolume = await prisma.$queryRaw`Select SUM("NseOrderBook"."totalSellQty" * "NseOrderBook"."sellPrice") As "sellVolume" from "NseOrderBook"  where "NseOrderBook"."seqNo"=${nseSeqNo}`
+        }))._sum.totalSellQty || 0;
+        const nseTotalSellVolume: any[] = await prisma.$queryRaw`Select SUM("NseOrderBook"."totalSellQty" * "NseOrderBook"."sellPrice") As "sellVolume" from "NseOrderBook"  where "NseOrderBook"."seqNo"=${nseSeqNo}`
         const summary = {
-            totalBuyQty: bseTotalBuyQty!._sum!.totalBuyQty + nseTotalBuyQty!._sum!.totalBuyQty,
-            totalSellQty: bseTotalSellQty!._sum!.totalSellQty + nseTotalSellQty!._sum!.totalSellQty,
+            totalBuyQty: bseTotalBuyQty + nseTotalBuyQty,
+            totalSellQty: bseTotalSellQty + nseTotalSellQty,
             totalBuyVolume: ((bseTotalBuyVolume[0]!.buyVolume + nseTotalBuyVolume[0]!.buyVolume) / 10000000).toFixed(2),
             totalSellVolume: ((bseTotalSellVolume[0]!.sellVolume + nseTotalSellVolume[0]!.sellVolume) / 10000000).toFixed(2),
         };
