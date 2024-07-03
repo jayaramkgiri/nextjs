@@ -3,8 +3,10 @@ import { inter } from '@/app/ui/fonts';
 import SideNav from '@/app/ui/overview/sidenav';
 import Cards from '@/app/ui/overview/cards';
 import { headers } from 'next/headers';
+import { fetchMarketSummary } from '@/app/models/orderBook'
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -12,6 +14,7 @@ export default function RootLayout({
   const header = headers();
   const pathname = header.get('next-url');
   console.log(pathname);
+  const marketSummary = await fetchMarketSummary();
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
@@ -22,8 +25,8 @@ export default function RootLayout({
           <div className="relative hidden h-screen w-0.5 bg-whitesmoke-100 md:block" />
           <div className="relative hidden h-screen w-0.5 bg-whitesmoke-200 md:block" />
           <div className="flex h-auto w-full shrink-0 flex-row items-center justify-start overflow-hidden md:hidden">
-            <Cards cardType="bid" />
-            <Cards cardType="ask" />
+            <Cards cardType="bid" marketSummary={marketSummary} />
+            <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
           <div className="flex w-[90%] flex-col gap-2">
             <div className="h-auto grow md:ml-10">{children}</div>

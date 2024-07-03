@@ -4,6 +4,7 @@ import Table from '@/app/ui/market/table';
 import Cards from '@/app/ui/overview/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
+import { fetchMarketSummary } from '@/app/models/orderBook'
 
 export default async function Page({
   searchParams,
@@ -16,6 +17,7 @@ export default async function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   // const totalPages = await fetchInvoicesPages(query);
+  const marketSummary = await fetchMarketSummary();
   const totalPages = 10;
   return (
     <div className="pr-6">
@@ -25,8 +27,8 @@ export default async function Page({
             Market
           </h1>
           <div className="my-0 flex h-auto shrink-0 flex-row items-end justify-start gap-4 overflow-hidden py-0">
-            <Cards cardType="bid" />
-            <Cards cardType="ask" />
+            <Cards cardType="bid" marketSummary={marketSummary} />
+            <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
         </div>
         <div className="my-auto flex w-[90%] justify-center">

@@ -1,9 +1,11 @@
 import YieldTable from '@/app/ui/overview/stepper';
 import { Suspense } from 'react';
 import Cards from '@/app/ui/overview/cards';
+import { fetchMarketSummary } from '@/app/models/orderBook'
 import { CardsSkeleton } from '@/app/ui/skeletons';
 
 export default async function Page() {
+  const marketSummary = await fetchMarketSummary();
   return (
     <div className='pb-32'>
       <section className="sticky left-0 top-0 z-20  bg-white pb-8">
@@ -12,8 +14,8 @@ export default async function Page() {
             Overview
           </h1>
           <div className="mx-8 my-0 flex h-auto shrink-0 flex-row items-end justify-start gap-4 overflow-hidden py-0">
-            <Cards cardType="bid" />
-            <Cards cardType="ask" />
+            <Cards cardType="bid" marketSummary={marketSummary} />
+            <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
         </div>
       </section>

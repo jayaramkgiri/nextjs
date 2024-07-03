@@ -1,5 +1,5 @@
 
-import { fetchMarket } from '@/app/models/issuance';
+import { fetchMarket } from '@/app/models/orderBook';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { FaArrowUp } from 'react-icons/fa';
@@ -196,7 +196,7 @@ export default async function DebenturesTable({
                         issuance.isin,
                         issuance.company!.name,
                         {
-                          value: issuance.bseOrderBook[0]?.scripName,
+                          value: issuance.bseOrderBook[0]?.scripName || '-',
                           classNames: 'bg-neutral-100',
                         },
                         bidAskCell(
@@ -212,7 +212,7 @@ export default async function DebenturesTable({
                           'bse',
                         ),
                         {
-                          value: issuance.nseOrderBook[0]?.scripName,
+                          value: issuance.nseOrderBook[0]?.scripName || '-',
                           classNames: 'bg-orange-100',
                         },
                         bidAskCell(
