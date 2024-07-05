@@ -53,9 +53,8 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
-    cookies.find((c) => c.name === 'nseappid').value
-  }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
+    }`;
 }
 
 async function fetchTradeList(cookie) {
@@ -145,28 +144,8 @@ async function fetchMarketDepth(cookie, symbol) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return marketDepth;
 }
-async function deleteEarliestVersion() {
-  const minSeqNo = await prisma.nseOrderBook.aggregate({
-    _min: {
-      seqNo: true,
-    },
-  });
-  const seqNo = minSeqNo._min.seqNo;
-  if (seqNo && seqNo > 0) {
-    try {
-      await prisma.nseOrderBook.deleteMany({
-        where: {
-          seqNo: seqNo,
-        },
-      });
-      console.log(`Deleted version ${seqNo}`);
-    } catch (e) {
-      console.log(`Error deleting version ${seqNo}`);
-    }
-  }
-}
 
-async function migrateNseMarketData() {
+module.exports.migrateNseMarketData = async function () {
   console.log('Fetching Cookie');
   const cookie = await getCookie();
 
@@ -221,4 +200,3 @@ async function migrateNseMarketData() {
   await prisma.$disconnect();
 }
 
-migrateNseMarketData();

@@ -7,14 +7,6 @@ import { FaArrowDown } from 'react-icons/fa';
 
 import TableRow from '@/app/ui/explore/table-row';
 
-function formatIssuances(issuances: any) {
-  let formatted: any = {};
-  for (let i = 0; i < issuances.length; i++) {
-    formatted[issuances[i].isin] = issuances[i];
-  }
-  return formatted;
-}
-
 function upArrow() {
   return (
     <div className="h-auto p-[2px] text-seagreen">
@@ -43,14 +35,14 @@ function bidAskCell(
       <div className="flex flex-col gap-1 ">
         <div className="flex flex-row">
           {closePrice &&
-            price &&
+            (price !== null) &&
             (closePrice < price ? upArrow() : downArrow())}
-          {price && units && (
-            <div className="h-auto p-[2px] font-light">
+          {(price !== null) && (units !== null) && (
+            <div className="h-auto p-[2px] text-dimgray font-thin">
               <FaIndianRupeeSign />
             </div>
           )}
-          {price || '-'}
+          {(price !== null) ? price : '-'}
         </div>
         <div className="text-xs text-dimgray">{units || 0} units</div>
       </div>
@@ -66,7 +58,23 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances({ bseBuyOrders: { not: null } }, currentPage, { bseBuyOrders: 'desc' });
+  const issuances = await fetchIssuances({
+    OR: [
+      {
+        totalBuyVolume: { not: null },
+      },
+      {
+        totalSellVolume: { not: null },
+      },
+    ]
+  }, currentPage, [
+    {
+      totalBuyVolume: 'desc',
+    },
+    {
+      totalSellVolume: 'desc',
+    },
+  ]);
 
   return (
     <div className="flow-root pt-0">
@@ -156,13 +164,13 @@ export default async function DebenturesTable({
                     scope="col"
                     className="bg-orange-100 px-3 py-3 font-medium"
                   >
-                    Bids
+                    Buy Orders
                   </th>
                   <th
                     scope="col"
                     className="bg-orange-100 px-3 py-3 font-medium"
                   >
-                    Asks
+                    Sell Orders
                   </th>
                   <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Face Value

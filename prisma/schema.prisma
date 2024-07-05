@@ -67,15 +67,13 @@ model Issuance {
   bseSellOrders            Int?
   bseBuyPrice              Float?
   bseSellPrice             Float?
-  bseBuyVolume             Float?
-  bseSellVolume            Float?
+  totalBuyVolume             Float?
+  totalSellVolume            Float?
   nseScripName            String?        @db.VarChar(255)
   nseBuyOrders             Int?
   nseSellOrders            Int?
   nseBuyPrice              Float?
   nseSellPrice             Float?
-  nseBuyVolume             Float?
-  nseSellVolume            Float?
   nseMaturityDate          DateTime?      @db.Date
   bseMaturityDate          DateTime?      @db.Date
   bseCreditRating          String?        @db.VarChar(255)
