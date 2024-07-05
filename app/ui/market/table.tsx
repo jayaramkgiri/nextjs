@@ -1,5 +1,5 @@
 
-import { fetchMarket } from '@/app/models/orderBook';
+import { fetchIssuances } from '@/app/models/issuance';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { FaArrowUp } from 'react-icons/fa';
@@ -66,7 +66,7 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchMarket(currentPage);
+  const issuances = await fetchIssuances({ bseBuyOrders: { not: null } }, currentPage, { bseBuyOrders: 'desc' });
 
   return (
     <div className="flow-root pt-0">
@@ -78,7 +78,7 @@ export default async function DebenturesTable({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <p>{issuance.bseOrderBook[0]?.scripName}</p>
+                      <p>{issuance.bseScripName}</p>
                     </div>
                     <p className="text-sm text-gray-500">{issuance.isin}</p>
                   </div>
@@ -114,7 +114,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    colSpan={6}
+                    colSpan={5}
                     className="bg-white px-3 py-3 text-center font-medium"
                   ></th>
                 </tr>
@@ -168,6 +168,9 @@ export default async function DebenturesTable({
                     Face Value
                   </th>
                   <th scope="col" className="sticky px-3 py-3 font-medium ">
+                    Credit Rating
+                  </th>
+                  <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Allotment Date
                   </th>
                   <th scope="col" className="sticky px-3 py-3 font-medium ">
@@ -178,9 +181,6 @@ export default async function DebenturesTable({
                   </th>
                   <th scope="col" className="sticky px-3 py-3 font-medium ">
                     Coupon Rate
-                  </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
-                    Payment Frequency
                   </th>
                 </tr>
               </thead>
@@ -196,43 +196,43 @@ export default async function DebenturesTable({
                         issuance.isin,
                         issuance.company!.name,
                         {
-                          value: issuance.bseOrderBook[0]?.scripName || '-',
+                          value: issuance.bseScripName || '-',
                           classNames: 'bg-neutral-100',
                         },
                         bidAskCell(
-                          issuance.bseOrderBook[0]?.totalBuyQty,
-                          issuance.bseOrderBook[0]?.buyPrice,
-                          issuance.bseOrderBook[0]?.close,
+                          issuance.bseBuyOrders,
+                          issuance.bseBuyPrice,
+                          issuance.bseclose,
                           'bse',
                         ),
                         bidAskCell(
-                          issuance.bseOrderBook[0]?.totalSellQty,
-                          issuance.bseOrderBook[0]?.sellPrice,
-                          issuance.bseOrderBook[0]?.close,
+                          issuance.bseSellOrders,
+                          issuance.bseSellPrice,
+                          issuance.bseclose,
                           'bse',
                         ),
                         {
-                          value: issuance.nseOrderBook[0]?.scripName || '-',
+                          value: issuance.nseScripName || '-',
                           classNames: 'bg-orange-100',
                         },
                         bidAskCell(
-                          issuance.nseOrderBook[0]?.totalBuyQty,
-                          issuance.nseOrderBook[0]?.buyPrice,
-                          issuance.nseOrderBook[0]?.close,
+                          issuance.nseBuyOrders,
+                          issuance.nseBuyPrice,
+                          issuance.nseclose,
                           'nse',
                         ),
                         bidAskCell(
-                          issuance.nseOrderBook[0]?.totalSellQty,
-                          issuance.nseOrderBook[0]?.sellPrice,
-                          issuance.nseOrderBook[0]?.close,
+                          issuance.nseSellOrders,
+                          issuance.nseSellPrice,
+                          issuance.nseclose,
                           'nse',
                         ),
-                        issuance.faceValue,
+                        issuance.faceValue || issuance.bseFaceValue || issuance.nseFaceValue,
+                        issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
-                        issuance.redemptionDate,
+                        issuance.redemptionDate || issuance.bseMaturityDate || issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
-                        issuance.paymentFrequency,
                       ]}
                     />
                   );
