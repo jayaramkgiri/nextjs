@@ -60,11 +60,33 @@ model Issuance {
   ratedDateAtIssuance      DateTime? @db.Date
   depository               String?   @db.VarChar
   coupon                   Float?
-  dayCount                 String?   @db.VarChar
-  paymentFrequency         String?   @db.VarChar
-  company                  Company?  @relation(fields: [cin], references: [cin])
-  bseOrderBook             BseOrderBook[] 
-  nseOrderBook             NseOrderBook[] 
+  dayCount                 String?        @db.VarChar
+  paymentFrequency         String?        @db.VarChar
+  bseScripName            String?        @db.VarChar(255)
+  bseBuyOrders             Int?
+  bseSellOrders            Int?
+  bseBuyPrice              Float?
+  bseSellPrice             Float?
+  bseBuyVolume             Float?
+  bseSellVolume            Float?
+  nseScripName            String?        @db.VarChar(255)
+  nseBuyOrders             Int?
+  nseSellOrders            Int?
+  nseBuyPrice              Float?
+  nseSellPrice             Float?
+  nseBuyVolume             Float?
+  nseSellVolume            Float?
+  nseMaturityDate          DateTime?      @db.Date
+  bseMaturityDate          DateTime?      @db.Date
+  bseCreditRating          String?        @db.VarChar(255)
+  nseCreditRating          String?        @db.VarChar(255)
+  bseclose                 Float?
+  nseclose                 Float?
+  bseFaceValue             Float?
+  nseFaceValue             Float?
+  company                  Company?       @relation(fields: [cin], references: [cin])
+  bseOrderBook             BseOrderBook[]
+  nseOrderBook             NseOrderBook[]
 }
 
 model BseOrderBook {
