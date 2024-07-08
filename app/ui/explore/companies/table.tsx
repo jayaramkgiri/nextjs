@@ -1,4 +1,4 @@
-import { fetchCompanies } from '@/app/models/company';
+import { fetchCompanies, ITEMS_PER_PAGE } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
 
 export default async function CompaniesTable({
@@ -61,6 +61,7 @@ export default async function CompaniesTable({
                       showSno={true}
                       currentPage={currentPage}
                       sno={index}
+                      itemsPerPage={ITEMS_PER_PAGE}
                       cells={[
                         company.name,
                         company.cin,

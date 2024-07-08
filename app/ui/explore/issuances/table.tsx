@@ -1,4 +1,4 @@
-import { fetchIssuances } from '@/app/models/issuance';
+import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
 
 export default async function DebenturesTable({
@@ -77,6 +77,7 @@ export default async function DebenturesTable({
                         sno={index}
                         currentPage={currentPage}
                         showSno={true}
+                        itemsPerPage={ITEMS_PER_PAGE}
                         cells={[
                           issuance.company!.name,
                           issuance.isin,

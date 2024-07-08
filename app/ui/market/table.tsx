@@ -1,4 +1,4 @@
-import { fetchIssuances } from '@/app/models/issuance';
+import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { FaArrowUp } from 'react-icons/fa';
@@ -22,6 +22,13 @@ function downArrow() {
   );
 }
 
+function currencyFormatter(x: number | null) {
+  if (x) {
+    return x.toLocaleString('en-IN');
+  }
+  return x;
+}
+
 function bidAskCell(
   units: number | null,
   price: number | null,
@@ -41,10 +48,10 @@ function bidAskCell(
               <FaIndianRupeeSign />
             </div>
           )}
-          {price !== null ? price : '-'}
+          {price !== null ? currencyFormatter(price) : '-'}
         </div>
         <div className="text-xs text-dimgray">
-          {units ? `${units} units` : ''}
+          {units ? `${currencyFormatter(units)} units` : ''}
         </div>
       </div>
     ),
@@ -106,6 +113,7 @@ export default async function DebenturesTable({
                   <th
                     scope="col"
                     className="sticky left-0 top-0 z-20 bg-white px-3 py-3"
+                    colSpan={2}
                   ></th>
                   <th
                     scope="col"
@@ -134,7 +142,13 @@ export default async function DebenturesTable({
                 <tr className="sticky top-10 z-20 border-b border-solid border-gray-200 bg-white">
                   <th
                     scope="col"
-                    className="sticky left-0 top-10 z-20 w-4 bg-white px-3 py-3 font-medium"
+                    className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
+                  >
+                    S.No
+                  </th>
+                  <th
+                    scope="col"
+                    className="sticky left-[59px] top-10 z-20 w-4 bg-white px-3 py-3 font-medium"
                   >
                     ISIN
                   </th>
@@ -151,13 +165,13 @@ export default async function DebenturesTable({
                     scope="col"
                     className="bg-neutral-100 px-3 py-3 font-medium"
                   >
-                    Bids
+                    Buy Orders
                   </th>
                   <th
                     scope="col"
                     className="bg-neutral-100 px-3 py-3 font-medium"
                   >
-                    Asks
+                    Sell Orders
                   </th>
                   <th
                     scope="col"
@@ -203,7 +217,8 @@ export default async function DebenturesTable({
                     <TableRow
                       key={Number(issuance.id)}
                       sno={index}
-                      showSno={false}
+                      showSno={true}
+                      itemsPerPage={ITEMS_PER_PAGE}
                       currentPage={currentPage}
                       cells={[
                         issuance.isin,
@@ -240,9 +255,11 @@ export default async function DebenturesTable({
                           issuance.nseclose,
                           'nse',
                         ),
-                        issuance.faceValue ||
-                          issuance.bseFaceValue ||
-                          issuance.nseFaceValue,
+                        currencyFormatter(
+                          issuance.faceValue ||
+                            issuance.bseFaceValue ||
+                            issuance.nseFaceValue,
+                        ),
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
                         issuance.redemptionDate ||

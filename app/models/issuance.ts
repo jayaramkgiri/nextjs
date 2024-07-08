@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const ITEMS_PER_PAGE = 30;
+export const ITEMS_PER_PAGE = 100;
 export async function fetchIssuances(
   query: object = {},
   currentPage: number = 1,
@@ -39,12 +39,19 @@ export async function fetchMarketSummary() {
       const aggregate = (await prisma.issuance.aggregate({
           _sum: { totalSellVolume: true, totalBuyVolume: true,bseBuyOrders: true, nseBuyOrders: true, bseSellOrders: true, nseSellOrders: true  },
       }));
-      const summary = {
-          totalBuyQty: aggregate._sum.bseBuyOrders + aggregate._sum.nseBuyOrders,
-          totalSellQty: aggregate._sum.bseSellOrders + aggregate._sum.nseSellOrders,
-          totalBuyVolume: (aggregate._sum.totalBuyVolume / 10000000).toFixed(2),
-          totalSellVolume: (aggregate._sum.totalSellVolume / 10000000).toFixed(2),
-      };
+      const bseBuyOrders = aggregate._sum.bseBuyOrders || 0;
+      const nseBuyOrders = aggregate._sum.nseBuyOrders || 0;
+      const bseSellOrders = aggregate._sum.bseSellOrders || 0;
+      const nseSellOrders = aggregate._sum.nseSellOrders || 0;
+      const totalBuyVolume = aggregate!._sum!.totalBuyVolume || 0
+      const totalSellVolume = aggregate!._sum!.totalSellVolume || 0;
+
+      let summary: any = {bseBuyOrders: 0, nseBuyOrders: 0, bseSellOrders: 0, nseSellOrders: 0, totalBuyVolume: '-', totalSellVolume: '-'};
+      summary['totalBuyQty'] = bseBuyOrders + nseBuyOrders;
+      summary['totalSellQty'] = bseSellOrders + nseSellOrders;
+      summary['totalBuyVolume'] = totalBuyVolume;
+      summary['totalSellVolume'] = totalSellVolume;
+
       return summary;
   } catch (error) {
       console.error('Database Error:', error);

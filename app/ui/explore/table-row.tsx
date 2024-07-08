@@ -4,6 +4,7 @@ export default function TableRow({
   key,
   currentPage,
   showSno,
+  itemsPerPage = 30,
   sno,
   cells,
 }: {
@@ -11,6 +12,7 @@ export default function TableRow({
   currentPage: number;
   showSno: boolean;
   sno: number;
+  itemsPerPage: number;
   cells: any[];
 }) {
   function tableData(cell: any, index: number) {
@@ -59,7 +61,7 @@ export default function TableRow({
           key={0}
           className=" sticky left-0 z-10 mx-0 whitespace-nowrap bg-white px-3 py-3"
         >
-          {(currentPage - 1) * 30 + sno + 1}
+          {(currentPage - 1) * itemsPerPage + sno + 1}
         </td>
       )}
       <td
