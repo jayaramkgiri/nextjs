@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const ITEMS_PER_PAGE = 30;
+export const ITEMS_PER_PAGE = 30;
 export async function fetchCompanies(
   // query: string,
   currentPage: number
