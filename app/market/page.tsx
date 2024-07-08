@@ -4,7 +4,7 @@ import Table from '@/app/ui/market/table';
 import Cards from '@/app/ui/overview/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchMarketSummary } from '@/app/models/orderBook'
+import { fetchMarketSummary, noOfPages } from '@/app/models/issuance';
 
 export default async function Page({
   searchParams,
@@ -16,9 +16,18 @@ export default async function Page({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  // const totalPages = await fetchInvoicesPages(query);
   const marketSummary = await fetchMarketSummary();
-  const totalPages = 10;
+
+  const totalPages = await noOfPages({
+    OR: [
+      {
+        totalBuyVolume: { not: 0 },
+      },
+      {
+        totalSellVolume: { not: 0 },
+      },
+    ],
+  });
   return (
     <div className="pr-6">
       <section className="sticky left-0 top-0 z-20 bg-white pb-3 ">
@@ -33,7 +42,7 @@ export default async function Page({
         </div>
         <div className="my-auto flex w-[90%] justify-center">
           <Search placeholder="Search" />
-          <Pagination totalPages={10} />
+          <Pagination totalPages={totalPages} />
         </div>
       </section>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>

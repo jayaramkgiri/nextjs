@@ -53,12 +53,13 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
-    }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
+    cookies.find((c) => c.name === 'nseappid').value
+  }`;
 }
 
 async function fetchTradeList(cookie) {
-  headers = {
+  let headers = {
     authority: 'www.nseindia.com',
     method: 'GET',
     path: '/api/liveBonds-traded-on-cm?type=bonds',
@@ -83,19 +84,14 @@ async function fetchTradeList(cookie) {
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   };
 
-  config = {
+  let config = {
     method: 'get',
     maxBodyLength: Infinity,
     url: 'https://www.nseindia.com/api/liveBonds-traded-on-cm?type=bonds',
     headers: headers,
   };
 
-  try {
-    tradeList = await axios.request(config);
-  } catch (e) {
-    console.log('Error Fetching TradeList', e);
-    return null;
-  }
+  const tradeList = await axios.request(config);
   return tradeList.data.data;
 }
 
@@ -132,33 +128,32 @@ async function fetchMarketDepth(cookie, symbol) {
     url: `https://www.nseindia.com/api/quote-bonds?index=${symbol}`,
     headers: headers,
   };
-  try {
-    const resp = await axios.request(config);
-    if (resp.status == 200) {
-      marketDepth = resp.data;
-    }
-  } catch (e) {
-    console.log(`Error fetching Market data for ${symbol}`, e);
-    errorList.push(symbol);
+  const resp = await axios.request(config);
+  if (resp.status == 200) {
+    marketDepth = resp.data;
+  } else {
+    throw `Nse API Failed with ${resp.statu}`;
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return marketDepth;
 }
 
 module.exports.migrateNseMarketData = async function () {
-  console.log('Fetching Cookie');
+  let migratedIsins = [];
+  let errorList = [];
+  // console.log('Fetching Cookie');
   const cookie = await getCookie();
 
   if (cookie) {
-    console.log('Fetching Trade Data');
+    // console.log('Fetching Trade Data');
     let tradeList = await fetchTradeList(cookie);
-    console.log('Completed Fetching Trade Data');
+    // console.log('Completed Fetching Trade Data');
 
     if (tradeList) {
       for (const trade of tradeList) {
-        console.log('Fetching Market Depth');
+        // console.log('Fetching Market Depth');
         const marketDepth = await fetchMarketDepth(cookie, trade.symbol);
-        console.log('Completed Fetching Market Depth');
+        // console.log('Completed Fetching Market Depth');
 
         if (marketDepth) {
           try {
@@ -181,7 +176,7 @@ module.exports.migrateNseMarketData = async function () {
                   .marketDeptOrderBook,
               ),
             };
-            console.log('Pushing Date to DB');
+            // console.log('Pushing Date to DB');
             const isin = trade.meta.isin;
             await prisma.issuance.update({
               where: {
@@ -189,14 +184,16 @@ module.exports.migrateNseMarketData = async function () {
               },
               data: data,
             });
+            migratedIsins.push(trade.meta.isin);
           } catch (e) {
-            console.log(`Error pushing ${trade.meta.isin}`, e);
+            errorList.push(trade.meta.isin);
+            // console.log(`Error pushing ${trade.meta.isin}`, e);
           }
         }
       }
-      console.log('Bond data migration completed.');
+      console.log(`Bond data migration completed for ${migratedIsins}`);
+      console.log(`Bond data migration errored for ${errorList}`);
     }
   }
   await prisma.$disconnect();
-}
-
+};

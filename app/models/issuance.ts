@@ -31,58 +31,24 @@ export async function fetchIssuances(
   }
 }
 
-async function latestBseSeqNo() {
-  const maxSeqNo = await prisma.bseOrderBook.aggregate({
-    _max: {
-      seqNo: true,
-    },
-  });
-  return maxSeqNo._max.seqNo;
-}
 
-async function latestNseSeqNo() {
-  const maxSeqNo = await prisma.nseOrderBook.aggregate({
-    _max: {
-      seqNo: true,
-    },
-  });
-  return maxSeqNo._max.seqNo;
-}
-
-export async function fetchMarket(
-  currentPage: number = 1
-) {
+export async function fetchMarketSummary() {
   // noStore();
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
 
-    const bseSeqNo = await latestBseSeqNo() || 0;
-    const nseSeqNo = await latestNseSeqNo() || 0;
-    const issuances = await prisma.issuance.findMany({
-      skip: offset,
-      take: ITEMS_PER_PAGE,
-      where: {
-        OR: [
-          {
-            bseOrderBook: { some: {}, every: { seqNo: bseSeqNo } }
-          },
-          {
-            nseOrderBook: { some: {}, every: { seqNo: nseSeqNo } }
-          }
-        ]
-      },
-      include: {
-        bseOrderBook: { orderBy: { totalSellQty: 'desc' } },
-        nseOrderBook: { orderBy: { totalSellQty: 'desc' } },
-        company: true
-      },
-    });
-
-    issuances.forEach((iss: any) => iss['issuerName'] = iss.company.name)
-    return issuances;
+      const aggregate = (await prisma.issuance.aggregate({
+          _sum: { totalSellVolume: true, totalBuyVolume: true,bseBuyOrders: true, nseBuyOrders: true, bseSellOrders: true, nseSellOrders: true  },
+      }));
+      const summary = {
+          totalBuyQty: aggregate._sum.bseBuyOrders + aggregate._sum.nseBuyOrders,
+          totalSellQty: aggregate._sum.bseSellOrders + aggregate._sum.nseSellOrders,
+          totalBuyVolume: (aggregate._sum.totalBuyVolume / 10000000).toFixed(2),
+          totalSellVolume: (aggregate._sum.totalSellVolume / 10000000).toFixed(2),
+      };
+      return summary;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch Issuances.');
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch Market Summary.');
   }
 }
 
@@ -101,13 +67,28 @@ export async function fetchAllIsins() {
   }
 }
 
-export async function noOfPages(
+
+export async function noOfPagesMarket(
 ) {
   // noStore();
   try {
 
     const issuancesCount = await prisma.issuance.count();
     return Math.floor(issuancesCount / ITEMS_PER_PAGE) + 1;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch Companies.');
+  }
+}
+
+export async function noOfPages(
+  query: object = {},
+) {
+  // noStore();
+  try {
+
+    const issuancesCount = await prisma.issuance.aggregate({_count: true, where: query});
+    return Math.floor(issuancesCount._count / ITEMS_PER_PAGE) + 1;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch Companies.');

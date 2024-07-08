@@ -1,4 +1,3 @@
-
 import { fetchIssuances } from '@/app/models/issuance';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
@@ -35,16 +34,18 @@ function bidAskCell(
       <div className="flex flex-col gap-1 ">
         <div className="flex flex-row">
           {closePrice &&
-            (price !== null) &&
-            (closePrice < price ? upArrow() : downArrow())}
-          {(price !== null) && (units !== null) && (
-            <div className="h-auto p-[2px] text-dimgray font-thin">
+            price !== null &&
+            (closePrice <= price ? upArrow() : downArrow())}
+          {price !== null && units !== null && (
+            <div className="h-auto p-[2px] font-thin text-dimgray">
               <FaIndianRupeeSign />
             </div>
           )}
-          {(price !== null) ? price : '-'}
+          {price !== null ? price : '-'}
         </div>
-        <div className="text-xs text-dimgray">{units || 0} units</div>
+        <div className="text-xs text-dimgray">
+          {units ? `${units} units` : ''}
+        </div>
       </div>
     ),
     classNames: classNames,
@@ -58,23 +59,27 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances({
-    OR: [
+  const issuances = await fetchIssuances(
+    {
+      OR: [
+        {
+          totalBuyVolume: { not: 0 },
+        },
+        {
+          totalSellVolume: { not: 0 },
+        },
+      ],
+    },
+    currentPage,
+    [
       {
-        totalBuyVolume: { not: null },
+        totalBuyVolume: 'desc',
       },
       {
-        totalSellVolume: { not: null },
+        totalSellVolume: 'desc',
       },
-    ]
-  }, currentPage, [
-    {
-      totalBuyVolume: 'desc',
-    },
-    {
-      totalSellVolume: 'desc',
-    },
-  ]);
+    ],
+  );
 
   return (
     <div className="flow-root pt-0">
@@ -235,10 +240,14 @@ export default async function DebenturesTable({
                           issuance.nseclose,
                           'nse',
                         ),
-                        issuance.faceValue || issuance.bseFaceValue || issuance.nseFaceValue,
+                        issuance.faceValue ||
+                          issuance.bseFaceValue ||
+                          issuance.nseFaceValue,
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
-                        issuance.redemptionDate || issuance.bseMaturityDate || issuance.nseMaturityDate,
+                        issuance.redemptionDate ||
+                          issuance.bseMaturityDate ||
+                          issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
                       ]}

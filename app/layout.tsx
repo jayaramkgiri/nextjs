@@ -3,8 +3,7 @@ import { inter } from '@/app/ui/fonts';
 import SideNav from '@/app/ui/overview/sidenav';
 import Cards from '@/app/ui/overview/cards';
 import { headers } from 'next/headers';
-import { fetchMarketSummary } from '@/app/models/orderBook'
-
+import { fetchMarketSummary } from '@/app/models/issuance';
 
 export default async function RootLayout({
   children,
