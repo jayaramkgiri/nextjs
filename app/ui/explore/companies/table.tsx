@@ -22,7 +22,7 @@ export default async function CompaniesTable({
                     <div className="mb-2 flex items-center">
                       <p>{company.name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{company.cin}</p>
+                    <p className="text-xs text-gray-500">{company.cin}</p>
                   </div>
                 </div>
               </div>
@@ -30,7 +30,7 @@ export default async function CompaniesTable({
           </div>
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-sm relative rounded-lg text-left font-normal text-darkgray">
+              <thead className="text-xs relative rounded-lg text-left font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
@@ -52,7 +52,7 @@ export default async function CompaniesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
+              <tbody className="text-secondary text-xs divide-y overflow-x-auto bg-white">
                 {companies?.map((company: any, index: number) => {
                   company['issuanceCount'] = company._count['issuances'];
                   return (
@@ -62,6 +62,7 @@ export default async function CompaniesTable({
                       currentPage={currentPage}
                       sno={index}
                       itemsPerPage={ITEMS_PER_PAGE}
+                      padding={2}
                       cells={[
                         company.name,
                         company.cin,

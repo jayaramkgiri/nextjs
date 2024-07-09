@@ -50,7 +50,7 @@ function bidAskCell(
           )}
           {price !== null ? currencyFormatter(price) : '-'}
         </div>
-        <div className="text-xs text-dimgray">
+        <div className="text-xxs text-dimgray">
           {units ? `${currencyFormatter(units)} units` : ''}
         </div>
       </div>
@@ -108,110 +108,110 @@ export default async function DebenturesTable({
           </div>
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-sm rounded-lg text-left font-normal text-darkgray">
+              <thead className="text-xs rounded-lg text-left font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 w-6  bg-white font-medium">
                   <th
                     scope="col"
-                    className="sticky left-0 top-0 z-20 bg-white px-3 py-3"
+                    className="sticky left-0 top-0 z-20 bg-white px-1 py-1"
                     colSpan={2}
                   ></th>
                   <th
                     scope="col"
-                    className=" bg-white  px-3 py-3 font-medium "
+                    className=" bg-white  px-2 py-2 font-medium "
                   ></th>
                   <th
                     scope="col"
                     colSpan={3}
-                    className="bg-neutral-100 px-3 py-3 text-center font-medium"
+                    className="bg-neutral-100 px-2 py-2 text-center font-medium"
                   >
                     BSE
                   </th>
                   <th
                     scope="col"
                     colSpan={3}
-                    className="bg-orange-100 px-3 py-3 text-center font-medium"
+                    className="bg-orange-100 px-2 py-2 text-center font-medium"
                   >
                     NSE
                   </th>
                   <th
                     scope="col"
                     colSpan={5}
-                    className="bg-white px-3 py-3 text-center font-medium"
+                    className="bg-white px-2 py-2 text-center font-medium"
                   ></th>
                 </tr>
-                <tr className="sticky top-10 z-20 border-b border-solid border-gray-200 bg-white">
+                <tr className="sticky top-6 z-20 border-b border-solid border-gray-200 bg-white">
                   <th
                     scope="col"
-                    className="sticky left-0 top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
+                    className="sticky left-0 top-0 z-20 w-6 bg-white px-2 py-2 font-medium"
                   >
                     S.No
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[59px] top-10 z-20 w-4 bg-white px-3 py-3 font-medium"
+                    className="sticky left-[42px] top-6 z-20 w-4 bg-white px-2 py-2 font-medium"
                   >
                     ISIN
                   </th>
-                  <th scope="col" className="px-3 py-3 font-medium">
+                  <th scope="col" className="px-2 py-2 font-medium">
                     Issuer Name
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-3 py-3 font-medium"
+                    className="bg-neutral-100 px-2 py-2 font-medium"
                   >
                     Scrip Name
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-3 py-3 font-medium"
+                    className="bg-neutral-100 px-2 py-2 font-medium"
                   >
                     Buy Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-3 py-3 font-medium"
+                    className="bg-neutral-100 px-2 py-2 font-medium"
                   >
                     Sell Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-3 py-3 font-medium"
+                    className="bg-orange-100 px-2 py-2 font-medium"
                   >
                     Scrip Name
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-3 py-3 font-medium"
+                    className="bg-orange-100 px-2 py-2 font-medium"
                   >
                     Buy Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-3 py-3 font-medium"
+                    className="bg-orange-100 px-2 py-2 font-medium"
                   >
                     Sell Orders
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Face Value
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Credit Rating
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Allotment Date
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Redemption / Maturity
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Coupon Basis
                   </th>
-                  <th scope="col" className="sticky px-3 py-3 font-medium ">
+                  <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Coupon Rate
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y  bg-white">
+              <tbody className="text-secondary text-xs divide-y  bg-white">
                 {issuances?.map((issuance, index) => {
                   return (
                     <TableRow
@@ -220,6 +220,7 @@ export default async function DebenturesTable({
                       showSno={true}
                       itemsPerPage={ITEMS_PER_PAGE}
                       currentPage={currentPage}
+                      padding={2}
                       cells={[
                         issuance.isin,
                         issuance.company!.name,
@@ -257,14 +258,14 @@ export default async function DebenturesTable({
                         ),
                         currencyFormatter(
                           issuance.faceValue ||
-                            issuance.bseFaceValue ||
-                            issuance.nseFaceValue,
+                          issuance.bseFaceValue ||
+                          issuance.nseFaceValue,
                         ),
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
                         issuance.redemptionDate ||
-                          issuance.bseMaturityDate ||
-                          issuance.nseMaturityDate,
+                        issuance.bseMaturityDate ||
+                        issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
                       ]}

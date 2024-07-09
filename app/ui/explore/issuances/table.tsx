@@ -22,7 +22,7 @@ export default async function DebenturesTable({
                     <div className="mb-2 flex items-center">
                       <p>{issuance.description}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{issuance.isin}</p>
+                    <p className="text-xs text-gray-500">{issuance.isin}</p>
                   </div>
                 </div>
               </div>
@@ -30,7 +30,7 @@ export default async function DebenturesTable({
           </div>
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-sm rounded-lg text-left font-normal text-darkgray">
+              <thead className="text-xs rounded-lg text-left font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
@@ -67,7 +67,7 @@ export default async function DebenturesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto bg-white">
+              <tbody className="text-secondary text-xs divide-y overflow-x-auto bg-white">
                 {issuances &&
                   issuances.length > 0 &&
                   issuances.map((issuance, index) => {
@@ -78,6 +78,7 @@ export default async function DebenturesTable({
                         currentPage={currentPage}
                         showSno={true}
                         itemsPerPage={ITEMS_PER_PAGE}
+                        padding={2}
                         cells={[
                           issuance.company!.name,
                           issuance.isin,
