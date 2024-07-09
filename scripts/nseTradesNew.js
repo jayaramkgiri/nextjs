@@ -53,9 +53,8 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
-    cookies.find((c) => c.name === 'nseappid').value
-  }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
+    }`;
 }
 
 async function fetchTradeList(cookie) {
@@ -191,8 +190,8 @@ module.exports.migrateNseMarketData = async function () {
           }
         }
       }
-      console.log(`Bond data migration completed for ${migratedIsins}`);
-      console.log(`Bond data migration errored for ${errorList}`);
+      console.log(`NSE Bond data migration completed for ${migratedIsins}`);
+      console.log(`NSE Bond data migration errored for ${errorList}`);
     }
   }
   await prisma.$disconnect();

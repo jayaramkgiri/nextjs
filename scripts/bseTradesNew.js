@@ -212,14 +212,17 @@ module.exports.migrateBseMarketData = async function () {
           },
           data: data,
         });
-        migratedIsins.push(securityInfo.ISFaceValue);
+        migratedIsins.push(securityInfo.ISSebiIsin);
       }
     } catch (error) {
-      errorList.push(bond.securityName);
-      // console.error(`Error migrating bond ${bondData.securityName}:`, error);
+      if (securityInfo) {
+        errorList.push(securityInfo.ISSebiIsin);
+      } else {
+        console.error(`Error migrating bond ${bondData.securityName}:`, error);
+      }
     }
   }
-  console.log(`Bond data migration completed for ${migratedIsins}`);
-  console.log(`Bond data migration errored for ${errorList}`);
+  console.log(`BSE Bond data migration completed for ${migratedIsins}`);
+  console.log(`BSE Bond data migration errored for ${errorList}`);
   await prisma.$disconnect();
 };

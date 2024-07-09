@@ -13,9 +13,8 @@ module.exports = {
 
         // Find the highest buy price
         for (let i = 1; i <= 5; i++) {
-            const bPriceStr = data[`BPrice${i}`];
-            if (bPriceStr != null) {
-                const bPrice = module.exports.formattedStringToNumber(bPriceStr);
+            const bPrice = module.exports.formattedStringToNumber(data[`BPrice${i}`]);
+            if (bPrice != null) {
                 if (highestBPrice === null || bPrice > highestBPrice) {
                     highestBPrice = bPrice;
                 }
@@ -30,10 +29,9 @@ module.exports = {
 
         // Find the lowest sell price
         for (let i = 1; i <= 5; i++) {
-            const sPriceStr = data[`SPrice${i}`];
+            const sPrice = module.exports.formattedStringToNumber(data[`SPrice${i}`]);
 
-            if (sPriceStr != null) {
-                const sPrice = module.exports.formattedStringToNumber(sPriceStr);
+            if (sPrice != null) {
                 if (lowestSPrice === null || sPrice < lowestSPrice) {
                     lowestSPrice = sPrice;
                 }
