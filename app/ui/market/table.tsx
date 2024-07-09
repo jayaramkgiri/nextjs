@@ -122,14 +122,14 @@ export default async function DebenturesTable({
                   <th
                     scope="col"
                     colSpan={3}
-                    className="border-l border-t border-solid border-gray-200 bg-neutral-100 px-2 py-2 text-center font-medium"
+                    className="border-b border-solid border-gray-200 bg-neutral-100 px-2 py-2 text-center font-medium"
                   >
                     BSE
                   </th>
                   <th
                     scope="col"
                     colSpan={3}
-                    className="border-r border-t border-l border-solid border-gray-200 bg-orange-100 px-2 py-2 text-center font-medium"
+                    className="border-b  border-solid border-gray-200 bg-orange-100 px-2 py-2 text-center font-medium"
                   >
                     NSE
                   </th>
