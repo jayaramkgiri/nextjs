@@ -38,7 +38,7 @@ function bidAskCell(
   // const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
   return {
     value: (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col">
         <div className="flex flex-row">
           {closePrice &&
             price !== null &&
@@ -48,7 +48,7 @@ function bidAskCell(
               <FaIndianRupeeSign />
             </div>
           )}
-          {price !== null ? currencyFormatter(price) : '-'}
+          {price !== null ? currencyFormatter(price) : ''}
         </div>
         <div className="text-xxs pl-5 text-dimgray">
           {units ? `${currencyFormatter(units)} units` : ''}
@@ -225,7 +225,7 @@ export default async function DebenturesTable({
                         issuance.isin,
                         issuance.company!.name,
                         {
-                          value: issuance.bseScripName || '-',
+                          value: issuance.bseScripName || '',
                           classNames: 'border-l border-solid border-gray-200',
                         },
                         bidAskCell(
@@ -241,7 +241,7 @@ export default async function DebenturesTable({
                           '',
                         ),
                         {
-                          value: issuance.nseScripName || '-',
+                          value: issuance.nseScripName || '',
                           classNames: 'border-l border-solid border-gray-200',
                         },
                         bidAskCell(
