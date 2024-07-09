@@ -33,12 +33,12 @@ function bidAskCell(
   units: number | null,
   price: number | null,
   closePrice: number | null,
-  exchange: string,
+  classNames: string,
 ) {
-  const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
+  // const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
   return {
     value: (
-      <div className="flex flex-col gap-1 ">
+      <div className="flex flex-col gap-1">
         <div className="flex flex-row">
           {closePrice &&
             price !== null &&
@@ -50,7 +50,7 @@ function bidAskCell(
           )}
           {price !== null ? currencyFormatter(price) : '-'}
         </div>
-        <div className="text-xxs text-dimgray">
+        <div className="text-xxs pl-5 text-dimgray">
           {units ? `${currencyFormatter(units)} units` : ''}
         </div>
       </div>
@@ -122,14 +122,14 @@ export default async function DebenturesTable({
                   <th
                     scope="col"
                     colSpan={3}
-                    className="bg-neutral-100 px-2 py-2 text-center font-medium"
+                    className="border-l border-t border-solid border-gray-200 bg-neutral-100 px-2 py-2 text-center font-medium"
                   >
                     BSE
                   </th>
                   <th
                     scope="col"
                     colSpan={3}
-                    className="bg-orange-100 px-2 py-2 text-center font-medium"
+                    className="border-r border-t border-l border-solid border-gray-200 bg-orange-100 px-2 py-2 text-center font-medium"
                   >
                     NSE
                   </th>
@@ -157,37 +157,37 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-2 py-2 font-medium"
+                    className="border-l border-solid border-gray-200 px-2 py-2 font-medium"
                   >
                     Scrip Name
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-2 py-2 font-medium"
+                    className=" px-2 py-2 font-medium"
                   >
                     Buy Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-neutral-100 px-2 py-2 font-medium"
+                    className="px-2 py-2 font-medium"
                   >
                     Sell Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-2 py-2 font-medium"
+                    className="border-l border-solid border-gray-200 px-2 py-2 font-medium"
                   >
                     Scrip Name
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-2 py-2 font-medium"
+                    className=" px-2 py-2 font-medium"
                   >
                     Buy Orders
                   </th>
                   <th
                     scope="col"
-                    className="bg-orange-100 px-2 py-2 font-medium"
+                    className="border-r border-solid border-gray-200 px-2 py-2 font-medium"
                   >
                     Sell Orders
                   </th>
@@ -226,35 +226,35 @@ export default async function DebenturesTable({
                         issuance.company!.name,
                         {
                           value: issuance.bseScripName || '-',
-                          classNames: 'bg-neutral-100',
+                          classNames: 'border-l border-solid border-gray-200',
                         },
                         bidAskCell(
                           issuance.bseBuyOrders,
                           issuance.bseBuyPrice,
                           issuance.bseclose,
-                          'bse',
+                          '',
                         ),
                         bidAskCell(
                           issuance.bseSellOrders,
                           issuance.bseSellPrice,
                           issuance.bseclose,
-                          'bse',
+                          '',
                         ),
                         {
                           value: issuance.nseScripName || '-',
-                          classNames: 'bg-orange-100',
+                          classNames: 'border-l border-solid border-gray-200',
                         },
                         bidAskCell(
                           issuance.nseBuyOrders,
                           issuance.nseBuyPrice,
                           issuance.nseclose,
-                          'nse',
+                          '',
                         ),
                         bidAskCell(
                           issuance.nseSellOrders,
                           issuance.nseSellPrice,
                           issuance.nseclose,
-                          'nse',
+                          'border-r border-solid border-gray-200',
                         ),
                         currencyFormatter(
                           issuance.faceValue ||
