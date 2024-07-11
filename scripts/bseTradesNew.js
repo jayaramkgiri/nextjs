@@ -157,7 +157,7 @@ async function fetchSecurityInfo(bond) {
     method: 'get',
     maxBodyLength: Infinity,
     url: `https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=${bond.securityCode}`,
-    // url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
+    // url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=920EFSL26A',
     headers: headers,
   };
 
@@ -215,10 +215,10 @@ module.exports.migrateBseMarketData = async function () {
         migratedIsins.push(securityInfo.ISSebiIsin);
       }
     } catch (error) {
-      if (securityInfo) {
+      if (typeof securityInfo !== 'undefined' && securityInfo !== null && securityInfo.ISSebiIsin) {
         errorList.push(securityInfo.ISSebiIsin);
       } else {
-        console.error(`Error migrating bond ${bondData.securityName}:`, error);
+        console.error(`Error migrating bond ${bond.securityName}:`, error);
       }
     }
   }
