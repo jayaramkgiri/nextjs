@@ -181,6 +181,7 @@ module.exports.migrateBseMarketData = async function () {
   // console.log('Completed Fetching Bond Data');
   let migratedIsins = [];
   let errorList = [];
+  let securityInfoError = [];
 
   for (const bond of bondData) {
     try {
@@ -218,11 +219,13 @@ module.exports.migrateBseMarketData = async function () {
       if (typeof securityInfo !== 'undefined' && securityInfo !== null && securityInfo.ISSebiIsin) {
         errorList.push(securityInfo.ISSebiIsin);
       } else {
-        console.error(`Error migrating bond ${bond.securityName}:`, error);
+        securityInfoError.push(bond.securityCode);
+        // console.error(`Error migrating bond ${bond.securityName}:`, error);
       }
     }
   }
-  console.log(`BSE Bond data migration completed for ${migratedIsins}`);
-  console.log(`BSE Bond data migration errored for ${errorList}`);
+  console.log(`BSE Bond data migration completed for ${migratedIsins} \n`);
+  console.log(`BSE Bond data migration errored for ${errorList} \n`);
+  console.log(`BSE Bond data migration errored for ${securityInfoError} \n`);
   await prisma.$disconnect();
 };

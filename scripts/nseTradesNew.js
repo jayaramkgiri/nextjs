@@ -35,7 +35,7 @@ function lowestSellPrice(orderBook) {
   // Find the highest buy price
   for (let i = 0; i < ask.length; i++) {
     if (ask[i] != null && typeof ask[i].price === 'number') {
-      if (lowestSPrice === null || ask[i].price < lowestSPrice) {
+      if (lowestSPrice === null || (ask[i].price < lowestSPrice && ask[i].quantity !== 0)) {
         lowestSPrice = ask[i].price;
       }
     }

@@ -6,22 +6,22 @@ const { migrateBseMarketData } = require('./bseTradesNew');
 const { migrateNseMarketData } = require('./nseTradesNew');
 
 async function migrateMarketData() {
-  await prisma.issuance.updateMany({
-    data: {
-      nseBuyOrders: null,
-      nseSellOrders: null,
-      nseBuyPrice: null,
-      nseSellPrice: null,
-      nseclose: null,
-      bseBuyOrders: null,
-      bseSellOrders: null,
-      bseBuyPrice: null,
-      bseSellPrice: null,
-      bseclose: null,
-      totalBuyVolume: null,
-      totalSellVolume: null,
-    },
-  });
+  // await prisma.issuance.updateMany({
+  //   data: {
+  //     nseBuyOrders: null,
+  //     nseSellOrders: null,
+  //     nseBuyPrice: null,
+  //     nseSellPrice: null,
+  //     nseclose: null,
+  //     bseBuyOrders: null,
+  //     bseSellOrders: null,
+  //     bseBuyPrice: null,
+  //     bseSellPrice: null,
+  //     bseclose: null,
+  //     totalBuyVolume: null,
+  //     totalSellVolume: null,
+  //   },
+  // });
   await Promise.all([migrateBseMarketData(), migrateNseMarketData()]);
 
   await prisma.$queryRaw`UPDATE "Issuance" SET "totalBuyVolume"=((coalesce("bseBuyOrders",0) * coalesce("bseBuyPrice", 0 )) + (coalesce("nseBuyOrders", 0) * coalesce("nseBuyPrice", 0)));`;

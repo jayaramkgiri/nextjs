@@ -37,7 +37,7 @@ function bidAskCell(
 ) {
   // const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
   return {
-    value: (
+    value: units && units !== 0 ? (
       <div className="flex flex-col">
         <div className="flex flex-row">
           {closePrice &&
@@ -54,7 +54,7 @@ function bidAskCell(
           {units ? `${currencyFormatter(units)} units` : ''}
         </div>
       </div>
-    ),
+    ) : '',
     classNames: classNames,
   };
 }
