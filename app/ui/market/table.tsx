@@ -135,7 +135,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    colSpan={5}
+                    colSpan={6}
                     className="bg-white px-2 py-2 text-center font-medium"
                   ></th>
                 </tr>
