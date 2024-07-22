@@ -13,8 +13,8 @@ export default async function Page() {
   return (
     <div className="grid w-[90%] grid-cols-3 gap-4">
       <Card className="col-span-2 rounded-lg  bg-gray-200 shadow-lg">
-        <CardHeader className="flex gap-3">
-          <h3 className="py-auto m-0 flex flex-1 items-center  self-stretch px-3 text-inherit font-semibold">
+        <CardHeader className="m-0 flex flex-col gap-0 p-0">
+          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
             ISSUE DETAILS
           </h3>
         </CardHeader>
@@ -67,9 +67,9 @@ export default async function Page() {
         </CardBody>
       </Card>
       <Card className=" rounded-lg  bg-gray-200 shadow-lg">
-        <CardHeader className="flex gap-3">
-          <h3 className="py-auto m-0 flex flex-1 items-center  self-stretch px-3 text-inherit font-semibold">
-            ISSUE DETAILS
+        <CardHeader className="m-0 flex flex-col gap-0 p-0">
+          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+            CASHFLOWS
           </h3>
         </CardHeader>
         <CardBody className="flex flex-row divide-x divide-solid divide-gray-200 p-0">
@@ -95,7 +95,7 @@ export default async function Page() {
       </Card>
       <Card className="col-span-2 rounded-lg  bg-gray-200 shadow-lg">
         <CardHeader className="m-0 flex flex-col gap-0 p-0">
-          <h3 className="text-md m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
             MARKET DEPTH
           </h3>
           <div className="m-0 flex w-full flex-row justify-between p-0">
@@ -131,26 +131,20 @@ export default async function Page() {
                 <div className="relative inline-block w-16 shrink-0 self-stretch">
                   10%
                 </div>
-                <div className="flex w-32 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
                   <div className="flex flex-row items-start justify-start">
                     <div className="h-auto p-[2px]">
                       <FaIndianRupeeSign />
                     </div>
                     20 Cr
                   </div>
-                  <div className="relative flex h-3 shrink-0 items-center text-xs font-medium text-color-states-common-black opacity-[0.5]">
-                    10,000 units
-                  </div>
                 </div>
-                <div className="flex w-32 flex-col items-start justify-start gap-2 self-stretch text-indianred">
+                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
                   <div className="flex flex-row items-start justify-start self-stretch">
                     <div className="h-auto p-[2px]">
                       <FaIndianRupeeSign />
                     </div>
                     2 Cr
-                  </div>
-                  <div className="relative flex h-3 shrink-0 items-center self-stretch text-xs font-medium text-color-states-common-black opacity-[0.5]">
-                    5,000 units
                   </div>
                 </div>
               </div>
@@ -177,26 +171,20 @@ export default async function Page() {
                 <div className="relative inline-block w-16 shrink-0 self-stretch">
                   10%
                 </div>
-                <div className="flex w-32 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
                   <div className="flex flex-row items-start justify-start">
                     <div className="h-auto p-[2px]">
                       <FaIndianRupeeSign />
                     </div>
                     20 Cr
                   </div>
-                  <div className="relative flex h-3 shrink-0 items-center text-xs font-medium text-color-states-common-black opacity-[0.5]">
-                    10,000 units
-                  </div>
                 </div>
-                <div className="flex w-32 flex-col items-start justify-start gap-2 self-stretch text-indianred">
+                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
                   <div className="flex flex-row items-start justify-start self-stretch">
                     <div className="h-auto p-[2px]">
                       <FaIndianRupeeSign />
                     </div>
                     2 Cr
-                  </div>
-                  <div className="relative flex h-3 shrink-0 items-center self-stretch text-xs font-medium text-color-states-common-black opacity-[0.5]">
-                    5,000 units
                   </div>
                 </div>
               </div>
