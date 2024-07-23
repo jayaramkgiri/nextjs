@@ -66,29 +66,54 @@ export default async function Page() {
           </div>
         </CardBody>
       </Card>
-      <Card className=" rounded-lg  bg-gray-200 shadow-lg">
-        <CardHeader className="m-0 flex flex-col gap-0 p-0">
+      <Card className="rounded-lg  bg-white  shadow-lg">
+        <CardHeader className="m-0 flex flex-col gap-0 p-0 bg-gray-200">
           <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
             CASHFLOWS
           </h3>
         </CardHeader>
-        <CardBody className="flex flex-row divide-x divide-solid divide-gray-200 p-0">
-          <div className="m-0 flex w-full flex-col justify-between bg-white pb-2 pl-5">
-            <p className="font-semibold text-darkgray">Face Value</p>
-            <div className="flex flex-row items-start justify-start">
-              <div className="h-auto p-[2px] font-light text-dimgray">
-                <FaIndianRupeeSign />
-              </div>
-              10,000,00
+        <CardBody className="flex flex-col p-0">
+          <div className="m-2 flex w-full h-6 flex-row items-start justify-between text-darkgray">
+            <div className="w-2/5 text-xs shrink-0 font-semibold">
+              Date
+            </div>
+            <div className="w-1/5 text-xs shrink-0 font-semibold">
+              Principal
+            </div>
+            <div className="w-1/5 text-xs shrink-0 font-semibold">
+              Interest
+            </div>
+            <div className="w-1/5 text-xs shrink-0 font-semibold">
+              Sum
             </div>
           </div>
-          <div className="m-0 flex w-full flex-col justify-between  bg-white pb-2 pl-5">
-            <p className="font-semibold text-darkgray">Allotment Date</p>
-            <div className="flex flex-row items-start justify-start">
-              <div className="h-auto p-[2px] font-light text-dimgray">
-                <FaIndianRupeeSign />
+          <div className="mx-2 flex w-full h-6 flex-1 flex-row items-start justify-between self-stretch">
+            <div className="w-2/5 relative inline-block  text-xs shrink-0 self-stretch">
+              24th May 2024
+            </div>
+            <div className="w-1/5 flex text-xs flex-col items-start justify-start gap-2 self-stretch">
+              <div className="flex flex-row items-start justify-start">
+                <div className="h-auto p-[2px]">
+                  <FaIndianRupeeSign />
+                </div>
+                10,00,000
               </div>
-              27 May, 2023
+            </div>
+            <div className="w-1/5 flex text-xs flex-col items-start justify-start gap-2 self-stretch ">
+              <div className="flex flex-row items-start justify-start">
+                <div className="h-auto p-[2px]">
+                  <FaIndianRupeeSign />
+                </div>
+                1,43,551
+              </div>
+            </div>
+            <div className="w-1/5 flex flex-col items-start text-xs  justify-start gap-2 self-stretch">
+              <div className="flex flex-row items-start justify-start self-stretch">
+                <div className="h-auto p-[2px]">
+                  <FaIndianRupeeSign />
+                </div>
+                11,43,551
+              </div>
             </div>
           </div>
         </CardBody>
