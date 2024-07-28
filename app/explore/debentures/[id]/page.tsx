@@ -12,7 +12,7 @@ import { FileIcon, defaultStyles } from 'react-file-icon';
 
 export default async function Page() {
   return (
-    <div className="h-[85%]w-[95%] grid grid-flow-col grid-rows-3 gap-4 overflow-auto">
+    <div className="h-[85%]w-[95%] grid grid-flow-col grid-rows-3 gap-6 overflow-auto">
       <Card className="col-span-2 row-span-1 rounded-lg bg-gray-200 shadow-lg">
         <CardHeader className="m-0 flex flex-col gap-0 p-0">
           <h3 className="m-0 flex self-stretch px-2 py-2 text-inherit font-semibold text-neutral-600">
@@ -73,7 +73,7 @@ export default async function Page() {
             CASHFLOWS
           </h3>
         </CardHeader>
-        <CardBody className="flex h-72 flex-col bg-white p-0">
+        <CardBody className="flex h-[312px] flex-col bg-white p-0">
           <div className="m-2 flex h-6 w-full flex-row items-start justify-between text-darkgray">
             <div className="w-1/4 shrink-0 text-xs font-semibold">Date</div>
             <div className="w-1/4 shrink-0 text-xs font-semibold">
@@ -178,7 +178,7 @@ export default async function Page() {
               })}
             </div>
             <div className="w-1/2">
-              <div className="text-sm m-2 flex h-12 w-full flex-row items-start justify-between self-stretch text-darkgray">
+              <div className="text-sm m-2 flex h-6 w-full flex-row items-start justify-between self-stretch text-darkgray">
                 <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
                   Tenor
                 </div>
@@ -192,9 +192,9 @@ export default async function Page() {
                   Ask
                 </div>
               </div>
-              {new Array(5).fill('').map((_) => {
+              {new Array(10).fill('').map((_) => {
                 return (
-                  <div className="mx-2 flex h-12 flex-1 flex-row items-start justify-between self-stretch">
+                  <div className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch">
                     <div className="relative inline-block w-16 shrink-0 self-stretch">
                       1 Y
                     </div>
@@ -247,7 +247,7 @@ export default async function Page() {
           </div>
           <div className="m-0 flex w-full flex-col justify-between  bg-white pb-2 pl-5">
             <p className="font-semibold text-darkgray">Trust Deed</p>
-            <div className="flex h-10 w-10">NA</div>
+            <div className="flex h-10 w-10">-</div>
           </div>
         </CardBody>
       </Card>
