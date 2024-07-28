@@ -8,13 +8,14 @@ import {
 } from '@nextui-org/react';
 import { David_Libre } from 'next/font/google';
 import { FaIndianRupeeSign } from 'react-icons/fa6';
+import { FileIcon, defaultStyles } from 'react-file-icon';
 
 export default async function Page() {
   return (
-    <div className="grid w-[90%] grid-cols-3 gap-4">
-      <Card className="col-span-2 rounded-lg  bg-gray-200 shadow-lg">
+    <div className="h-[85%]w-[95%] grid grid-flow-col grid-rows-3 gap-4 overflow-auto">
+      <Card className="col-span-2 row-span-1 rounded-lg bg-gray-200 shadow-lg">
         <CardHeader className="m-0 flex flex-col gap-0 p-0">
-          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+          <h3 className="m-0 flex self-stretch px-2 py-2 text-inherit font-semibold text-neutral-600">
             ISSUE DETAILS
           </h3>
         </CardHeader>
@@ -66,76 +67,74 @@ export default async function Page() {
           </div>
         </CardBody>
       </Card>
-      <Card className="rounded-lg  bg-white  shadow-lg">
-        <CardHeader className="m-0 flex flex-col gap-0 p-0 bg-gray-200">
-          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+      <Card className="col-span-1 col-start-3 row-span-2 h-[360px]  overflow-auto rounded-lg bg-gray-200 shadow-lg">
+        <CardHeader className="m-0 flex flex-col gap-0  p-0">
+          <h3 className="m-0 flex self-stretch px-2 py-2 text-inherit font-semibold text-neutral-600">
             CASHFLOWS
           </h3>
         </CardHeader>
-        <CardBody className="flex flex-col p-0">
-          <div className="m-2 flex w-full h-6 flex-row items-start justify-between text-darkgray">
-            <div className="w-2/5 text-xs shrink-0 font-semibold">
-              Date
-            </div>
-            <div className="w-1/5 text-xs shrink-0 font-semibold">
+        <CardBody className="flex h-72 flex-col bg-white p-0">
+          <div className="m-2 flex h-6 w-full flex-row items-start justify-between text-darkgray">
+            <div className="w-1/4 shrink-0 text-xs font-semibold">Date</div>
+            <div className="w-1/4 shrink-0 text-xs font-semibold">
               Principal
             </div>
-            <div className="w-1/5 text-xs shrink-0 font-semibold">
-              Interest
-            </div>
-            <div className="w-1/5 text-xs shrink-0 font-semibold">
-              Sum
-            </div>
+            <div className="w-1/4 shrink-0 text-xs font-semibold">Interest</div>
+            <div className="w-1/4 shrink-0 text-xs font-semibold">Sum</div>
           </div>
-          <div className="mx-2 flex w-full h-6 flex-1 flex-row items-start justify-between self-stretch">
-            <div className="w-2/5 relative inline-block  text-xs shrink-0 self-stretch">
-              24th May 2024
-            </div>
-            <div className="w-1/5 flex text-xs flex-col items-start justify-start gap-2 self-stretch">
-              <div className="flex flex-row items-start justify-start">
-                <div className="h-auto p-[2px]">
-                  <FaIndianRupeeSign />
+          {new Array(16).fill('').map((_) => {
+            return (
+              <div className="m-2 flex h-auto w-full flex-row items-start justify-between self-stretch pr-2">
+                <div className="relative inline-block w-1/4  shrink-0 self-stretch text-xs">
+                  24 May 2024
                 </div>
-                10,00,000
-              </div>
-            </div>
-            <div className="w-1/5 flex text-xs flex-col items-start justify-start gap-2 self-stretch ">
-              <div className="flex flex-row items-start justify-start">
-                <div className="h-auto p-[2px]">
-                  <FaIndianRupeeSign />
+                <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-xs">
+                  <div className="flex flex-row items-start justify-start">
+                    <div className="h-auto p-[2px]">
+                      <FaIndianRupeeSign />
+                    </div>
+                    10,00,000
+                  </div>
                 </div>
-                1,43,551
-              </div>
-            </div>
-            <div className="w-1/5 flex flex-col items-start text-xs  justify-start gap-2 self-stretch">
-              <div className="flex flex-row items-start justify-start self-stretch">
-                <div className="h-auto p-[2px]">
-                  <FaIndianRupeeSign />
+                <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-xs ">
+                  <div className="flex flex-row items-start justify-start">
+                    <div className="h-auto p-[2px]">
+                      <FaIndianRupeeSign />
+                    </div>
+                    1,43,551
+                  </div>
                 </div>
-                11,43,551
+                <div className="flex w-1/4 flex-col items-start justify-start  gap-2 self-stretch text-xs">
+                  <div className="flex flex-row items-start justify-start self-stretch">
+                    <div className="h-auto p-[2px]">
+                      <FaIndianRupeeSign />
+                    </div>
+                    11,43,551
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </CardBody>
       </Card>
-      <Card className="col-span-2 rounded-lg  bg-gray-200 shadow-lg">
+      <Card className="col-span-2 col-start-1 row-span-2 row-start-2 rounded-lg bg-gray-200 shadow-lg">
         <CardHeader className="m-0 flex flex-col gap-0 p-0">
-          <h3 className="text-inherit m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+          <h3 className="m-0 flex self-stretch px-2 py-2 text-inherit font-semibold text-neutral-600">
             MARKET DEPTH
           </h3>
-          <div className="m-0 flex w-full flex-row justify-between p-0">
+          <div className="m-0 flex w-full flex-row justify-between p-0 text-xs">
             <div className="m-0 w-full bg-green-500">
-              <p className="text-secondary text-sm m-0 px-2 py-1">Buy</p>
+              <p className="text-secondary m-0 px-2 py-1">Buy</p>
             </div>
             <div className="w-full bg-red-500">
-              <p className="text-secondary text-sm m-0 px-2 py-1">Sell</p>
+              <p className="text-secondary m-0 px-2 py-1">Sell</p>
             </div>
           </div>
         </CardHeader>
-        <CardBody className=" flex w-full flex-col  bg-white p-0">
-          <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200">
+        <CardBody className=" flex h-72 w-full flex-col bg-white p-0 text-xs">
+          <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200 pb-0">
             <div className="w-1/2">
-              <div className="m-2 flex h-12 flex-row items-start justify-between self-stretch text-darkgray">
+              <div className="m-2 flex h-6 flex-row items-start justify-between self-stretch text-darkgray">
                 <div className=" inline-block w-16 shrink-0 font-semibold">
                   Tenor
                 </div>
@@ -149,33 +148,37 @@ export default async function Page() {
                   Ask
                 </div>
               </div>
-              <div className="mx-2 flex h-12 flex-1 flex-row items-start justify-between self-stretch">
-                <div className="relative inline-block w-16 shrink-0 self-stretch">
-                  1 Y
-                </div>
-                <div className="relative inline-block w-16 shrink-0 self-stretch">
-                  10%
-                </div>
-                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
-                  <div className="flex flex-row items-start justify-start">
-                    <div className="h-auto p-[2px]">
-                      <FaIndianRupeeSign />
+              {new Array(10).fill('').map((_) => {
+                return (
+                  <div className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch">
+                    <div className="relative inline-block w-16 shrink-0 self-stretch">
+                      1 Y
                     </div>
-                    20 Cr
-                  </div>
-                </div>
-                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
-                  <div className="flex flex-row items-start justify-start self-stretch">
-                    <div className="h-auto p-[2px]">
-                      <FaIndianRupeeSign />
+                    <div className="relative inline-block w-16 shrink-0 self-stretch">
+                      10%
                     </div>
-                    2 Cr
+                    <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                      <div className="flex flex-row items-start justify-start">
+                        <div className="h-auto p-[2px]">
+                          <FaIndianRupeeSign />
+                        </div>
+                        20 Cr
+                      </div>
+                    </div>
+                    <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
+                      <div className="flex flex-row items-start justify-start self-stretch">
+                        <div className="h-auto p-[2px]">
+                          <FaIndianRupeeSign />
+                        </div>
+                        2 Cr
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="w-1/2">
-              <div className="m-2 flex h-12 w-full flex-row items-start justify-between self-stretch text-darkgray">
+              <div className="text-sm m-2 flex h-12 w-full flex-row items-start justify-between self-stretch text-darkgray">
                 <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
                   Tenor
                 </div>
@@ -189,31 +192,62 @@ export default async function Page() {
                   Ask
                 </div>
               </div>
-              <div className="mx-2 flex h-12 flex-1 flex-row items-start justify-between self-stretch">
-                <div className="relative inline-block w-16 shrink-0 self-stretch">
-                  1 Y
-                </div>
-                <div className="relative inline-block w-16 shrink-0 self-stretch">
-                  10%
-                </div>
-                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
-                  <div className="flex flex-row items-start justify-start">
-                    <div className="h-auto p-[2px]">
-                      <FaIndianRupeeSign />
+              {new Array(5).fill('').map((_) => {
+                return (
+                  <div className="mx-2 flex h-12 flex-1 flex-row items-start justify-between self-stretch">
+                    <div className="relative inline-block w-16 shrink-0 self-stretch">
+                      1 Y
                     </div>
-                    20 Cr
-                  </div>
-                </div>
-                <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
-                  <div className="flex flex-row items-start justify-start self-stretch">
-                    <div className="h-auto p-[2px]">
-                      <FaIndianRupeeSign />
+                    <div className="relative inline-block w-16 shrink-0 self-stretch">
+                      10%
                     </div>
-                    2 Cr
+                    <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                      <div className="flex flex-row items-start justify-start">
+                        <div className="h-auto p-[2px]">
+                          <FaIndianRupeeSign />
+                        </div>
+                        20 Cr
+                      </div>
+                    </div>
+                    <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
+                      <div className="flex flex-row items-start justify-start self-stretch">
+                        <div className="h-auto p-[2px]">
+                          <FaIndianRupeeSign />
+                        </div>
+                        2 Cr
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
+          </div>
+        </CardBody>
+      </Card>
+      <Card className="col-span-1 row-span-1 rounded-lg bg-gray-200 shadow-lg">
+        <CardHeader className="m-0 flex flex-col gap-0 p-0">
+          <h3 className="m-0 flex self-stretch px-2 py-2 text-inherit font-semibold text-neutral-600">
+            DOWNLOADS
+          </h3>
+        </CardHeader>
+        <CardBody className="flex flex-row divide-x divide-solid divide-gray-200 p-0">
+          <div className="m-0 flex w-full flex-col justify-between bg-white pb-2 pl-5">
+            <p className="font-semibold text-darkgray">
+              Information Memorandum
+            </p>
+            <div className="flex h-10 w-10">
+              <FileIcon extension="IM.pdf" {...defaultStyles['pdf']} />
+            </div>
+          </div>
+          <div className="m-0 flex w-full flex-col justify-between  bg-white pb-2 pl-5">
+            <p className="font-semibold text-darkgray">Rating Rationale</p>
+            <div className="flex h-10 w-10">
+              <FileIcon extension="RR.pdf" {...defaultStyles['pdf']} />
+            </div>
+          </div>
+          <div className="m-0 flex w-full flex-col justify-between  bg-white pb-2 pl-5">
+            <p className="font-semibold text-darkgray">Trust Deed</p>
+            <div className="flex h-10 w-10">NA</div>
           </div>
         </CardBody>
       </Card>
