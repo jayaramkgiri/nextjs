@@ -4,7 +4,7 @@ import TopNav from '@/app/ui/explore/top-nav';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <TopNav />
+      {/* <TopNav /> */}
       {children}
     </div>
   );

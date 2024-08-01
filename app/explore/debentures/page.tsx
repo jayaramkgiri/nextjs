@@ -4,6 +4,7 @@ import Table from '@/app/ui/explore/issuances/table';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { noOfPages } from '@/app/models/issuance';
 import { Suspense } from 'react';
+import TopNav from '@/app/ui/explore/top-nav';
 
 export default async function Page({
   searchParams,
@@ -19,6 +20,7 @@ export default async function Page({
   const totalPages = 10;
   return (
     <>
+      <TopNav />
       <section className="bg-white pb-3 pr-10">
         <div className="flex justify-between">
           <Search placeholder="Search" />

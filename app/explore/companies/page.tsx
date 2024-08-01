@@ -4,6 +4,7 @@ import Table from '@/app/ui/explore/companies/table';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { noOfPages } from '@/app/models/company';
+import TopNav from '@/app/ui/explore/top-nav';
 
 export default async function Page({
   searchParams,
@@ -17,6 +18,7 @@ export default async function Page({
   const currentPage = Number(searchParams?.page) || 1;
   return (
     <>
+      <TopNav />
       <section className=" bg-white pb-3 pr-10">
         <div className="my-auto flex justify-center">
           <Search placeholder="Search" />
