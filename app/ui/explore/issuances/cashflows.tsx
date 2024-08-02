@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import Accordion from '@mui/material/Accordion';
@@ -16,11 +16,13 @@ export default async function Cashflows() {
           id="cashflows"
           className="shadow-t-lg m-0 rounded-t-lg bg-gray-200"
         >
-          <div className='flex flex-col'>
-            <p className='text-inherit text-md font-semibold text-neutral-600 m-0 p-0'>
+          <div className="flex flex-col">
+            <p className="text-md m-0 p-0 text-inherit font-semibold text-neutral-600">
               CASHFLOWS
             </p>
-            <p className='text-inherit text-xs font-semibold text-neutral-600 m-0 px-0 pt-2 pb-0'>Next Payment Cutoff: 24th June</p>
+            <p className="m-0 px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
+              Next Payment Cutoff: 24th June
+            </p>
           </div>
         </AccordionSummary>
         <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-lg">
@@ -36,9 +38,12 @@ export default async function Cashflows() {
                 </div>
                 <div className="w-1/4 shrink-0 text-xs font-semibold">Sum</div>
               </div>
-              {new Array(16).fill('').map((_) => {
+              {new Array(16).fill('').map((_, index) => {
                 return (
-                  <div className="m-2 flex h-auto w-full flex-row items-start justify-between self-stretch pr-2">
+                  <div
+                    key={index}
+                    className="m-2 flex h-auto w-full flex-row items-start justify-between self-stretch pr-2"
+                  >
                     <div className="relative inline-block w-1/4  shrink-0 self-stretch text-xs">
                       24 May 2024
                     </div>

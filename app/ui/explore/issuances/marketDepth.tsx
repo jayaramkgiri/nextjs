@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import Accordion from '@mui/material/Accordion';
@@ -16,14 +16,14 @@ export default async function MarketDepth() {
           id="cashflows"
           className="shadow-t-lg m-0 rounded-t-lg bg-gray-200 text-inherit font-semibold text-neutral-600"
         >
-          <div className='flex flex-col'>
-            <p className='text-inherit text-md font-semibold text-neutral-600 m-0 p-0'>
+          <div className="flex flex-col">
+            <p className="text-md m-0 p-0 text-inherit font-semibold text-neutral-600">
               MARKET DEPTH
             </p>
-            <div className='flex text-inherit text-xs font-semibold text-neutral-600 m-0 px-0 pt-2 pb-0'>
-              <p className='m-0'>Interest Accrued: </p>
+            <div className="m-0 flex px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
+              <p className="m-0">Interest Accrued: </p>
               <div className="flex flex-row items-start justify-start pl-3">
-                <div className='text-[10px] pt-[2px] pr-[2px]'>
+                <div className="pr-[2px] pt-[2px] text-[10px]">
                   <FaIndianRupeeSign />
                 </div>
                 567
@@ -32,7 +32,10 @@ export default async function MarketDepth() {
           </div>
         </AccordionSummary>
         <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-lg">
-          <div key="1" className="flex h-[calc(50vh-160px)] flex-col divide-y divide-solid divide-gray-200 overflow-auto">
+          <div
+            key="1"
+            className="flex h-[calc(50vh-160px)] flex-col divide-y divide-solid divide-gray-200 overflow-auto"
+          >
             <div className="m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0 text-xs">
               <div className="m-0 w-full">
                 <p className="m-0 px-2 py-1 text-green-500">Buy</p>
@@ -58,9 +61,12 @@ export default async function MarketDepth() {
                       Ask
                     </div>
                   </div>
-                  {new Array(10).fill('').map((_) => {
+                  {new Array(10).fill('').map((_, index) => {
                     return (
-                      <div className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch">
+                      <div
+                        key={index}
+                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch"
+                      >
                         <div className="relative inline-block w-16 shrink-0 self-stretch">
                           1 Y
                         </div>
@@ -102,9 +108,12 @@ export default async function MarketDepth() {
                       Ask
                     </div>
                   </div>
-                  {new Array(10).fill('').map((_) => {
+                  {new Array(10).fill('').map((_, index) => {
                     return (
-                      <div className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch">
+                      <div
+                        key={index}
+                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch"
+                      >
                         <div className="relative inline-block w-16 shrink-0 self-stretch">
                           1 Y
                         </div>
