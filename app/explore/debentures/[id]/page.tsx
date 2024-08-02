@@ -6,33 +6,31 @@ import MarketDepth from '@/app/ui/explore/issuances/marketDepth';
 
 export default async function Page() {
   return (
-    <div className="flex h-[88%] w-[95%] my-3 mx-3 flex-col gap-x-3 gap-y-3 overflow-auto">
-      <div className='mt-3 w-full'>
-        <div className='flex mb-3 m-0 w-full'>
-          <div className='m-0 w-1/4 flex self-stretch px-0 py-2'>
+    <div className="m-0 flex h-[88%] w-[95%] flex-col gap-x-3 gap-y-3 overflow-auto px-2 pb-2">
+      <div className="mt-3 w-full">
+        <div className="m-0 mb-3 flex w-full">
+          <div className="m-0 flex w-1/4 self-stretch px-0 py-2">
             <h1 className="m-0 text-xl font-semibold text-neutral-600">
               INE196P07047
             </h1>
           </div>
-          <div className='m-0 w-1/2 flex self-stretch px-0 py-2'>
-            <p className="m-0 text-md font-semibold text-blue-600">
+          <div className="m-0 flex w-1/2 self-stretch px-0 py-2">
+            <p className="text-md m-0 font-semibold text-blue-600">
               PIRAMAL CAPITAL & HOUSING FINANCE LIMITED
             </p>
           </div>
         </div>
-        <div className='flex w-full m-0'>
-          <div className='flex flex-col w-1/4'>
-            <p className="m-0 text-xs py-1 font-normal text-neutral-500">
+        <div className="m-0 flex w-full">
+          <div className="flex w-1/4 flex-col">
+            <p className="m-0 py-1 text-xs font-normal text-neutral-500">
               BSE Scrip: 938742
             </p>
             <p className="m-0 text-xs font-normal text-neutral-500">
               NSE Scrip: 871REC28-N9
             </p>
           </div>
-          <div className='m-0 w-1/4 flex self-stretch px-0'>
-            <p className="text-md font-semibold text-neutral-600">
-              CRISIL AAA
-            </p>
+          <div className="m-0 flex w-1/4 self-stretch px-0">
+            <p className="text-md font-semibold text-neutral-600">CRISIL AAA</p>
           </div>
         </div>
       </div>
@@ -129,6 +127,6 @@ export default async function Page() {
           <MarketDepth />
         </div>
       </div>
-    </div >
+    </div>
   );
 }
