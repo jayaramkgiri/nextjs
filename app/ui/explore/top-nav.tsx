@@ -5,29 +5,29 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { name: 'Companies', href: '/explore/companies' },
-  { name: 'Debentures', href: '/explore/debentures' },
+  { name: 'COMPANIES', href: '/explore/companies' },
+  { name: 'DEBENTURES', href: '/explore/debentures' },
 ];
 
 export default function TopNav() {
   const pathname = usePathname();
   return (
-    <div className="m-2 flex flex-row items-start justify-start self-stretch overflow-hidden py-0 pl-0 pr-5">
+    <div className="m-2 flex flex-row items-start self-stretch overflow-hidden py-0 pl-0 pr-5">
       <div className="mb-0 ml-2  flex w-2/5 gap-0 pt-5 ">
         {links.map((link) => {
           return (
             <div
               key={link.name}
-              className={`group my-1 w-full  p-3 text-xl ${
+              className={`text-md group my-1  w-full border  border-solid border-gray-300 p-1 ${
                 pathname === link.href
-                  ? ' border-1 border-solid border-gray-700 shadow-inner shadow-gray-300'
-                  : 'hover:duration-250  shadow-lg shadow-gray-300 transition duration-0 hover:border-2 hover:border-solid hover:border-gray-300'
+                  ? 'bg-gray-100 shadow-inner shadow-gray-300'
+                  : 'hover:duration-250  shadow-sm shadow-gray-300 transition duration-0 hover:bg-gray-100'
               }`}
             >
               <Link
                 key={link.name}
                 href={link.href}
-                className={`mx-auto block pb-3 font-medium no-underline  ${
+                className={`mx-auto block py-1 text-center font-medium no-underline  ${
                   pathname === link.href
                     ? 'text-gray-800 '
                     : ' text-gray-800 group-hover:text-gray-800'
