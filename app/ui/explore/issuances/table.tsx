@@ -19,7 +19,7 @@ export default async function DebenturesTable({
               <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
-                    <div className="mb-2 flex items-center">
+                    <div className="mb-2 flex font-medium items-center">
                       <p>{issuance.description}</p>
                     </div>
                     <p className="text-xs text-gray-500">{issuance.isin}</p>
@@ -30,7 +30,7 @@ export default async function DebenturesTable({
           </div>
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-xs rounded-lg text-left font-normal text-darkgray">
+              <thead className="text-xs rounded-lg text-left font-medium text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
@@ -40,7 +40,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[59px] top-0 z-20 bg-white px-3 py-5 font-medium"
+                    className="sticky left-[59px] w-6 top-0 z-20 bg-white px-3 py-5 font-medium"
                   >
                     Issuer Name
                   </th>

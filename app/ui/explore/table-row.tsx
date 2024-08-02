@@ -23,7 +23,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} hover:text-clip`}
+          className={`mx-0 truncate bg-auto font-medium  px-${padding} py-${padding} hover:text-clip`}
         >
           {
             cell.toLocaleDateString('en-US', {
@@ -38,7 +38,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} hover:text-clip ${cell.classNames}`}
+          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} font-medium hover:text-clip ${cell.classNames}`}
         >
           {cell.value}
         </td>
@@ -47,7 +47,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} hover:text-clip`}
+          className={`mx-0 truncate w-3 bg-auto font-medium px-${padding} py-${padding} hover:text-clip`}
         >
           {cell}
         </td>
@@ -63,7 +63,7 @@ export default function TableRow({
       {showSno && (
         <td
           key={0}
-          className={`sticky left-0 z-10 mx-0 whitespace-nowrap bg-white px-${padding} py-${padding}`}
+          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  font-medium bg-white px-${padding} py-${padding}`}
         >
           {(currentPage - 1) * itemsPerPage + sno + 1}
         </td>
@@ -71,7 +71,7 @@ export default function TableRow({
       <td
         key={1}
         className={`sticky ${showSno ? 'left-[42px]' : 'left-0'
-          } z-10 mx-0  whitespace-nowrap bg-white px-${padding} py-${padding}`}
+          } z-10 mx-0  whitespace-nowrap font-medium bg-white px-${padding} py-${padding}`}
       >
         {cells[0]}
       </td>

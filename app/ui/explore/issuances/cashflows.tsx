@@ -1,3 +1,5 @@
+'use client'
+
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -12,12 +14,17 @@ export default async function Cashflows() {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="cashflows"
           id="cashflows"
-          className="shadow-t-lg m-0 rounded-t-lg bg-gray-200 text-inherit font-semibold text-neutral-600"
+          className="shadow-t-lg m-0 rounded-t-lg bg-gray-200"
         >
-          CASHFLOWS
+          <div className='flex flex-col'>
+            <p className='text-inherit text-md font-semibold text-neutral-600 m-0 p-0'>
+              CASHFLOWS
+            </p>
+            <p className='text-inherit text-xs font-semibold text-neutral-600 m-0 px-0 pt-2 pb-0'>Next Payment Cutoff: 24th June</p>
+          </div>
         </AccordionSummary>
         <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-lg">
-          <div key="1" className=" max-h-[240px] min-h-[240px] overflow-auto ">
+          <div key="1" className="  h-[calc(50vh-160px)] overflow-auto ">
             <div className="flex h-[312px] flex-col bg-white p-0">
               <div className="m-2 flex h-6 w-full flex-row items-start justify-between text-darkgray">
                 <div className="w-1/4 shrink-0 text-xs font-semibold">Date</div>

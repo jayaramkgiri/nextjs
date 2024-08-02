@@ -1,3 +1,5 @@
+'use client'
+
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -14,10 +16,23 @@ export default async function MarketDepth() {
           id="cashflows"
           className="shadow-t-lg m-0 rounded-t-lg bg-gray-200 text-inherit font-semibold text-neutral-600"
         >
-          MARKET DEPTH
+          <div className='flex flex-col'>
+            <p className='text-inherit text-md font-semibold text-neutral-600 m-0 p-0'>
+              MARKET DEPTH
+            </p>
+            <div className='flex text-inherit text-xs font-semibold text-neutral-600 m-0 px-0 pt-2 pb-0'>
+              <p className='m-0'>Interest Accrued: </p>
+              <div className="flex flex-row items-start justify-start pl-3">
+                <div className='text-[10px] pt-[2px] pr-[2px]'>
+                  <FaIndianRupeeSign />
+                </div>
+                567
+              </div>
+            </div>
+          </div>
         </AccordionSummary>
         <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-lg">
-          <div className="flex max-h-[240px] min-h-[240px] flex-col divide-y divide-solid divide-gray-200 overflow-auto">
+          <div key="1" className="flex h-[calc(50vh-160px)] flex-col divide-y divide-solid divide-gray-200 overflow-auto">
             <div className="m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0 text-xs">
               <div className="m-0 w-full">
                 <p className="m-0 px-2 py-1 text-green-500">Buy</p>
