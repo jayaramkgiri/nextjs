@@ -1,6 +1,7 @@
 import Pagination from '@/app/ui/market/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/market/table';
+import Sort from '@/app/ui/market/sort';
 import Cards from '@/app/ui/overview/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -30,19 +31,23 @@ export default async function Page({
   });
   return (
     <div className="pr-6">
-      <section className="sticky left-0 top-0 z-20 bg-white pb-3 ">
-        <div className="flex flex-row items-start justify-between self-stretch overflow-hidden py-0 pl-0 pr-5">
-          <h1 className="text-brand-primary mt-5 pl-2 text-left text-15xl font-bold">
-            Market
-          </h1>
-          <div className="my-0 flex h-auto shrink-0 flex-row items-end justify-start gap-4 overflow-hidden py-0">
+      <section className="sticky left-0 top-0 z-20 mt-10 bg-white pb-3 ">
+        <div className="flex w-full flex-row items-start justify-between self-stretch overflow-hidden p-0">
+          <div className="w-1/2">
+            <Search placeholder="Search" />
+          </div>
+          <div className="z-30 w-1/2">
+            <Sort />
+          </div>
+        </div>
+        <div className="flex w-[90%] justify-between">
+          <div className="flex h-full shrink-0 flex-row items-start justify-end gap-4">
             <Cards cardType="bid" marketSummary={marketSummary} />
             <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
-        </div>
-        <div className="my-auto flex w-[90%] justify-center">
-          <Search placeholder="Search" />
-          <Pagination totalPages={totalPages} />
+          <div className="flex flex-col justify-end">
+            <Pagination totalPages={totalPages} />
+          </div>
         </div>
       </section>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>

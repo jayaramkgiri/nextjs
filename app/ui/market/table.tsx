@@ -37,24 +37,24 @@ function bidAskCell(
 ) {
   // const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
   return {
-    value: units && units !== 0 ? (
-      <div className="flex flex-col">
-        <div className="flex flex-row">
-          {closePrice &&
-            price !== null &&
-            (closePrice <= price ? upArrow() : downArrow())}
-          {price !== null && units !== null && (
-            <div className="h-auto p-[2px] font-thin text-dimgray">
-              <FaIndianRupeeSign />
-            </div>
-          )}
-          {price !== null ? currencyFormatter(price) : ''}
+    value:
+      units && units !== 0 ? (
+        <div className="flex flex-col">
+          <div className="flex flex-row">
+            {closePrice &&
+              price !== null &&
+              (closePrice <= price ? upArrow() : downArrow())}
+            {price !== null && units !== null && (
+              <div className="h-auto p-[2px] font-thin text-dimgray">
+                <FaIndianRupeeSign />
+              </div>
+            )}
+            {price !== null ? currencyFormatter(price) : ''}
+          </div>
         </div>
-        <div className="text-xxs pl-5 text-dimgray">
-          {units ? `${currencyFormatter(units)} units` : ''}
-        </div>
-      </div>
-    ) : '',
+      ) : (
+        ''
+      ),
     classNames: classNames,
   };
 }
@@ -108,38 +108,8 @@ export default async function DebenturesTable({
           </div>
           <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-xs rounded-lg text-left font-normal text-darkgray">
-                <tr className="sticky top-0 z-20 w-6  bg-white font-medium">
-                  <th
-                    scope="col"
-                    className="sticky left-0 top-0 z-20 bg-white px-1 py-1"
-                    colSpan={2}
-                  ></th>
-                  <th
-                    scope="col"
-                    className=" bg-white  px-2 py-2 font-medium "
-                  ></th>
-                  <th
-                    scope="col"
-                    colSpan={3}
-                    className="border-b border-solid border-gray-200 bg-neutral-100 px-2 py-2 text-center font-medium"
-                  >
-                    BSE
-                  </th>
-                  <th
-                    scope="col"
-                    colSpan={3}
-                    className="border-b  border-solid border-gray-200 bg-orange-100 px-2 py-2 text-center font-medium"
-                  >
-                    NSE
-                  </th>
-                  <th
-                    scope="col"
-                    colSpan={6}
-                    className="bg-white px-2 py-2 text-center font-medium"
-                  ></th>
-                </tr>
-                <tr className="sticky top-6 z-20 border-b border-solid border-gray-200 bg-white">
+              <thead className="rounded-lg text-left text-xs font-normal text-darkgray">
+                <tr className="sticky top-0 z-20 border-b border-solid border-gray-200 bg-white">
                   <th
                     scope="col"
                     className="sticky left-0 top-0 z-20 w-6 bg-white px-2 py-2 font-medium"
@@ -148,48 +118,18 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[42px] top-6 z-20 w-4 bg-white px-2 py-2 font-medium"
+                    className="sticky left-[42px] top-0 z-20 w-4 bg-white px-2 py-2 font-medium"
                   >
                     ISIN
                   </th>
                   <th scope="col" className="px-2 py-2 font-medium">
                     Issuer Name
                   </th>
-                  <th
-                    scope="col"
-                    className="border-l border-solid border-gray-200 px-2 py-2 font-medium"
-                  >
-                    Scrip Name
+                  <th scope="col" className=" px-2 py-2 font-medium">
+                    Buy Price
                   </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-2 font-medium"
-                  >
-                    Buy Orders
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-2 py-2 font-medium"
-                  >
-                    Sell Orders
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-l border-solid border-gray-200 px-2 py-2 font-medium"
-                  >
-                    Scrip Name
-                  </th>
-                  <th
-                    scope="col"
-                    className=" px-2 py-2 font-medium"
-                  >
-                    Buy Orders
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-r border-solid border-gray-200 px-2 py-2 font-medium"
-                  >
-                    Sell Orders
+                  <th scope="col" className="px-2 py-2 font-medium">
+                    Sell Price
                   </th>
                   <th scope="col" className="sticky px-2 py-2 font-medium ">
                     Face Value
@@ -211,7 +151,7 @@ export default async function DebenturesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary text-xs divide-y  bg-white">
+              <tbody className="text-secondary divide-y bg-white  text-xs">
                 {issuances?.map((issuance, index) => {
                   return (
                     <TableRow
@@ -224,10 +164,6 @@ export default async function DebenturesTable({
                       cells={[
                         issuance.isin,
                         issuance.company!.name,
-                        {
-                          value: issuance.bseScripName || '',
-                          classNames: 'border-l border-solid border-gray-200',
-                        },
                         bidAskCell(
                           issuance.bseBuyOrders,
                           issuance.bseBuyPrice,
@@ -240,32 +176,16 @@ export default async function DebenturesTable({
                           issuance.bseclose,
                           '',
                         ),
-                        {
-                          value: issuance.nseScripName || '',
-                          classNames: 'border-l border-solid border-gray-200',
-                        },
-                        bidAskCell(
-                          issuance.nseBuyOrders,
-                          issuance.nseBuyPrice,
-                          issuance.nseclose,
-                          '',
-                        ),
-                        bidAskCell(
-                          issuance.nseSellOrders,
-                          issuance.nseSellPrice,
-                          issuance.nseclose,
-                          'border-r border-solid border-gray-200',
-                        ),
                         currencyFormatter(
                           issuance.faceValue ||
-                          issuance.bseFaceValue ||
-                          issuance.nseFaceValue,
+                            issuance.bseFaceValue ||
+                            issuance.nseFaceValue,
                         ),
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
                         issuance.redemptionDate ||
-                        issuance.bseMaturityDate ||
-                        issuance.nseMaturityDate,
+                          issuance.bseMaturityDate ||
+                          issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
                       ]}
