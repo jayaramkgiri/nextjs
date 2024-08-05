@@ -2,6 +2,7 @@ import Pagination from '@/app/ui/market/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/market/table';
 import Sort from '@/app/ui/market/sort';
+import Filter from '@/app/ui/market/filter';
 import Cards from '@/app/ui/overview/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -36,8 +37,9 @@ export default async function Page({
           <div className="w-1/2">
             <Search placeholder="Search" />
           </div>
-          <div className="z-30 w-1/2">
+          <div className="z-30 flex w-1/2 flex-row">
             <Sort />
+            <Filter />
           </div>
         </div>
         <div className="flex w-[90%] justify-between">

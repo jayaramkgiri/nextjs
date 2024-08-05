@@ -2,12 +2,12 @@
 import { styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
+import { usePathname, useRouter } from 'next/navigation';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(3),
-  },
   '& .MuiInputBase-input': {
     borderRadius: 8,
     position: 'relative',
@@ -37,19 +37,29 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Sort() {
-  const handleChange = (event: { target: { value: string } }) => {};
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const handleChange = (event: { target: { value: string } }) => {
+    replace(`${pathname}?sortby=${event.target.value}`);
+  };
   return (
-    <Select
-      labelId="demo-customized-select-label"
-      id="demo-customized-select"
-      value="10"
-      onChange={handleChange}
-      input={<BootstrapInput />}
-    >
-      <MenuItem value={10}>Buy Volume</MenuItem>
-      <MenuItem value={20}>Buy Yield</MenuItem>
-      <MenuItem value={30}>Sell Volume</MenuItem>
-      <MenuItem value={30}>Sell Yield</MenuItem>
-    </Select>
+    <div className="m-0 flex w-1/2 flex-col justify-start gap-1 p-0">
+      <InputLabel className="m-0 h-auto p-0 text-xs" id="label">
+        Sort
+      </InputLabel>
+      <Select
+        className="m-0 p-0"
+        labelId="demo-customized-select-label"
+        id="demo-customized-select"
+        value="sellVolume"
+        onChange={handleChange}
+        input={<BootstrapInput />}
+      >
+        <MenuItem value={'sellVolume'}>Sell Volume</MenuItem>
+        <MenuItem value={'sellYield'}>Sell Yield</MenuItem>
+        <MenuItem value={'buyVolume'}>Buy Volume</MenuItem>
+        <MenuItem value={'buyYield'}>Buy Yield</MenuItem>
+      </Select>
+    </div>
   );
 }
