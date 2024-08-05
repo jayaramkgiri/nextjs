@@ -6,6 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
 import { usePathname, useRouter } from 'next/navigation';
+import { inter } from '@/app/ui/fonts';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
@@ -14,21 +15,10 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
-    padding: '10px 26px 10px 12px',
+    padding: '4px 10px 4px 12px',
+    width: '160px',
     transition: theme.transitions.create(['border-color']),
     // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
     '&:focus': {
       borderRadius: 8,
       borderColor: 'rgb(229 231 235 / var(--tw-border-opacity))',
@@ -43,7 +33,7 @@ export default function Sort() {
     replace(`${pathname}?sortby=${event.target.value}`);
   };
   return (
-    <div className="m-0 flex w-1/2 flex-col justify-start gap-1 p-0">
+    <div className="m-0 flex w-1/3 flex-col justify-start gap-1 p-0">
       <InputLabel className="m-0 h-auto p-0 text-xs" id="label">
         Sort
       </InputLabel>

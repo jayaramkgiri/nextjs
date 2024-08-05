@@ -32,12 +32,12 @@ export default async function Page({
   });
   return (
     <div className="pr-6">
-      <section className="sticky left-0 top-0 z-20 mt-10 bg-white pb-3 ">
-        <div className="flex w-full flex-row items-start justify-between self-stretch overflow-hidden p-0">
-          <div className="w-1/2">
+      <section className="sticky left-0 top-0 z-20 m-0 bg-white pb-3 ">
+        <div className="relative flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0 ">
+          <div className="mt-10 flex w-1/2">
             <Search placeholder="Search" />
           </div>
-          <div className="z-30 flex w-1/2 flex-row">
+          <div className="mt-6 flex w-1/2 flex-row items-end justify-end gap-8">
             <Sort />
             <Filter />
           </div>
