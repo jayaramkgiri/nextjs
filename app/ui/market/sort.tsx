@@ -43,7 +43,7 @@ export default function Sort() {
   );
 
   useEffect(() => {
-    const sort = searchParams.get('sort') || 'all';
+    const sort = searchParams.get('sort') || 'sellVolume';
     setSortValue(sort);
   }, []);
 
