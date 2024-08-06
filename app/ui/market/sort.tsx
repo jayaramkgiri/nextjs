@@ -5,8 +5,8 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
-import { usePathname, useRouter } from 'next/navigation';
-import { inter } from '@/app/ui/fonts';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useState, useEffect } from 'react';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
@@ -15,7 +15,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
-    padding: '4px 10px 4px 12px',
+    padding: '4px 16px 4px 16px',
     width: '160px',
     transition: theme.transitions.create(['border-color']),
     // Use the system font instead of the default Roboto font.
@@ -28,9 +28,28 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 export default function Sort() {
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [sortValue, setSortValue] = useState('sellVolume');
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  useEffect(() => {
+    const sort = searchParams.get('sort') || 'all';
+    setSortValue(sort);
+  }, []);
+
   const handleChange = (event: { target: { value: string } }) => {
-    replace(`${pathname}?sortby=${event.target.value}`);
+    setSortValue(event.target.value);
+    router.push(pathname + '?' + createQueryString('sort', event.target.value));
   };
   return (
     <div className="m-0 flex w-1/3 flex-col justify-start gap-1 p-0">
@@ -41,7 +60,7 @@ export default function Sort() {
         className="m-0 p-0"
         labelId="demo-customized-select-label"
         id="demo-customized-select"
-        value="sellVolume"
+        value={sortValue}
         onChange={handleChange}
         input={<BootstrapInput />}
       >
