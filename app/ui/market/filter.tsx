@@ -17,7 +17,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     border: '1px solid #ced4da',
     fontSize: 16,
     padding: '4px 16px 4px 16px',
-    width: '160px',
+    width: '100%',
     transition: theme.transitions.create(['border-color']),
     // Use the system font instead of the default Roboto font.
     '&:focus': {
