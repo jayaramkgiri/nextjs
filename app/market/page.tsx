@@ -3,6 +3,7 @@ import Search from '@/app/ui/search';
 import Table from '@/app/ui/market/table';
 import Sort from '@/app/ui/market/sort';
 import Filter from '@/app/ui/market/filter';
+import YieldCard from '@/app/ui/market/yieldCard';
 import Cards from '@/app/ui/overview/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -31,7 +32,13 @@ export default async function Page({
     ],
   });
   return (
-    <div className="pr-6">
+    <div className="overflow-auto pr-6">
+      <section className="m-2 flex w-[90%] gap-2">
+        <YieldCard rating={'AAA'} />
+        <YieldCard rating={'AA'} />
+        <YieldCard rating={'A'} />
+        <YieldCard rating={'BBB'} />
+      </section>
       <section className="sticky left-0 top-0 z-20 m-0 bg-white pb-3 ">
         <div className="relative flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0 ">
           <div className="mt-10 flex w-1/2">
