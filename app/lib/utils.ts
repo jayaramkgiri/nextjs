@@ -67,3 +67,11 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+
+export const  currencyFormatter = (x: number | null) => {
+  if (x) {
+    return x.toLocaleString('en-IN');
+  }
+  return x;
+};

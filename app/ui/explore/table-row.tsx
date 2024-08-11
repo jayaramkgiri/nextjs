@@ -1,4 +1,5 @@
 'use client';
+import { BidAskCell } from '../market/bidAsk';
 
 export default function TableRow({
   key,
@@ -7,7 +8,7 @@ export default function TableRow({
   itemsPerPage = 30,
   sno,
   cells,
-  padding = 1
+  padding = 1,
 }: {
   key: number;
   currentPage: number;
@@ -25,29 +26,31 @@ export default function TableRow({
           key={index + 1}
           className={`mx-0 truncate bg-auto font-medium  px-${padding} py-${padding} hover:text-clip`}
         >
-          {
-            cell.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </td >
+          {cell.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </td>
       );
     } else if (cell instanceof Object) {
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} font-medium hover:text-clip ${cell.classNames}`}
+          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} font-medium hover:text-clip`}
         >
-          {cell.value}
+          <BidAskCell
+            units={cell.units}
+            price={cell.price}
+            closePrice={cell.closePrice}
+          />
         </td>
       );
     } else {
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate w-3 bg-auto font-medium px-${padding} py-${padding} hover:text-clip`}
+          className={`mx-0 w-3 truncate bg-auto font-medium px-${padding} py-${padding} hover:text-clip`}
         >
           {cell}
         </td>
@@ -63,23 +66,22 @@ export default function TableRow({
       {showSno && (
         <td
           key={0}
-          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  font-medium bg-white px-${padding} py-${padding}`}
+          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  bg-white font-medium px-${padding} py-${padding}`}
         >
           {(currentPage - 1) * itemsPerPage + sno + 1}
         </td>
       )}
       <td
         key={1}
-        className={`sticky ${showSno ? 'left-[42px]' : 'left-0'
-          } z-10 mx-0  whitespace-nowrap font-medium bg-white px-${padding} py-${padding}`}
+        className={`sticky ${
+          showSno ? 'left-[42px]' : 'left-0'
+        } z-10 mx-0  whitespace-nowrap bg-white font-medium px-${padding} py-${padding}`}
       >
         {cells[0]}
       </td>
-      {
-        cells?.slice(1, cells.length).map((cell, index) => {
-          return tableData(cell, index);
-        })
-      }
-    </tr >
+      {cells?.slice(1, cells.length).map((cell, index) => {
+        return tableData(cell, index);
+      })}
+    </tr>
   );
 }

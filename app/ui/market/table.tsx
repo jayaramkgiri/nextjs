@@ -1,63 +1,8 @@
 import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 
-import { FaIndianRupeeSign } from 'react-icons/fa6';
-import { FaArrowUp } from 'react-icons/fa';
-import { FaArrowDown } from 'react-icons/fa';
-
 import TableRow from '@/app/ui/explore/table-row';
-
-function upArrow() {
-  return (
-    <div className="h-auto p-[2px] text-seagreen">
-      <FaArrowUp />
-    </div>
-  );
-}
-
-function downArrow() {
-  return (
-    <div className="h-auto p-[2px] text-indianred">
-      <FaArrowDown />
-    </div>
-  );
-}
-
-function currencyFormatter(x: number | null) {
-  if (x) {
-    return x.toLocaleString('en-IN');
-  }
-  return x;
-}
-
-function bidAskCell(
-  units: number | null,
-  price: number | null,
-  closePrice: number | null,
-  classNames: string,
-) {
-  // const classNames = exchange === 'bse' ? 'bg-neutral-100' : 'bg-orange-100';
-  return {
-    value:
-      units && units !== 0 ? (
-        <div className="flex flex-col">
-          <div className="flex flex-row">
-            {closePrice &&
-              price !== null &&
-              (closePrice <= price ? upArrow() : downArrow())}
-            {price !== null && units !== null && (
-              <div className="h-auto p-[2px] font-thin text-dimgray">
-                <FaIndianRupeeSign />
-              </div>
-            )}
-            {price !== null ? currencyFormatter(price) : ''}
-          </div>
-        </div>
-      ) : (
-        ''
-      ),
-    classNames: classNames,
-  };
-}
+import { currencyFormatter } from '@/app/lib/utils';
+import { ClassNames } from '@emotion/react';
 
 export default async function DebenturesTable({
   query,
@@ -153,6 +98,16 @@ export default async function DebenturesTable({
               </thead>
               <tbody className="text-secondary divide-y bg-white  text-xs">
                 {issuances?.map((issuance, index) => {
+                  const buy = {
+                    units: issuance.bseBuyOrders,
+                    price: issuance.bseBuyPrice,
+                    closePrice: issuance.bseclose,
+                  };
+                  const sell = {
+                    units: issuance.bseSellOrders,
+                    price: issuance.bseSellPrice,
+                    closePrice: issuance.bseclose,
+                  };
                   return (
                     <TableRow
                       key={Number(issuance.id)}
@@ -164,18 +119,8 @@ export default async function DebenturesTable({
                       cells={[
                         issuance.isin,
                         issuance.company!.name,
-                        bidAskCell(
-                          issuance.bseBuyOrders,
-                          issuance.bseBuyPrice,
-                          issuance.bseclose,
-                          '',
-                        ),
-                        bidAskCell(
-                          issuance.bseSellOrders,
-                          issuance.bseSellPrice,
-                          issuance.bseclose,
-                          '',
-                        ),
+                        buy,
+                        sell,
                         currencyFormatter(
                           issuance.faceValue ||
                             issuance.bseFaceValue ||
