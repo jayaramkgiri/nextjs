@@ -4,7 +4,7 @@ import UnoBondsLogo from '@/app/ui/unobonds-logo';
 
 export default function SideNav() {
   return (
-    <div className="flex h-full w-full  flex-col py-4">
+    <div className="flex w-full flex-col py-4">
       {/* <div className="w-full h-[982px] relative rounded-2xl bg-neutral-white overflow-hidden flex flex-row items-start justify-start leading-[normal] tracking-[normal] mq825:h-auto"> */}
 
       {/* <Link

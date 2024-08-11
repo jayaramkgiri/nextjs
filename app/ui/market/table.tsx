@@ -51,7 +51,7 @@ export default async function DebenturesTable({
               </div>
             ))}
           </div>
-          <div className="absolute h-[calc(100vh-160px)] w-[75%] overflow-auto">
+          <div className="absolute h-[calc(75vh-104px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="rounded-lg text-left text-xs font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 border-b border-solid border-gray-200 bg-white">

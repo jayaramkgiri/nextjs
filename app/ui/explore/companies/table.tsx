@@ -28,9 +28,9 @@ export default async function CompaniesTable({
               </div>
             ))}
           </div>
-          <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
+          <div className="absolute h-[calc(85vh-104px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-xs relative rounded-lg text-left text-darkgray">
+              <thead className="relative rounded-lg text-left text-xs text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
@@ -52,7 +52,7 @@ export default async function CompaniesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary text-xs divide-y  font-medium overflow-x-auto bg-white">
+              <tbody className="text-secondary divide-y overflow-x-auto  bg-white text-xs font-medium">
                 {companies?.map((company: any, index: number) => {
                   company['issuanceCount'] = company._count['issuances'];
                   return (

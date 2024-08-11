@@ -12,13 +12,13 @@ const links = [
 export default function TopNav() {
   const pathname = usePathname();
   return (
-    <div className="m-2 flex flex-row items-start self-stretch overflow-hidden py-0 pl-0 pr-5">
-      <div className="mb-0 ml-2  flex w-2/5 gap-0 pt-5 ">
+    <div className="mb-2 ml-0 flex flex-row items-start self-stretch overflow-hidden py-0 pl-0 pr-5">
+      <div className=" mb-2 ml-0 flex w-2/5 gap-0 pt-5 ">
         {links.map((link) => {
           return (
             <div
               key={link.name}
-              className={`text-md group my-1  w-full border  border-solid border-gray-300 p-1 ${
+              className={`text-md group mx-0 my-1 w-full border  border-solid border-gray-300 p-1 ${
                 pathname === link.href
                   ? 'bg-gray-100 shadow-inner shadow-gray-300'
                   : 'hover:duration-250  shadow-sm shadow-gray-300 transition duration-0 hover:bg-gray-100'

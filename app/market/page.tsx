@@ -32,7 +32,7 @@ export default async function Page({
     ],
   });
   return (
-    <div className="overflow-auto pr-6">
+    <div className="h-[100vh] pr-6">
       <section className="m-2 flex w-[90%] gap-2">
         <YieldCard rating={'AAA'} />
         <YieldCard rating={'AA'} />

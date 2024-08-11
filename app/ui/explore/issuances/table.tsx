@@ -19,7 +19,7 @@ export default async function DebenturesTable({
               <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
-                    <div className="mb-2 flex font-medium items-center">
+                    <div className="mb-2 flex items-center font-medium">
                       <p>{issuance.description}</p>
                     </div>
                     <p className="text-xs text-gray-500">{issuance.isin}</p>
@@ -28,9 +28,9 @@ export default async function DebenturesTable({
               </div>
             ))}
           </div>
-          <div className="absolute h-[calc(100vh-280px)] w-[75%] overflow-auto">
+          <div className="absolute h-[calc(85vh-104px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
-              <thead className="text-xs rounded-lg text-left font-medium text-darkgray">
+              <thead className="rounded-lg text-left text-xs font-medium text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">
                   <th
                     scope="col"
@@ -40,7 +40,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[59px] w-6 top-0 z-20 bg-white px-3 py-5 font-medium"
+                    className="sticky left-[59px] top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
                   >
                     Issuer Name
                   </th>
@@ -67,7 +67,7 @@ export default async function DebenturesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary text-xs divide-y overflow-x-auto bg-white">
+              <tbody className="text-secondary divide-y overflow-x-auto bg-white text-xs">
                 {issuances &&
                   issuances.length > 0 &&
                   issuances.map((issuance, index) => {

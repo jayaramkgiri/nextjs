@@ -17,20 +17,20 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="flex h-screen w-full flex-col md:flex-row md:overflow-hidden">
-          <div className="w-full flex-none md:w-1/6">
+        <div className="absolute flex h-auto w-full flex-row">
+          <div className="sticky left-0 top-0 h-screen w-full flex-none overflow-hidden md:w-1/6">
             <SideNav />
           </div>
-          <div className="relative hidden h-screen w-0.5 bg-whitesmoke-100 md:block" />
-          <div className="relative hidden h-screen w-0.5 bg-whitesmoke-200 md:block" />
+          <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-100 md:block" />
+          <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-200 md:block" />
           <div className="flex h-auto w-full shrink-0 flex-row items-center justify-start overflow-hidden md:hidden">
             <Cards cardType="bid" marketSummary={marketSummary} />
             <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
-          <div className="flex w-[90%] flex-col gap-2">
-            <div className="h-auto grow md:ml-10">{children}</div>
-            <footer className="m-4 rounded-lg">
-              <div className="text-sm m-0 w-full max-w-screen-xl flex-row p-4 text-gray-500 sm:text-center md:flex md:items-center md:justify-center dark:text-gray-400">
+          <div className="flex h-auto w-[90%] flex-col gap-2 overflow-auto ">
+            <div className="grow md:ml-10">{children}</div>
+            <footer className="mt-4">
+              <div className="m-0 w-full max-w-screen-xl flex-row p-4 text-xs text-gray-700 sm:text-center md:flex md:items-center md:justify-center dark:text-gray-400">
                 © 2024{' FirstDigit LLP'}. All Rights Reserved.
               </div>
             </footer>
