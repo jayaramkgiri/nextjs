@@ -39,29 +39,31 @@ export default async function Page({
         <YieldCard rating={'A'} />
         <YieldCard rating={'BBB'} />
       </section>
-      <section className="sticky left-0 top-0 z-20 m-0 bg-white pb-3 ">
-        <div className="relative flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0 ">
-          <div className="mt-10 flex w-1/2">
-            <Search placeholder="Search" />
+      <section className='h-full'>
+        <section className="h-auto m-0 bg-white pb-3 ">
+          <div className=" flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0 ">
+            <div className="mt-10 flex w-1/2">
+              <Search placeholder="Search" />
+            </div>
+            <div className="mt-6 flex w-1/2 flex-row items-end justify-end gap-8">
+              <Sort />
+              <Filter />
+            </div>
           </div>
-          <div className="mt-6 flex w-1/2 flex-row items-end justify-end gap-8">
-            <Sort />
-            <Filter />
+          <div className="flex w-[90%] justify-between">
+            <div className="flex h-full shrink-0 flex-row items-start justify-end gap-4">
+              <Cards cardType="bid" marketSummary={marketSummary} />
+              <Cards cardType="ask" marketSummary={marketSummary} />
+            </div>
+            <div className="flex flex-col justify-end">
+              <Pagination totalPages={totalPages} />
+            </div>
           </div>
-        </div>
-        <div className="flex w-[90%] justify-between">
-          <div className="flex h-full shrink-0 flex-row items-start justify-end gap-4">
-            <Cards cardType="bid" marketSummary={marketSummary} />
-            <Cards cardType="ask" marketSummary={marketSummary} />
-          </div>
-          <div className="flex flex-col justify-end">
-            <Pagination totalPages={totalPages} />
-          </div>
-        </div>
+        </section>
+        <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+          <Table query={query} currentPage={currentPage} />
+        </Suspense>
       </section>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
-      </Suspense>
     </div>
   );
 }

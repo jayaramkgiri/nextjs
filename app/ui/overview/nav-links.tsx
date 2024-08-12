@@ -16,9 +16,9 @@ import React, { useState, useEffect } from 'react';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Overview', href: '/overview', icon: MdDashboard },
-  { name: 'Market', href: '/market', icon: BsGraphUpArrow },
-  { name: 'Explore', href: '/explore/companies', icon: MdOutlineExplore },
+  // { name: 'Overview', href: '/overview', icon: MdDashboard },
+  { name: 'Market', href: '/market', icon: BsGraphUpArrow, root: '/market' },
+  { name: 'Explore', href: '/explore/companies', icon: MdOutlineExplore, root: '/explore' },
 ];
 
 export default function NavLinks() {
@@ -32,16 +32,14 @@ export default function NavLinks() {
             <Link
               key={link.name}
               href={link.href}
-              className={`flex h-6 grow items-center justify-center gap-2 rounded-md p-2 text-lg font-medium no-underline hover:bg-chocolate hover:text-indianred md:flex-none md:justify-start ${
-                pathname === link.href
-                  ? 'bg-chocolate text-indianred'
-                  : 'text-silver-100'
-              }`}
+              className={`flex h-6 grow items-center justify-center gap-2 rounded-md p-2 text-lg font-medium no-underline hover:bg-chocolate hover:text-indianred md:flex-none md:justify-start ${pathname.includes(link.root) ? 'bg-chocolate text-indianred'
+                : 'text-silver-100'
+                }`}
             >
               <LinkIcon className="h-6 w-7 md:h-5 md:w-6" />
               <p className="hidden md:block">{link.name}</p>
             </Link>
-          </div>
+          </div >
         );
       })}
     </>

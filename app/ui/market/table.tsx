@@ -51,8 +51,8 @@ export default async function DebenturesTable({
               </div>
             ))}
           </div>
-          <div className="absolute h-[calc(75vh-104px)] w-[75%] overflow-auto">
-            <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
+          <div className="h-[calc(80vh-104px)] w-[90%] overflow-auto">
+            <table className="ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="rounded-lg text-left text-xs font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 border-b border-solid border-gray-200 bg-white">
                   <th
@@ -123,14 +123,14 @@ export default async function DebenturesTable({
                         sell,
                         currencyFormatter(
                           issuance.faceValue ||
-                            issuance.bseFaceValue ||
-                            issuance.nseFaceValue,
+                          issuance.bseFaceValue ||
+                          issuance.nseFaceValue,
                         ),
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
                         issuance.redemptionDate ||
-                          issuance.bseMaturityDate ||
-                          issuance.nseMaturityDate,
+                        issuance.bseMaturityDate ||
+                        issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
                       ]}
