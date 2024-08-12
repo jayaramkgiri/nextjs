@@ -33,6 +33,8 @@ export function BidAskCell({
 }) {
   return units && units !== 0 ? (
     <Tooltip
+      delay={1000}
+      closeDelay={500}
       content={
         <div
           key="1"
