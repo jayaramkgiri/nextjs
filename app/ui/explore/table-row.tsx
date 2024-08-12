@@ -1,5 +1,6 @@
 'use client';
 import { BidAskCell } from '../market/bidAsk';
+import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
 
 export default function TableRow({
   key,
@@ -9,6 +10,7 @@ export default function TableRow({
   sno,
   cells,
   padding = 1,
+  isinHover = false,
 }: {
   key: number;
   currentPage: number;
@@ -17,6 +19,7 @@ export default function TableRow({
   itemsPerPage: number;
   cells: any[];
   padding: number;
+  isinHover: boolean;
 }) {
   function tableData(cell: any, index: number) {
     let value = null;
@@ -24,7 +27,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto font-medium  px-${padding} py-${padding} hover:text-clip`}
+          className={`mx-0 truncate bg-auto px-2  font-medium py-${padding} hover:text-clip`}
         >
           {cell.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -37,7 +40,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 truncate bg-auto  px-${padding} py-${padding} font-medium hover:text-clip`}
+          className={`mx-0 truncate bg-auto  px-2 py-${padding} font-medium hover:text-clip`}
         >
           <BidAskCell
             units={cell.units}
@@ -50,7 +53,7 @@ export default function TableRow({
       value = (
         <td
           key={index + 1}
-          className={`mx-0 w-3 truncate bg-auto font-medium px-${padding} py-${padding} hover:text-clip`}
+          className={`mx-0 w-3 truncate bg-auto px-2 font-medium py-${padding} hover:text-clip`}
         >
           {cell}
         </td>
@@ -66,7 +69,7 @@ export default function TableRow({
       {showSno && (
         <td
           key={0}
-          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  bg-white font-medium px-${padding} py-${padding}`}
+          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  bg-white px-2 font-medium py-${padding}`}
         >
           {(currentPage - 1) * itemsPerPage + sno + 1}
         </td>
@@ -75,9 +78,30 @@ export default function TableRow({
         key={1}
         className={`sticky ${
           showSno ? 'left-[42px]' : 'left-0'
-        } z-10 mx-0  whitespace-nowrap bg-white font-medium px-${padding} py-${padding}`}
+        } z-10 mx-0  whitespace-nowrap bg-white px-2 font-medium py-${padding}`}
       >
-        {cells[0]}
+        {isinHover ? (
+          <Tooltip
+            delay={500}
+            closeDelay={500}
+            content={
+              <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
+                <CardBody className="text-xxs flex flex-col gap-1 font-semibold text-gray-500">
+                  <p className="text-2xs m-0 p-0">
+                    BSE Scrip&ensp;:&ensp;akjsjka
+                  </p>
+                  <p className="text-2xs m-0 p-0">
+                    NSE Scrip&ensp;:&ensp;jshdjs
+                  </p>
+                </CardBody>
+              </Card>
+            }
+          >
+            {cells[0]}
+          </Tooltip>
+        ) : (
+          cells[0]
+        )}
       </td>
       {cells?.slice(1, cells.length).map((cell, index) => {
         return tableData(cell, index);
