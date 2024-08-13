@@ -2,6 +2,7 @@
 import { BidAskCell } from '../market/bidAsk';
 import { Card, CardBody, Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function TableRow({
   key,
@@ -24,6 +25,7 @@ export default function TableRow({
   isinHover: boolean;
   clickable: boolean;
 }) {
+
   function tableData(cell: any, index: number) {
     let value = null;
     if (cell instanceof Date) {
@@ -40,7 +42,7 @@ export default function TableRow({
         </td>
       );
     } else if (cell instanceof Object) {
-      value = (
+      value = (cell.url === undefined) ? (
         <td
           key={index + 1}
           className={`mx-0 truncate bg-auto  px-2 py-${padding} font-medium hover:text-clip`}
@@ -51,7 +53,12 @@ export default function TableRow({
             closePrice={cell.closePrice}
           />
         </td>
-      );
+      ) : (<td
+        key={index + 1}
+        className={`mx-0 truncate bg-auto  pl-5 py-${padding}  font-medium`}>
+        <Link href={cell.url} className='no-underline text-[#35353A] focus:cursor-pointer hover:underline'>
+          {cell.value}
+        </Link > </td>)
     } else {
       value = (
         <td

@@ -31,10 +31,10 @@ export default function MarketDepth() {
             </div>
           </div>
         </AccordionSummary>
-        <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-lg">
+        <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-md">
           <div
             key="1"
-            className="flex h-[calc(50vh-160px)] flex-col divide-y divide-solid divide-gray-200 overflow-auto"
+            className="flex h-80 flex-col divide-y divide-solid divide-gray-200 overflow-auto"
           >
             <div className="m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0 text-xs">
               <div className="m-0 w-full">

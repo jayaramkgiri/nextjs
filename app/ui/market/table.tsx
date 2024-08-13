@@ -2,7 +2,6 @@ import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 
 import TableRow from '@/app/ui/explore/table-row';
 import { currencyFormatter } from '@/app/lib/utils';
-import { ClassNames } from '@emotion/react';
 
 export default async function DebenturesTable({
   query,

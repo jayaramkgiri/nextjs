@@ -6,7 +6,7 @@ import MarketDepth from '@/app/ui/explore/issuances/marketDepth';
 
 export default async function Page() {
   return (
-    <div className="m-0 flex h-[88%] w-[95%] flex-col gap-x-3 gap-y-3 overflow-auto px-2 pb-2">
+    <div className="m-0 flex h-[88%] w-[95%] flex-col gap-x-3 gap-y-6 overflow-auto px-2 pb-2 overflow-auto">
       <div className="mt-3 w-full">
         <div className="m-0 mb-3 flex w-full">
           <div className="m-0 flex w-1/4 self-stretch px-0 py-2">
@@ -120,10 +120,10 @@ export default async function Page() {
         </Card>
       </div>
       <div className="flex flex-row gap-6">
-        <div className="w-2/5">
+        <div className="w-2/5 h-[100vh-104px]">
           <Cashflows />
         </div>
-        <div className="w-3/5">
+        <div className="w-3/5 h-[100vh-104px]">
           <MarketDepth />
         </div>
       </div>

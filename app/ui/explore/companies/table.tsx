@@ -1,5 +1,8 @@
 import { fetchCompanies, ITEMS_PER_PAGE } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
+import Link from 'next/link'
+
+
 
 export default async function CompaniesTable({
   query,
@@ -67,7 +70,7 @@ export default async function CompaniesTable({
                       cells={[
                         company.name,
                         company.cin,
-                        company._count['issuances'],
+                        { url: `/explore/debentures?cin=${company.cin}`, value: company._count['issuances'] },
                       ]}
                       clickable={false}
                     />
