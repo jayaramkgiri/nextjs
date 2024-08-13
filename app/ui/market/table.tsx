@@ -123,18 +123,19 @@ export default async function DebenturesTable({
                         sell,
                         currencyFormatter(
                           issuance.faceValue ||
-                            issuance.bseFaceValue ||
-                            issuance.nseFaceValue,
+                          issuance.bseFaceValue ||
+                          issuance.nseFaceValue,
                         ),
                         issuance.bseCreditRating || issuance.nseCreditRating,
                         issuance.allotmentDate,
                         issuance.redemptionDate ||
-                          issuance.bseMaturityDate ||
-                          issuance.nseMaturityDate,
+                        issuance.bseMaturityDate ||
+                        issuance.nseMaturityDate,
                         issuance.couponBasis,
                         issuance.couponRate,
                       ]}
                       isinHover={true}
+                      clickable={true}
                     />
                   );
                 })}

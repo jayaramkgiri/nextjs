@@ -69,6 +69,7 @@ export default async function CompaniesTable({
                         company.cin,
                         company._count['issuances'],
                       ]}
+                      clickable={false}
                     />
                   );
                 })}

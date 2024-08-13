@@ -1,6 +1,7 @@
 'use client';
 import { BidAskCell } from '../market/bidAsk';
-import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
+import { Card, CardBody, Tooltip } from '@nextui-org/react';
+import { useRouter } from 'next/navigation'
 
 export default function TableRow({
   key,
@@ -11,6 +12,7 @@ export default function TableRow({
   cells,
   padding = 1,
   isinHover = false,
+  clickable = true,
 }: {
   key: number;
   currentPage: number;
@@ -20,6 +22,7 @@ export default function TableRow({
   cells: any[];
   padding: number;
   isinHover: boolean;
+  clickable: boolean;
 }) {
   function tableData(cell: any, index: number) {
     let value = null;
@@ -61,15 +64,17 @@ export default function TableRow({
     }
     return value;
   }
+  const router = useRouter()
   return (
     <tr
       key={key}
-      className={`text-sm h-auto border-b border-solid border-gray-200 py-${padding}`}
+      className={`text-sm h-auto border-b border-solid border-gray-200 group ${clickable && ("cursor-pointer")} ${clickable && ("hover:bg-gray-100")} py-${padding}`}
+      onClick={() => clickable && router.push('/explore/debentures/1')}
     >
       {showSno && (
         <td
           key={0}
-          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  bg-white px-2 font-medium py-${padding}`}
+          className={`sticky left-0 z-10 mx-0 whitespace-nowrap  bg-white px-2 font-medium py-${padding} ${clickable && ("group-hover:bg-gray-100")}`}
         >
           {(currentPage - 1) * itemsPerPage + sno + 1}
         </td>
@@ -77,7 +82,7 @@ export default function TableRow({
       <td
         key={1}
         className={`sticky ${showSno ? 'left-[42px]' : 'left-0'
-          } z-10 mx-0  whitespace-nowrap bg-white px-2 font-medium py-${padding}`}
+          } ${clickable && ("group-hover:bg-gray-100")} z-10 mx-0  whitespace-nowrap bg-white px-2 font-medium py-${padding}`}
       >
         {isinHover ? (
           <Tooltip

@@ -90,6 +90,7 @@ export default async function DebenturesTable({
                           issuance.couponRate,
                           issuance.paymentFrequency,
                         ]}
+                        clickable={true}
                       />
                     );
                   })}
