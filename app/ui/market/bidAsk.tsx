@@ -48,7 +48,7 @@ export function BidAskCell({
                 <p className="text-2xs m-0 p-0">
                   Prev Close&ensp;:{' '}
                   <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
-                  998
+                  979
                 </p>
               </CardBody>
             </Card>

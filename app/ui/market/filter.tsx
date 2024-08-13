@@ -46,7 +46,7 @@ export default function Sort() {
   useEffect(() => {
     const filter = searchParams.get('filter') || 'all';
     setFilterValue(filter);
-  }, []);
+  }, [searchParams]);
 
   const handleChange = (event: { target: { value: string } }) => {
     setFilterValue(event.target.value);

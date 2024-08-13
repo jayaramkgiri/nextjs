@@ -74,6 +74,7 @@ export default async function DebenturesTable({
                     return (
                       <TableRow
                         key={Number(issuance.id)}
+                        isinHover={false}
                         sno={index}
                         currentPage={currentPage}
                         showSno={true}

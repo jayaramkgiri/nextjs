@@ -113,7 +113,7 @@ export default function Stepper({ rating }: { rating: string }) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [baseUnit, baseValue, baseYield]);
 
   return (
     <div className="col-span-2 flex h-[480px] w-full min-w-[400px] flex-1 flex-col items-start justify-start rounded-lgi bg-white text-left font-title-lg text-base text-dimgray shadow-lg">

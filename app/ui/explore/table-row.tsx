@@ -76,9 +76,8 @@ export default function TableRow({
       )}
       <td
         key={1}
-        className={`sticky ${
-          showSno ? 'left-[42px]' : 'left-0'
-        } z-10 mx-0  whitespace-nowrap bg-white px-2 font-medium py-${padding}`}
+        className={`sticky ${showSno ? 'left-[42px]' : 'left-0'
+          } z-10 mx-0  whitespace-nowrap bg-white px-2 font-medium py-${padding}`}
       >
         {isinHover ? (
           <Tooltip
@@ -88,10 +87,10 @@ export default function TableRow({
               <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
                 <CardBody className="text-xxs flex flex-col gap-1 font-semibold text-gray-500">
                   <p className="text-2xs m-0 p-0">
-                    BSE Scrip&ensp;:&ensp;akjsjka
+                    BSE Scrip&ensp;:&ensp;938742
                   </p>
                   <p className="text-2xs m-0 p-0">
-                    NSE Scrip&ensp;:&ensp;jshdjs
+                    NSE Scrip&ensp;:&ensp;871REC28-N9
                   </p>
                 </CardBody>
               </Card>

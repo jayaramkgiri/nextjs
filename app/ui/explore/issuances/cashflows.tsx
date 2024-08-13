@@ -6,7 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default async function Cashflows() {
+export default function Cashflows() {
   return (
     <div className="w-full">
       <Accordion>

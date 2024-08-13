@@ -45,7 +45,7 @@ export default function Sort() {
   useEffect(() => {
     const sort = searchParams.get('sort') || 'sellVolume';
     setSortValue(sort);
-  }, []);
+  }, [searchParams]);
 
   const handleChange = (event: { target: { value: string } }) => {
     setSortValue(event.target.value);
