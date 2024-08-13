@@ -41,7 +41,7 @@ export default async function Page({
       </section>
       <section className='h-full'>
         <section className="h-auto m-0 bg-white pb-3 ">
-          <div className=" flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0 ">
+          <div className=" flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0">
             <div className="mt-10 flex w-1/2">
               <Search placeholder="Search" />
             </div>

@@ -15,9 +15,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
-    fontSize: 16,
+    fontSize: 12,
     padding: '4px 16px 4px 16px',
     width: '100%',
+    fontFamily: "Inter",
+    fontWeight: 500,
     transition: theme.transitions.create(['border-color']),
     // Use the system font instead of the default Roboto font.
     '&:focus': {
@@ -68,11 +70,11 @@ export default function Sort() {
         onChange={handleChange}
         input={<BootstrapInput />}
       >
-        <MenuItem value={'all'}>All</MenuItem>
-        <MenuItem value={'aaa'}>AAA</MenuItem>
-        <MenuItem value={'aa'}>AA</MenuItem>
-        <MenuItem value={'a'}>A</MenuItem>
-        <MenuItem value={'bbb'}>BBB</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'all'}>All</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'aaa'}>AAA</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'aa'}>AA</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'a'}>A</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'bbb'}>BBB</MenuItem>
       </Select>
     </div>
   );

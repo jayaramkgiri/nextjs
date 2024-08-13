@@ -14,10 +14,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
-    fontSize: 16,
+    fontSize: 12,
     padding: '4px 16px 4px 16px',
     width: '100%',
     transition: theme.transitions.create(['border-color']),
+    fontFamily: "Inter",
+    fontWeight: 500,
     // Use the system font instead of the default Roboto font.
     '&:focus': {
       borderRadius: 8,
@@ -57,18 +59,18 @@ export default function Sort() {
         Sort
       </InputLabel>
       <Select
-        className="m-0 p-0"
         labelId="demo-customized-select-label"
         id="demo-customized-select"
         value={sortValue}
         onChange={handleChange}
         input={<BootstrapInput />}
+        sx={{ fontSize: "12px", paddingTop: "4px", marginBottom: "4px", fontFamily: "Inter", fontWeight: 500 }}
       >
-        <MenuItem value={'sellVolume'}>Sell Volume</MenuItem>
-        <MenuItem value={'sellYield'}>Sell Yield</MenuItem>
-        <MenuItem value={'buyVolume'}>Buy Volume</MenuItem>
-        <MenuItem value={'buyYield'}>Buy Yield</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'sellVolume'}>Sell Volume</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'sellYield'}>Sell Yield</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'buyVolume'}>Buy Volume</MenuItem>
+        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'buyYield'}>Buy Yield</MenuItem>
       </Select>
-    </div>
+    </div >
   );
 }
