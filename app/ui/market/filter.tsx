@@ -20,12 +20,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     width: '100%',
     fontFamily: "Inter",
     fontWeight: 500,
-    transition: theme.transitions.create(['border-color']),
-    // Use the system font instead of the default Roboto font.
-    '&:focus': {
-      borderRadius: 8,
-      borderColor: 'rgb(229 231 235 / var(--tw-border-opacity))',
-    },
   },
 }));
 

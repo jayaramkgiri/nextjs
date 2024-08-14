@@ -5,6 +5,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { BsInfoCircleFill } from "react-icons/bs";
 
 export default function Cashflows() {
   return (
@@ -20,9 +21,12 @@ export default function Cashflows() {
             <p className="text-md m-0 p-0 text-inherit font-semibold text-neutral-600">
               CASHFLOWS
             </p>
-            <p className="m-0 px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
-              Next Payment Cutoff: 24th June
-            </p>
+            <div className='flex gap-2'>
+              <p className="m-0 px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
+                Next Payment Cutoff: 24th June
+              </p>
+              <BsInfoCircleFill className=' pt-2 t' />
+            </div>
           </div>
         </AccordionSummary>
         <AccordionDetails className="mt-0 rounded-lg pt-0 shadow-md">
