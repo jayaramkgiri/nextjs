@@ -25,7 +25,7 @@ export default function Cashflows() {
               <p className="m-0 px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
                 Next Payment Cutoff: 24th June
               </p>
-              <BsInfoCircleFill className=' pt-2 t' />
+              <BsInfoCircleFill className=' pt-2' />
             </div>
           </div>
         </AccordionSummary>

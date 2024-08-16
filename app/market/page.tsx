@@ -32,7 +32,7 @@ export default async function Page({
     ],
   });
   return (
-    <div className="h-[100vh] md:pr-6">
+    <div className="h:auto md:pr-6">
       <section className="m-2 hidden w-[90%] gap-2 md:flex">
         <YieldCard rating={'AAA'} />
         <YieldCard rating={'AA'} />
@@ -68,7 +68,7 @@ export default async function Page({
         </Suspense>
       </section>
       <section className="h-full md:hidden">
-        <div className="mx-auto flex h-auto w-[80%] flex-col items-start justify-between self-stretch overflow-hidden px-4">
+        <div className="mx-auto flex h-auto w-[90%] flex-col items-start justify-between self-stretch overflow-hidden px-4">
           <div className="flex w-full">
             <Search placeholder="Search" />
           </div>

@@ -2,6 +2,8 @@ import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 
 import TableRow from '@/app/ui/explore/table-row';
 import { currencyFormatter } from '@/app/lib/utils';
+import { Card, CardHeader, CardBody } from '@nextui-org/react';
+import { BidAskCell } from '../market/bidAsk';
 
 export default async function DebenturesTable({
   query,
@@ -33,25 +35,62 @@ export default async function DebenturesTable({
   );
 
   return (
-    <div className="flow-root pt-0">
-      <div className="inline-block max-w-full align-middle">
+    <div className="pt-0 w-full">
+      < div className="inline-block w-full align-middle" >
         <div className="rounded-lg ">
-          <div className="md:hidden">
-            {issuances.map((issuance, index) => (
-              <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <p>{issuance.bseScripName}</p>
+          <div className="md:hidden flex flex-col gap-2 mt-3">
+            {issuances.map((issuance, index) => {
+              return (
+                <Card className='shadow-md rounded-lg w-full p-2 text-xs'>
+                  <CardHeader className='mb-2'>
+                    <div className='font-semibold'>{issuance.isin}</div>
+                  </CardHeader>
+                  <CardBody className='w-full flex flex-col gap-2'>
+                    <div className='text-xxs font-normal text-blue-600'>{issuance.company!.name}</div>
+                    <div className='flex w-full gap-2'>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Buy Price</div>
+                        <BidAskCell units={100} price={99.12} closePrice={98} />
+                      </div>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Sell Price</div>
+                        <BidAskCell units={100} price={99.12} closePrice={98} />
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-500">{issuance.isin}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+                    <div className='flex w-full gap-2'>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Face Value</div>
+                        <div className='text-primary text-xs w-full'>1,000</div>
+                      </div>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Coupon</div>
+                        <div className='text-primary text-xs w-full'>Fixed  11.2%</div>
+                      </div>
+                    </div>
+                    <div className='flex w-full gap-2'>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Allotment</div>
+                        <div className='text-primary text-xs w-full'>29 Jun 2019</div>
+                      </div>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Maturity</div>
+                        <div className='text-primary text-xs w-full'>31 Jul 2032</div>
+                      </div>
+                    </div>
+                    <div className='flex w-1/2 gap-2'>
+                      <div className='flex w-full gap-0'>
+                        <div className='text-gray-500 text-xs w-full'>Rating</div>
+                        <div className='text-primary text-xs w-full'>Crisil AA</div>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              )
+            }
+            )}
           </div>
-          <div className="h-[calc(80vh-104px)] w-[90%] overflow-auto">
-            <table className="ml-0 hidden border-collapse scroll-smooth md:table">
+          <div className="h-[calc(80vh-104px)] hidden w-[90%] overflow-auto md:block">
+            <table className="ml-0 border-collapse scroll-smooth">
               <thead className="rounded-lg text-left text-xs font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 border-b border-solid border-gray-200 bg-white">
                   <th
@@ -142,7 +181,7 @@ export default async function DebenturesTable({
             </table>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

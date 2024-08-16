@@ -24,15 +24,16 @@ export default async function RootLayout({
           <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-100 md:block" />
           <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-200 md:block" />
           <div className="flex h-auto w-full flex-col gap-2 md:w-[90%] md:overflow-auto ">
-            <div className="grow md:ml-10">{children}</div>
+            <div className="md:ml-10">{children}</div>
             <footer className="mt-4">
-              <div className="m-0 flex w-full max-w-screen-xl flex-row items-center justify-center pb-2 pt-10 text-xs text-gray-700 sm:text-center dark:text-gray-400">
+              <div className="m-0 flex w-full max-w-screen-xl flex-row items-center justify-center pb-2 md:pt-10  text-xs text-gray-700">
                 © 2024{' FirstDigit LLP'}. All Rights Reserved.
               </div>
             </footer>
           </div>
         </div>
       </body>
+
     </html>
   );
 }
