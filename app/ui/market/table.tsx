@@ -41,7 +41,7 @@ export default async function DebenturesTable({
           <div className="md:hidden flex flex-col gap-2 mt-3">
             {issuances.map((issuance, index) => {
               return (
-                <Card className='shadow-md rounded-lg w-full p-2 text-xs'>
+                <Card key={index} className='shadow-md rounded-lg w-full p-2 text-xs'>
                   <CardHeader className='mb-2'>
                     <div className='font-semibold'>{issuance.isin}</div>
                   </CardHeader>
