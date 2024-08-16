@@ -32,15 +32,15 @@ export default async function Page({
     ],
   });
   return (
-    <div className="h-[100vh] pr-6">
-      <section className="m-2 flex w-[90%] gap-2">
+    <div className="h-[100vh] md:pr-6">
+      <section className="m-2 hidden w-[90%] gap-2 md:flex">
         <YieldCard rating={'AAA'} />
         <YieldCard rating={'AA'} />
         <YieldCard rating={'A'} />
         <YieldCard rating={'BBB'} />
       </section>
-      <section className='h-full'>
-        <section className="h-auto m-0 bg-white pb-3 ">
+      <section className="hidden h-full md:block">
+        <section className="m-0 h-auto bg-white pb-3 ">
           <div className=" flex h-20 w-[90%] flex-row items-start justify-between self-stretch overflow-hidden p-0">
             <div className="mt-10 flex w-1/2">
               <Search placeholder="Search" />
@@ -60,9 +60,32 @@ export default async function Page({
             </div>
           </div>
         </section>
-        <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+        <Suspense
+          key={query + currentPage}
+          fallback={<InvoicesTableSkeleton />}
+        >
           <Table query={query} currentPage={currentPage} />
         </Suspense>
+      </section>
+      <section className="h-full md:hidden">
+        <div className="mx-auto flex h-auto w-[80%] flex-col items-start justify-between self-stretch overflow-hidden px-4">
+          <div className="flex w-full">
+            <Search placeholder="Search" />
+          </div>
+          <div className="mt-3 flex h-auto w-full flex-row items-end justify-between">
+            <Sort />
+            <Filter />
+          </div>
+          <Suspense
+            key={query + currentPage}
+            fallback={<InvoicesTableSkeleton />}
+          >
+            <Table query={query} currentPage={currentPage} />
+          </Suspense>
+          <div className="flex flex-col justify-end">
+            <Pagination totalPages={totalPages} />
+          </div>
+        </div>
       </section>
     </div>
   );

@@ -17,7 +17,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     fontSize: 12,
     padding: '4px 16px 4px 16px',
     width: '100%',
-    fontFamily: "Inter",
+    fontFamily: 'Inter',
     fontWeight: 500,
     // Use the system font instead of the default Roboto font.
   },
@@ -49,7 +49,7 @@ export default function Sort() {
     router.push(pathname + '?' + createQueryString('sort', event.target.value));
   };
   return (
-    <div className="m-0 flex w-1/3 flex-col justify-start gap-1 p-0">
+    <div className="m-0 flex w-2/5 flex-col justify-start gap-1 p-0 md:w-1/3">
       <InputLabel className="m-0 h-auto p-0 text-xs" id="label">
         Sort
       </InputLabel>
@@ -60,11 +60,31 @@ export default function Sort() {
         onChange={handleChange}
         input={<BootstrapInput />}
       >
-        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'sellVolume'}>Sell Volume</MenuItem>
-        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'sellYield'}>Sell Yield</MenuItem>
-        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'buyVolume'}>Buy Volume</MenuItem>
-        <MenuItem sx={{ fontFamily: "Inter", fontWeight: 500, fontSize: 12 }} value={'buyYield'}>Buy Yield</MenuItem>
+        <MenuItem
+          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+          value={'sellVolume'}
+        >
+          Sell Volume
+        </MenuItem>
+        <MenuItem
+          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+          value={'sellYield'}
+        >
+          Sell Yield
+        </MenuItem>
+        <MenuItem
+          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+          value={'buyVolume'}
+        >
+          Buy Volume
+        </MenuItem>
+        <MenuItem
+          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+          value={'buyYield'}
+        >
+          Buy Yield
+        </MenuItem>
       </Select>
-    </div >
+    </div>
   );
 }

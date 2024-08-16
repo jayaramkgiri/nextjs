@@ -1,7 +1,6 @@
 'use client';
 
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
-import { Divider } from '@nextui-org/react';
 
 export default function YieldCard({ rating }: { rating: string }) {
   return (
