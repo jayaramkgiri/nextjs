@@ -1,5 +1,6 @@
 import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
+import IssuanceList from './issuanceList';
 
 export default async function DebenturesTable({
   query,
@@ -15,18 +16,11 @@ export default async function DebenturesTable({
       <div className="inline-block max-w-full align-middle">
         <div className="rounded-lg ">
           <div className="md:hidden">
-            {issuances.map((issuance, index) => (
-              <div key={issuance.isin} className="mb-2 rounded-md bg-white p-4">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center font-medium">
-                      <p>{issuance.description}</p>
-                    </div>
-                    <p className="text-xs text-gray-500">{issuance.isin}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {issuances.map((issuance, index) => {
+              return (
+                <IssuanceList key={index} issuance={issuance} market={true} />
+              );
+            })}
           </div>
           <div className="absolute h-[calc(85vh-104px)] w-[75%] overflow-auto">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
