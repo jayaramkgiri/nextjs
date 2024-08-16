@@ -26,14 +26,13 @@ export default async function RootLayout({
           <div className="flex h-auto w-full flex-col gap-2 md:w-[90%] md:overflow-auto ">
             <div className="md:ml-10">{children}</div>
             <footer className="mt-4">
-              <div className="m-0 flex w-full max-w-screen-xl flex-row items-center justify-center pb-2 md:pt-10  text-xs text-gray-700">
+              <div className="m-0 flex w-full max-w-screen-xl flex-row items-center justify-center pb-2 text-xs  text-gray-700">
                 © 2024{' FirstDigit LLP'}. All Rights Reserved.
               </div>
             </footer>
           </div>
         </div>
       </body>
-
     </html>
   );
 }
