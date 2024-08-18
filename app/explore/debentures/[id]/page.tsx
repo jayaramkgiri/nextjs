@@ -7,14 +7,16 @@ import IssueDownloads from '@/app/ui/explore/issuances/issueDownloads';
 import IssueDetailsMobile from '@/app/ui/explore/issuances/issueDetailsMobile';
 import IssueDownloadsMobile from '@/app/ui/explore/issuances/issueDownloadsMobile';
 import MarketDepthMobile from '@/app/ui/explore/issuances/marketDepthMobile';
+import CashflowsMobile from '@/app/ui/explore/issuances/cashflowsMobile';
 
 export default async function Page() {
   return (
     <>
-      <section className="flex h-full w-full flex-col gap-2 md:hidden">
+      <section className="flex h-full w-full flex-col gap-3 md:hidden">
         <IssueDetailsMobile />
         <IssueDownloadsMobile />
         <MarketDepthMobile />
+        <CashflowsMobile />
       </section>
       <div className="m-0 hidden h-[88%] w-[95%] flex-col gap-x-3 gap-y-6 overflow-auto px-2 pb-2 md:flex">
         <div className="mt-3 w-full">

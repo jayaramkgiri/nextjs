@@ -4,14 +4,14 @@ import { Card, CardHeader, CardBody } from '@nextui-org/react';
 export default function MarketDepthMobile() {
   return (
     <Card className="mx-5 rounded-lg text-xs shadow-md">
-      <CardHeader className="m-0 flex flex-col gap-1 bg-gray-200 px-2 py-2 ">
+      <CardHeader className="m-0 flex w-auto flex-col gap-1 bg-gray-200 px-2 py-2 ">
         <h3 className="m-0 flex self-stretch text-inherit font-semibold text-neutral-600">
           MARKET DEPTH
         </h3>
         <div className="text-xxs m-0 flex w-full text-inherit font-semibold text-neutral-600">
           <p className="text-xxs m-0">Interest Accrued: </p>
           <div className="flex flex-row items-start justify-start pl-3">
-            <div className="pr-[2px] pt-[2px] text-[10px]">
+            <div className=" text-xxs pt-[1px]">
               <FaIndianRupeeSign />
             </div>
             567
@@ -21,7 +21,7 @@ export default function MarketDepthMobile() {
       <CardBody className="flex w-full flex-row divide-x divide-solid divide-gray-200  bg-white p-0">
         <div
           key="1"
-          className="flex h-auto w-full flex-col divide-y divide-solid divide-gray-200 overflow-y-auto"
+          className="flex h-auto w-full flex-col divide-y divide-solid divide-gray-200 "
         >
           <div className="text-xxs m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0">
             <div className="m-0 w-full">
@@ -34,7 +34,7 @@ export default function MarketDepthMobile() {
           <div className=" text-xxs flex h-auto w-full  flex-col p-0">
             <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200">
               <div className="m-0 w-1/2 px-2">
-                <div className="mx-0 my-2 flex h-6 flex-row items-start justify-between self-stretch text-darkgray">
+                <div className="mx-0 my-2 flex h-auto flex-row items-start justify-between self-stretch text-darkgray">
                   <div className=" inline-block w-1/4 shrink-0 font-semibold">
                     Tenor
                   </div>
@@ -52,7 +52,7 @@ export default function MarketDepthMobile() {
                   return (
                     <div
                       key={index}
-                      className="m-0 flex h-6 flex-1 flex-row items-start justify-between self-stretch"
+                      className="m-0 flex h-auto flex-1 flex-row items-start justify-between self-stretch py-1"
                     >
                       <div className="relative inline-block w-1/4 shrink-0 self-stretch">
                         1 Y
@@ -62,7 +62,7 @@ export default function MarketDepthMobile() {
                       </div>
                       <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
                         <div className="flex flex-row items-start justify-start">
-                          <div className="h-auto p-0">
+                          <div className="h-auto  pt-[1px]">
                             <FaIndianRupeeSign />
                           </div>
                           20 Cr
@@ -70,7 +70,7 @@ export default function MarketDepthMobile() {
                       </div>
                       <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-indianred">
                         <div className="flex flex-row items-start justify-start self-stretch">
-                          <div className="h-auto p-0">
+                          <div className="h-auto pt-[1px]">
                             <FaIndianRupeeSign />
                           </div>
                           2 Cr
@@ -81,7 +81,7 @@ export default function MarketDepthMobile() {
                 })}
               </div>
               <div className="m-0 w-1/2 px-2">
-                <div className="mx-0 my-2 flex h-6 flex-row items-start justify-between self-stretch px-2 text-darkgray">
+                <div className="mx-0 my-2 flex h-auto flex-row items-start justify-between self-stretch px-2 text-darkgray">
                   <div className=" inline-block w-1/4 shrink-0 font-semibold">
                     Tenor
                   </div>
@@ -99,7 +99,7 @@ export default function MarketDepthMobile() {
                   return (
                     <div
                       key={index}
-                      className="m-0 flex h-6 flex-1 flex-row items-start justify-between self-stretch px-2"
+                      className="m-0 flex h-auto flex-1 flex-row items-start justify-between self-stretch px-2 py-1"
                     >
                       <div className="relative inline-block w-1/4 shrink-0 self-stretch">
                         1 Y
@@ -109,7 +109,7 @@ export default function MarketDepthMobile() {
                       </div>
                       <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
                         <div className="flex flex-row items-start justify-start">
-                          <div className="h-auto p-0">
+                          <div className="h-auto  pt-[1px]">
                             <FaIndianRupeeSign />
                           </div>
                           20 Cr
@@ -117,7 +117,7 @@ export default function MarketDepthMobile() {
                       </div>
                       <div className="flex w-1/4 flex-col items-start justify-start gap-2 self-stretch text-indianred">
                         <div className="flex flex-row items-start justify-start self-stretch">
-                          <div className="h-auto p-0">
+                          <div className="h-auto  pt-[1px]">
                             <FaIndianRupeeSign />
                           </div>
                           2 Cr
