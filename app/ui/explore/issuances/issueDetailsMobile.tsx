@@ -3,9 +3,9 @@ import { Card, CardHeader, CardBody } from '@nextui-org/react';
 
 export default function IssueDetailsMobile() {
   return (
-    <Card className="mx-5 rounded-lg bg-gray-200 shadow-md">
+    <Card className="mx-5 rounded-lg bg-gray-200 text-xs shadow-md ">
       <CardHeader className="m-0 flex flex-col gap-0 p-0">
-        <h3 className="text-sm m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
+        <h3 className="m-0 flex self-stretch px-2 py-2 font-semibold text-neutral-600">
           ISSUE DETAILS
         </h3>
       </CardHeader>
