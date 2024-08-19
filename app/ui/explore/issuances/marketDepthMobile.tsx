@@ -1,5 +1,6 @@
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
+import { BsInfoCircleFill } from 'react-icons/bs';
 
 export default function MarketDepthMobile() {
   return (
@@ -8,14 +9,15 @@ export default function MarketDepthMobile() {
         <h3 className="m-0 flex self-stretch text-inherit font-semibold text-neutral-600">
           MARKET DEPTH
         </h3>
-        <div className="text-xxs m-0 flex w-full text-inherit font-semibold text-neutral-600">
-          <p className="text-xxs m-0">Interest Accrued: </p>
-          <div className="flex flex-row items-start justify-start pl-3">
-            <div className=" text-xxs pt-[1px]">
+        <div className="m-0 flex w-full gap-2 text-inherit text-xxs font-semibold text-neutral-600">
+          <p className="m-0 text-xxs">Interest Accrued: </p>
+          <div className="flex flex-row items-start justify-start">
+            <div className=" pt-[1px] text-xxs">
               <FaIndianRupeeSign />
             </div>
             567
           </div>
+          <BsInfoCircleFill className="pt-[1px]" />
         </div>
       </CardHeader>
       <CardBody className="flex w-full flex-row divide-x divide-solid divide-gray-200  bg-white p-0">
@@ -23,7 +25,7 @@ export default function MarketDepthMobile() {
           key="1"
           className="flex h-auto w-full flex-col divide-y divide-solid divide-gray-200 "
         >
-          <div className="text-xxs m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0">
+          <div className="m-0 flex w-full flex-row justify-between divide-x divide-solid divide-gray-200 p-0 text-xxs">
             <div className="m-0 w-full">
               <p className="m-0 px-2 py-1 text-green-500">Buy</p>
             </div>
@@ -31,7 +33,7 @@ export default function MarketDepthMobile() {
               <p className="m-0 px-2 py-1 text-red-500">Sell</p>
             </div>
           </div>
-          <div className=" text-xxs flex h-auto w-full  flex-col p-0">
+          <div className=" flex h-auto w-full flex-col  p-0 text-xxs">
             <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200">
               <div className="m-0 w-1/2 px-2">
                 <div className="mx-0 my-2 flex h-auto flex-row items-start justify-between self-stretch text-darkgray">

@@ -13,6 +13,35 @@ export default async function Page() {
   return (
     <>
       <section className="flex h-full w-full flex-col gap-3 md:hidden">
+        <div className="mx-5 text-xs ">
+          <div className="m-0 flex w-full">
+            <div className="m-0 flex w-1/2 self-stretch px-0 py-1">
+              <h1 className="text-sm m-0 font-semibold text-neutral-600">
+                INE196P07047
+              </h1>
+            </div>
+            <div className="m-0 flex w-1/2 self-stretch px-0 py-1">
+              <p className="m-0 text-2xs font-semibold text-blue-600">
+                PIRAMAL CAPITAL & HOUSING FINANCE LIMITED
+              </p>
+            </div>
+          </div>
+          <div className="m-0 flex w-full">
+            <div className="flex w-1/2 flex-col">
+              <p className="m-0 py-1 text-2xs font-normal text-neutral-500">
+                BSE Scrip: 938742
+              </p>
+              <p className="m-0 text-2xs font-normal text-neutral-500">
+                NSE Scrip: 871REC28-N9
+              </p>
+            </div>
+            <div className="m-0 flex w-1/2 self-stretch px-0">
+              <p className="text-md font-semibold text-neutral-600">
+                CRISIL AAA
+              </p>
+            </div>
+          </div>
+        </div>
         <IssueDetailsMobile />
         <IssueDownloadsMobile />
         <MarketDepthMobile />

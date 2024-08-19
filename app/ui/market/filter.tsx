@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -53,7 +52,10 @@ export default function Sort() {
 
   return (
     <div className="m-0 flex w-2/5 flex-col justify-start gap-1 p-0 md:w-1/3">
-      <InputLabel className="m-0 h-auto p-0 text-xs" id="label">
+      <InputLabel
+        id="label"
+        sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+      >
         Filter By Rating
       </InputLabel>
       <Select

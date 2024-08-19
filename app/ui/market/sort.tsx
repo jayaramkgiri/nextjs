@@ -50,7 +50,10 @@ export default function Sort() {
   };
   return (
     <div className="m-0 flex w-2/5 flex-col justify-start gap-1 p-0 md:w-1/3">
-      <InputLabel className="m-0 h-auto p-0 text-xs" id="label">
+      <InputLabel
+        id="label"
+        sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
+      >
         Sort
       </InputLabel>
       <Select

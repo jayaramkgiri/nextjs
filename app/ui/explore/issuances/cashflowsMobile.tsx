@@ -9,9 +9,10 @@ export default function CashflowsMobile() {
         <h3 className="m-0 flex self-stretch p-0 text-inherit font-semibold text-neutral-600">
           Cashflows
         </h3>
-        <div className="text-xxs m-0 flex w-full text-inherit font-semibold text-neutral-600">
-          <p className="text-xxs m-0"> Next Payment Cutoff: 24th June</p>
-          <BsInfoCircleFill className=" pl-1 pt-[1px]" />
+        <div className="m-0 flex w-full gap-2 text-inherit text-xxs font-semibold text-neutral-600">
+          <p className="m-0 text-xxs"> Next Payment Cutoff:</p>
+          <p className="m-0 text-xxs"> 24th June</p>
+          <BsInfoCircleFill className="pt-[1px]" />
         </div>
       </CardHeader>
       <CardBody className="flex w-full flex-row divide-x divide-solid divide-gray-200 bg-white p-0">
@@ -19,7 +20,7 @@ export default function CashflowsMobile() {
           key="1"
           className="flex h-auto w-full flex-col divide-y divide-solid divide-gray-200 "
         >
-          <div className=" text-xxs flex h-auto  flex-col px-2">
+          <div className=" flex h-auto flex-col  px-2 text-xxs">
             <div className="mx-0 my-2 flex h-auto flex-row items-start justify-between self-stretch text-darkgray">
               <div className=" inline-block w-1/4 shrink-0 font-semibold">
                 Date

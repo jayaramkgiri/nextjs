@@ -4,7 +4,6 @@ import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa';
 import { currencyFormatter } from '@/app/lib/utils';
 import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
-import MarketDepth from '@/app/ui/explore/issuances/marketDepth';
 
 function upArrow() {
   return (
@@ -26,26 +25,28 @@ export function BidAskCell({
   units,
   price,
   closePrice,
+  classNames = '',
 }: {
   units: number | null;
   price: number | null;
   closePrice: number | null;
+  classNames: string;
 }) {
   return units && units !== 0 ? (
-    <div className="container flex flex-col">
+    <div className={`container flex flex-col ${classNames}`}>
       <div className="flex flex-row">
         <Tooltip
           delay={500}
           closeDelay={500}
           content={
             <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
-              <CardBody className="text-xxs flex flex-col gap-1 font-semibold text-gray-500">
-                <p className="text-2xs m-0 p-0">
+              <CardBody className="flex flex-col gap-1 text-xxs font-semibold text-gray-500">
+                <p className="m-0 p-0 text-2xs">
                   Open&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:{' '}
                   <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
                   998
                 </p>
-                <p className="text-2xs m-0 p-0">
+                <p className="m-0 p-0 text-2xs">
                   Prev Close&ensp;:{' '}
                   <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
                   979
@@ -69,16 +70,16 @@ export function BidAskCell({
           content={
             <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
               <CardHeader className="border-b border-solid border-gray-300 pb-1">
-                <p className="text-2xs  m-0 p-0 font-bold text-green-500">
+                <p className="m-0  p-0 text-2xs font-bold text-green-500">
                   Buy
                 </p>
               </CardHeader>
-              <CardBody className="text-xxs flex flex-col gap-1 pt-1 font-semibold text-gray-500">
-                <p className="text-2xs m-0 p-0">Orders&ensp;: 2345</p>
-                <p className="text-2xs m-0 p-0">
+              <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
+                <p className="m-0 p-0 text-2xs">Orders&ensp;: 2345</p>
+                <p className="m-0 p-0 text-2xs">
                   Yield&ensp;&ensp;&ensp;: 8.16%
                 </p>
-                <p className="text-2xs m-0 p-0">Volume&nbsp;: 456 Cr</p>
+                <p className="m-0 p-0 text-2xs">Volume&nbsp;: 456 Cr</p>
               </CardBody>
             </Card>
           }

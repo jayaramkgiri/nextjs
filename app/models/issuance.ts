@@ -1,5 +1,5 @@
 
-import { unstable_noStore as noStore } from 'next/cache';
+import { Button } from '../../button';
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
