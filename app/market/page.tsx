@@ -76,6 +76,9 @@ export default async function Page({
             <Sort />
             <Filter />
           </div>
+          <div className="flex flex-col justify-end">
+            <Pagination totalPages={totalPages} />
+          </div>
           <Suspense
             key={query + currentPage}
             fallback={<InvoicesTableSkeleton />}

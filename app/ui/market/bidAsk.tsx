@@ -26,11 +26,13 @@ export function BidAskCell({
   price,
   closePrice,
   classNames = '',
+  showRupee = true,
 }: {
   units: number | null;
   price: number | null;
   closePrice: number | null;
   classNames: string;
+  showRupee: boolean;
 }) {
   return units && units !== 0 ? (
     <div className={`container flex flex-col ${classNames}`}>
@@ -59,7 +61,7 @@ export function BidAskCell({
             price !== null &&
             (closePrice <= price ? upArrow() : downArrow())}
         </Tooltip>
-        {price !== null && units !== null && (
+        {showRupee && price !== null && units !== null && (
           <div className="h-auto p-[2px] font-thin text-dimgray">
             <FaIndianRupeeSign />
           </div>

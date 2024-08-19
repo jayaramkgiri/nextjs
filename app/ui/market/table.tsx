@@ -3,6 +3,7 @@ import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
 import { currencyFormatter } from '@/app/lib/utils';
 import IssuanceList from '../explore/issuances/issuanceList';
+import BackToTopButton from '../explore/issuances/backToTopButton';
 
 export default async function DebenturesTable({
   query,
@@ -43,6 +44,7 @@ export default async function DebenturesTable({
                 <IssuanceList key={index} issuance={issuance} market={true} />
               );
             })}
+            <BackToTopButton />
           </div>
           <div className="hidden h-[calc(80vh-96px)] w-[90%] overflow-auto md:block">
             <table className="ml-0 border-collapse scroll-smooth">

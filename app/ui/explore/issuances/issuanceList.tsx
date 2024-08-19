@@ -36,18 +36,20 @@ export default function IssuanceList({
                 <div className="w-2/5  text-xs text-gray-500">Buy Price</div>
                 <BidAskCell
                   classNames="w-3/5"
-                  units={100}
-                  price={99.12}
-                  closePrice={98}
+                  units={1007686}
+                  price={10999999.12}
+                  closePrice={10999999}
+                  showRupee={false}
                 />
               </div>
               <div className="flex w-1/2 gap-0">
                 <div className="w-2/5 text-xs text-gray-500">Sell Price</div>
                 <BidAskCell
                   classNames="w-3/5"
-                  units={100}
-                  price={99.12}
-                  closePrice={98}
+                  units={1007686}
+                  price={10999999.12}
+                  closePrice={10999999}
+                  showRupee={false}
                 />
               </div>
             </div>

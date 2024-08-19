@@ -52,6 +52,7 @@ export default function TableRow({
               price={cell.price}
               closePrice={cell.closePrice}
               classNames=""
+              showRupee={true}
             />
           </td>
         ) : (
