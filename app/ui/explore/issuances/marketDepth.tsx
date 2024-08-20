@@ -48,46 +48,41 @@ export default function MarketDepth() {
               <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200 pb-0">
                 <div className="w-1/2">
                   <div className="m-2 flex h-6 flex-row items-start justify-between self-stretch text-darkgray">
-                    <div className=" inline-block w-16 shrink-0 font-semibold">
-                      Tenor
+                    <div className=" inline-block w-1/5 shrink-0 font-semibold">
+                      Orders
                     </div>
-                    <div className=" inline-block w-16 shrink-0 font-semibold">
+                    <div className=" inline-block w-2/5 shrink-0 font-semibold">
+                      Price
+                    </div>
+                    <div className=" inline-block w-1/5 shrink-0 font-semibold">
+                      Volume
+                    </div>
+                    <div className=" inline-block w-1/5 shrink-0  font-semibold">
                       Yield
-                    </div>
-                    <div className=" inline-block w-16 shrink-0 font-semibold">
-                      Bid
-                    </div>
-                    <div className=" inline-block w-16 shrink-0  font-semibold">
-                      Ask
                     </div>
                   </div>
                   {new Array(10).fill('').map((_, index) => {
                     return (
                       <div
                         key={index}
-                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch"
+                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch text-seagreen"
                       >
-                        <div className="relative inline-block w-16 shrink-0 self-stretch">
-                          1 Y
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          1445
                         </div>
-                        <div className="relative inline-block w-16 shrink-0 self-stretch">
-                          10%
-                        </div>
-                        <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                        <div className="flex w-2/5 flex-col items-start justify-start gap-2 self-stretch">
                           <div className="flex flex-row items-start justify-start">
                             <div className="h-auto p-[2px]">
                               <FaIndianRupeeSign />
                             </div>
-                            20 Cr
+                            100024.56
                           </div>
                         </div>
-                        <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
-                          <div className="flex flex-row items-start justify-start self-stretch">
-                            <div className="h-auto p-[2px]">
-                              <FaIndianRupeeSign />
-                            </div>
-                            2 Cr
-                          </div>
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          14.45 Cr
+                        </div>
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          9.88%
                         </div>
                       </div>
                     );
@@ -95,46 +90,41 @@ export default function MarketDepth() {
                 </div>
                 <div className="w-1/2">
                   <div className="text-sm m-2 flex h-6 w-full flex-row items-start justify-between self-stretch text-darkgray">
-                    <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
-                      Tenor
+                    <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
+                      Orders
                     </div>
-                    <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
+                    <div className="relative inline-block w-2/5 shrink-0 self-stretch font-semibold">
+                      Price
+                    </div>
+                    <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
+                      Volume
+                    </div>
+                    <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
                       Yield
-                    </div>
-                    <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
-                      Bid
-                    </div>
-                    <div className="relative inline-block w-16 shrink-0 self-stretch font-semibold">
-                      Ask
                     </div>
                   </div>
                   {new Array(10).fill('').map((_, index) => {
                     return (
                       <div
                         key={index}
-                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch"
+                        className="mx-2 flex h-6 flex-1 flex-row items-start justify-between self-stretch text-indianred"
                       >
-                        <div className="relative inline-block w-16 shrink-0 self-stretch">
-                          1 Y
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          1445
                         </div>
-                        <div className="relative inline-block w-16 shrink-0 self-stretch">
-                          10%
-                        </div>
-                        <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-seagreen">
+                        <div className="flex w-2/5 flex-col items-start justify-start gap-2 self-stretch">
                           <div className="flex flex-row items-start justify-start">
                             <div className="h-auto p-[2px]">
                               <FaIndianRupeeSign />
                             </div>
-                            20 Cr
+                            100024.56
                           </div>
                         </div>
-                        <div className="flex w-16 flex-col items-start justify-start gap-2 self-stretch text-indianred">
-                          <div className="flex flex-row items-start justify-start self-stretch">
-                            <div className="h-auto p-[2px]">
-                              <FaIndianRupeeSign />
-                            </div>
-                            2 Cr
-                          </div>
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          14.45 Cr
+                        </div>
+                        <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                          9.88%
                         </div>
                       </div>
                     );

@@ -45,7 +45,7 @@ export default function TableRow({
         cell.url === undefined ? (
           <td
             key={index + 1}
-            className={`mx-0 truncate bg-auto  px-2 py-${padding} font-medium hover:text-clip`}
+            className={`mx-0 min-w-20 truncate bg-auto px-2 py-${padding} font-medium hover:text-clip`}
           >
             <BidAskCell
               units={cell.units}
