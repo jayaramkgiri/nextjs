@@ -4,6 +4,8 @@ import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa';
 import { currencyFormatter } from '@/app/lib/utils';
 import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
+import TextTransition, { presets } from 'react-text-transition';
 
 function upArrow() {
   return (
@@ -34,6 +36,22 @@ export function BidAskCell({
   classNames: string;
   showRupee: boolean;
 }) {
+  const [priceValue, setPriceValue] = useState(price);
+
+  useEffect(() => {
+    // Use setTimeout to update the message after 2000 milliseconds (2 seconds)
+    const interval = setInterval(
+      () => {
+        setPriceValue((priceValue) =>
+          priceValue === price ? price! + 1 : price,
+        );
+      },
+      Math.floor(Math.random() * (20000 - 5000) + 5000),
+    );
+
+    // Cleanup function to clear the timeout if the component unmounts
+    return () => clearInterval(interval);
+  }, []);
   return units && units !== 0 ? (
     <div className={`container flex flex-col ${classNames}`}>
       <div className="flex flex-row">
@@ -86,9 +104,9 @@ export function BidAskCell({
             </Card>
           }
         >
-          <p className="m-0">
-            {price !== null ? currencyFormatter(price) : ''}
-          </p>
+          <TextTransition className="m-0" springConfig={presets.gentle}>
+            {priceValue !== null ? currencyFormatter(priceValue) : ''}
+          </TextTransition>
         </Tooltip>
       </div>
     </div>
