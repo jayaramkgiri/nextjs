@@ -51,7 +51,7 @@ export function BidAskCell({
 
     // Cleanup function to clear the timeout if the component unmounts
     return () => clearInterval(interval);
-  }, []);
+  }, [price]);
   return units && units !== 0 ? (
     <div className={`container flex flex-col ${classNames}`}>
       <div className="flex flex-row">
