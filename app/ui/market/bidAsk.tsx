@@ -5,7 +5,6 @@ import { FaArrowDown } from 'react-icons/fa';
 import { currencyFormatter } from '@/app/lib/utils';
 import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import TextTransition, { presets } from 'react-text-transition';
 
 function upArrow() {
   return (
@@ -36,79 +35,81 @@ export function BidAskCell({
   classNames: string;
   showRupee: boolean;
 }) {
-  const [priceValue, setPriceValue] = useState(price);
+  const [priceShow, setpriceShow] = useState(true);
 
   useEffect(() => {
     // Use setTimeout to update the message after 2000 milliseconds (2 seconds)
     const interval = setInterval(
       () => {
-        setPriceValue((priceValue) =>
-          priceValue === price ? price! + 1 : price,
-        );
+        setpriceShow(false);
+        setTimeout(() => setpriceShow(true), 500);
       },
-      Math.floor(Math.random() * (20000 - 5000) + 5000),
+      Math.floor(Math.random() * (20000 - 10000) + 10000),
     );
 
     // Cleanup function to clear the timeout if the component unmounts
     return () => clearInterval(interval);
   }, [price]);
+
   return units && units !== 0 ? (
     <div className={`container flex flex-col ${classNames}`}>
-      <div className="flex flex-row">
-        <Tooltip
-          delay={500}
-          closeDelay={500}
-          content={
-            <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
-              <CardBody className="flex flex-col gap-1 text-xxs font-semibold text-gray-500">
-                <p className="m-0 p-0 text-2xs">
-                  Open&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:{' '}
-                  <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
-                  998
-                </p>
-                <p className="m-0 p-0 text-2xs">
-                  Prev Close&ensp;:{' '}
-                  <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
-                  979
-                </p>
-              </CardBody>
-            </Card>
-          }
-        >
-          {closePrice &&
-            price !== null &&
-            (closePrice <= price ? upArrow() : downArrow())}
-        </Tooltip>
-        {showRupee && price !== null && units !== null && (
-          <div className="h-auto p-[2px] font-thin text-dimgray">
-            <FaIndianRupeeSign />
-          </div>
-        )}
-        <Tooltip
-          delay={500}
-          closeDelay={500}
-          content={
-            <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
-              <CardHeader className="border-b border-solid border-gray-300 pb-1">
-                <p className="m-0  p-0 text-2xs font-bold text-green-500">
-                  Buy
-                </p>
-              </CardHeader>
-              <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
-                <p className="m-0 p-0 text-2xs">Orders&ensp;: 2345</p>
-                <p className="m-0 p-0 text-2xs">
-                  Yield&ensp;&ensp;&ensp;: 8.16%
-                </p>
-                <p className="m-0 p-0 text-2xs">Volume&nbsp;: 456 Cr</p>
-              </CardBody>
-            </Card>
-          }
-        >
-          <TextTransition className="m-0" springConfig={presets.gentle}>
-            {priceValue !== null ? currencyFormatter(priceValue) : ''}
-          </TextTransition>
-        </Tooltip>
-      </div>
+      {priceShow && (
+        <div className="flex flex-row">
+          <Tooltip
+            delay={500}
+            closeDelay={500}
+            content={
+              <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
+                <CardBody className="flex flex-col gap-1 text-xxs font-semibold text-gray-500">
+                  <p className="m-0 p-0 text-2xs">
+                    Open&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;:{' '}
+                    <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
+                    998
+                  </p>
+                  <p className="m-0 p-0 text-2xs">
+                    Prev Close&ensp;:{' '}
+                    <FaIndianRupeeSign className="mt-1 h-[8px] p-0" />
+                    979
+                  </p>
+                </CardBody>
+              </Card>
+            }
+          >
+            {closePrice &&
+              price !== null &&
+              (closePrice <= price ? upArrow() : downArrow())}
+          </Tooltip>
+          {showRupee && price !== null && units !== null && (
+            <div className="h-auto p-[2px] font-thin text-dimgray">
+              <FaIndianRupeeSign />
+            </div>
+          )}
+          <Tooltip
+            delay={500}
+            closeDelay={500}
+            content={
+              <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
+                <CardHeader className="border-b border-solid border-gray-300 pb-1">
+                  <p className="m-0  p-0 text-2xs font-bold text-green-500">
+                    Buy
+                  </p>
+                </CardHeader>
+                <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
+                  <p className="m-0 p-0 text-2xs">Orders&ensp;: 2345</p>
+                  <p className="m-0 p-0 text-2xs">
+                    Yield&ensp;&ensp;&ensp;: 8.16%
+                  </p>
+                  <p className="m-0 p-0 text-2xs">Volume&nbsp;: 456 Cr</p>
+                </CardBody>
+              </Card>
+            }
+          >
+            <p className={'m-0'}>
+              {price !== null ? currencyFormatter(price) : ''}
+            </p>
+          </Tooltip>
+        </div>
+      )}
     </div>
   ) : (
     ''
