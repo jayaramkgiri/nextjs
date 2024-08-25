@@ -1,6 +1,7 @@
 import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
 import TableRow from '@/app/ui/explore/table-row';
 import IssuanceList from './issuanceList';
+import BackToTopButton from '@/app/ui/explore/issuances/backToTopButton';
 
 export default async function DebenturesTable({
   query,
@@ -12,17 +13,18 @@ export default async function DebenturesTable({
   const issuances = await fetchIssuances({}, currentPage);
 
   return (
-    <div className="flow-root pt-0">
-      <div className="inline-block max-w-full align-middle">
+    <div className="w-full pt-0">
+      <div className="inline-block w-full align-middle">
         <div className="rounded-lg ">
-          <div className="md:hidden">
+          <div className="mt-3 flex flex-col gap-2 md:hidden">
             {issuances.map((issuance, index) => {
               return (
                 <IssuanceList key={index} issuance={issuance} market={true} />
               );
             })}
+            <BackToTopButton />
           </div>
-          <div className="absolute h-[calc(85vh-104px)] w-[75%] overflow-auto">
+          <div className="hidden h-[calc(94vh-72px)] w-[90%] overflow-auto md:block">
             <table className="relative ml-0 hidden border-collapse scroll-smooth md:table">
               <thead className="rounded-lg text-left text-xs font-medium text-darkgray">
                 <tr className="sticky top-0 z-20 bg-white">

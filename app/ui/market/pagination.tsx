@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
@@ -14,18 +14,17 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const currentPage = Number(searchParams.get('page')) || 1;
   const allPages = generatePagination(currentPage, totalPages);
 
-
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
-  
+
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      <div className="inline-flex mt-5">
+      <div className="mt-5 inline-flex md:mt-0">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -80,7 +79,8 @@ function PaginationNumber({
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-chocolate text-indianred': isActive,
-      'hover:bg-chocolate hover:text-indianred': !isActive && position !== 'middle',
+      'hover:bg-chocolate hover:text-indianred':
+        !isActive && position !== 'middle',
       'text-silver-100': !isActive,
     },
   );
@@ -115,7 +115,7 @@ function PaginationArrow({
 
   const icon =
     direction === 'left' ? (
-      <IoIosArrowBack  className="w-4" />
+      <IoIosArrowBack className="w-4" />
     ) : (
       <IoIosArrowForward className="w-4" />
     );
