@@ -19,7 +19,7 @@ export default async function DebenturesTable({
           <div className="mt-3 flex flex-col gap-2 md:hidden">
             {issuances.map((issuance, index) => {
               return (
-                <IssuanceList key={index} issuance={issuance} market={true} />
+                <IssuanceList key={index} issuance={issuance} market={false} />
               );
             })}
             <BackToTopButton />
@@ -36,7 +36,7 @@ export default async function DebenturesTable({
                   </th>
                   <th
                     scope="col"
-                    className="sticky left-[59px] top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
+                    className="sticky left-[42px] top-0 z-20 w-6 bg-white px-3 py-5 font-medium"
                   >
                     Issuer Name
                   </th>

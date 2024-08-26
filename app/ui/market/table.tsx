@@ -46,7 +46,7 @@ export default async function DebenturesTable({
             })}
             <BackToTopButton />
           </div>
-          <div className="hidden h-[calc(80vh-96px)] w-[90%] overflow-auto md:block">
+          <div className="hidden h-[calc(88vh-96px)] w-[90%] overflow-auto md:block">
             <table className="ml-0 border-collapse scroll-smooth">
               <thead className="rounded-lg text-left text-xs font-normal text-darkgray">
                 <tr className="sticky top-0 z-20 border-b border-solid border-gray-200 bg-white">

@@ -12,7 +12,7 @@ const links = [
 export default function TopNav() {
   const pathname = usePathname();
   return (
-    <div className="mb-2 ml-0 flex flex-row items-start self-stretch overflow-hidden py-0 pl-0 md:pr-5">
+    <div className="mb-2 ml-0 flex w-full flex-row items-start self-stretch overflow-hidden py-0 pl-0 md:pr-5">
       <div className=" mb-2 flex w-full gap-0  md:ml-0 md:w-2/5 md:p-0 md:pt-5 ">
         {links.map((link) => {
           return (

@@ -19,8 +19,13 @@ export default async function Page({
 
   return (
     <>
-      <TopNav />
-      <section className="hidden bg-white pb-3 pr-10 md:block">
+      <div className="hidden md:block">
+        <TopNav />
+      </div>
+      <div className="mx-auto flex w-[90%] items-start  justify-between self-stretch overflow-hidden px-4 md:hidden">
+        <TopNav />
+      </div>
+      <section className="hidden w-[90%] bg-white pb-3 md:block">
         <div className="flex justify-between">
           <Search placeholder="Search" />
           <Pagination totalPages={await noOfPages()} />
@@ -34,8 +39,8 @@ export default async function Page({
           <Table query={query} currentPage={currentPage} />
         </Suspense>
       </section>
-      <section className="h-full w-full md:hidden">
-        <div className="mx-auto flex h-auto w-full flex-col items-start justify-between self-stretch overflow-hidden">
+      <section className="h-full md:hidden">
+        <div className="mx-auto flex h-auto w-[90%] flex-col items-start justify-between self-stretch overflow-hidden px-4">
           <div className="flex w-full">
             <Search placeholder="Search" />
           </div>

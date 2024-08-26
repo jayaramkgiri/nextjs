@@ -50,7 +50,7 @@ export default async function Page({
               <Filter />
             </div>
           </div>
-          <div className="flex w-[90%] justify-between">
+          <div className="mt-3 flex w-[90%] justify-between">
             <div className="flex h-full shrink-0 flex-row items-start justify-end gap-4">
               <Cards cardType="bid" marketSummary={marketSummary} />
               <Cards cardType="ask" marketSummary={marketSummary} />
@@ -75,6 +75,10 @@ export default async function Page({
           <div className="mt-3 flex h-auto w-full flex-row items-end justify-between">
             <Sort />
             <Filter />
+          </div>
+          <div className="mt-2 flex h-full w-full shrink-0 items-start justify-between gap-4">
+            <Cards cardType="bid" marketSummary={marketSummary} />
+            <Cards cardType="ask" marketSummary={marketSummary} />
           </div>
           <div className="flex flex-col justify-end">
             <Pagination totalPages={totalPages} />

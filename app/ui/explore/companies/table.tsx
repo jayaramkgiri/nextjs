@@ -1,6 +1,7 @@
 import { fetchCompanies, ITEMS_PER_PAGE } from '@/app/models/company';
 import TableRow from '@/app/ui/explore/table-row';
 import BackToTopButton from '@/app/ui/explore/issuances/backToTopButton';
+import CompaniesList from '@/app/ui/explore/companies/companiesList';
 
 export default async function CompaniesTable({
   query,
@@ -16,18 +17,9 @@ export default async function CompaniesTable({
       <div className="inline-block w-full align-middle">
         <div className="rounded-lg ">
           <div className="mt-3 flex flex-col gap-2 md:hidden">
-            {companies?.map((company, index) => (
-              <div key={company.id} className="mb-2 rounded-md bg-white p-4">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <p>{company.name}</p>
-                    </div>
-                    <p className="text-xs text-gray-500">{company.cin}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {companies?.map((company, index) => {
+              return <CompaniesList key={index} company={company} />;
+            })}
             <BackToTopButton />
           </div>
           <div className="hidden h-[calc(94vh-72px)] w-[90%] overflow-auto md:block">
