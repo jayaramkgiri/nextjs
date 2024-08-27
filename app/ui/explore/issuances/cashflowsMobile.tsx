@@ -4,7 +4,7 @@ import { BsInfoCircleFill } from 'react-icons/bs';
 
 export default function CashflowsMobile() {
   return (
-    <Card className="mx-5 rounded-lg text-xs shadow-md">
+    <Card className="mx-5 mb-2 rounded-lg text-xs shadow-md">
       <CardHeader className="m-0 flex w-auto flex-col gap-1 bg-gray-200 px-2 py-2 ">
         <h3 className="m-0 flex self-stretch p-0 text-inherit font-semibold text-neutral-600">
           Cashflows

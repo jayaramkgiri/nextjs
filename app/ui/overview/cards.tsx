@@ -44,7 +44,7 @@ export default function Cards({
             cardType === 'bid' ? 'text-seagreen' : 'text-indianred'
           }`}
         >
-          <div className="md:text-sm h-auto p-[1px] text-2xs md:p-[2px]">
+          <div className="md:text-sm h-auto pt-[2px] text-2xs md:p-[2px]">
             <FaIndianRupeeSign />
           </div>
           <p className="m-0 text-[12px]">
