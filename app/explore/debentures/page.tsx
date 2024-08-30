@@ -22,7 +22,8 @@ export default async function Page({
       <div className="hidden md:block">
         <TopNav />
       </div>
-      <div className="mx-auto flex w-[90%] items-start  justify-between self-stretch overflow-hidden px-4 md:hidden">
+      <div className="mx-auto flex w-[90%] flex-col items-start  justify-between self-stretch overflow-hidden px-4 md:hidden">
+        <h2 className="text-md text-text-primary">Explore</h2>
         <TopNav />
       </div>
       <section className="hidden w-[90%] bg-white pb-3 md:block">

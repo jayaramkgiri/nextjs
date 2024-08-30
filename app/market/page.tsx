@@ -69,6 +69,7 @@ export default async function Page({
       </section>
       <section className="h-full md:hidden">
         <div className="mx-auto flex h-auto w-[90%] flex-col items-start justify-between self-stretch overflow-hidden px-4">
+          <h2 className="text-md text-text-primary">Market</h2>
           <div className="flex w-full">
             <Search placeholder="Search" />
           </div>
