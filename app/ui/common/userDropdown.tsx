@@ -25,7 +25,6 @@ export const UserDropdown = () => {
       <DropdownMenuContent
         className="rounded-md border-none bg-white p-0 shadow-lg"
         aria-label="User menu actions"
-        onAction={(actionKey) => console.log({ actionKey })}
       >
         <DropdownMenuLabel key="profile">
           <p className="mx-auto w-fit text-xs">ZB3249</p>
