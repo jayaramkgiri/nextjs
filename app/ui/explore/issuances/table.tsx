@@ -63,7 +63,7 @@ export default async function DebenturesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto bg-white text-xs">
+              <tbody className="divide-y overflow-x-auto bg-white text-xs">
                 {issuances &&
                   issuances.length > 0 &&
                   issuances.map((issuance, index) => {

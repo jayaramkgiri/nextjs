@@ -4,10 +4,11 @@ import Table from '@/app/ui/market/table';
 import Sort from '@/app/ui/market/sort';
 import Filter from '@/app/ui/market/filter';
 import YieldCard from '@/app/ui/market/yieldCard';
-import Cards from '@/app/ui/overview/cards';
+import Cards from '@/app/ui/common/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchMarketSummary, noOfPages } from '@/app/models/issuance';
+import { KiteConnect } from 'kiteconnect';
 
 export default async function Page({
   searchParams,
@@ -15,11 +16,25 @@ export default async function Page({
   searchParams?: {
     query?: string;
     page?: string;
+    request_token?: string;
   };
 }) {
+  const kc = new KiteConnect({ api_key: process.env.KITE_API_KEY! });
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const marketSummary = await fetchMarketSummary();
+
+  console.log(searchParams?.request_token);
+  if (searchParams?.request_token !== undefined) {
+    const response = await kc.generateSession(
+      searchParams.request_token,
+      process.env.KITE_API_SECRET!,
+    );
+    kc.setAccessToken(response.access_token);
+    const profile = await kc.getProfile();
+    console.log(response.access_token);
+    console.log('Profile:', profile);
+  }
 
   const totalPages = await noOfPages({
     OR: [
@@ -33,7 +48,7 @@ export default async function Page({
   });
   return (
     <div className="h:auto md:pr-6">
-      <section className="m-2 hidden w-[90%] gap-2 md:flex">
+      <section className="m-2 hidden w-[85%] gap-2 md:flex">
         <YieldCard rating={'AAA'} />
         <YieldCard rating={'AA'} />
         <YieldCard rating={'A'} />

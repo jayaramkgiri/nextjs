@@ -46,7 +46,7 @@ export default async function CompaniesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y overflow-x-auto  bg-white text-xs font-medium">
+              <tbody className=" divide-y overflow-x-auto  bg-white text-xs font-medium">
                 {companies?.map((company: any, index: number) => {
                   company['issuanceCount'] = company._count['issuances'];
                   return (

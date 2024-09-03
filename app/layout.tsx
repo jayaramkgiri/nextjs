@@ -1,7 +1,7 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
-import SideNav from '@/app/ui/overview/sidenav';
-import Cards from '@/app/ui/overview/cards';
+import SideNav from '@/app/ui/common/sidenav';
+import { UserDropdown } from './ui/common/userDropdown';
 import { headers } from 'next/headers';
 import { fetchMarketSummary } from '@/app/models/issuance';
 
@@ -14,6 +14,7 @@ export default async function RootLayout({
   const pathname = header.get('next-url');
   console.log(pathname);
   const marketSummary = await fetchMarketSummary();
+
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
@@ -24,6 +25,9 @@ export default async function RootLayout({
           <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-100 md:block" />
           <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-200 md:block" />
           <div className="flex h-auto w-full flex-col gap-2 md:w-[90%] md:overflow-auto ">
+            <div className="absolute right-0 top-0">
+              <UserDropdown />
+            </div>
             <div className="md:ml-10">{children}</div>
             <footer className="mt-4">
               <div className="m-0 flex w-full max-w-screen-xl flex-row items-center justify-center pb-2 text-xs  text-gray-700">

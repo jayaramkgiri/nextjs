@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import NavLinks from '@/app/ui/overview/nav-links';
+import NavLinks from '@/app/ui/common/nav-links';
 import UnoBondsLogo from '@/app/ui/unobonds-logo';
+import LoginSignup from './loginSignup';
 
 export default function SideNav() {
   return (
-    <div className="flex w-full flex-col py-4">
+    <div className="flex w-full flex-col py-4 md:h-screen">
       {/* <div className="w-full h-[982px] relative rounded-2xl bg-neutral-white overflow-hidden flex flex-row items-start justify-start leading-[normal] tracking-[normal] mq825:h-auto"> */}
 
       {/* <Link
@@ -20,9 +20,14 @@ export default function SideNav() {
         />
       </div>
       {/* </Link> */}
-      <div className="mx-auto flex w-4/5 grow flex-row justify-between space-x-2 md:w-11/12 md:flex-col md:space-x-0 md:space-y-3">
-        <NavLinks />
-        <div className="hidden h-auto w-full grow md:block"></div>
+      <div className="flex h-auto flex-col md:h-full ">
+        <div className="mx-auto flex w-4/5 grow flex-row justify-between space-x-2 md:w-11/12 md:flex-col md:space-x-0 md:space-y-3">
+          <NavLinks />
+          <div className="hidden h-auto w-full grow md:block"></div>
+        </div>
+        <div className="mx-auto mb-11 hidden md:block md:w-11/12  md:space-x-0 md:space-y-3">
+          <LoginSignup className="" />
+        </div>
       </div>
     </div>
   );

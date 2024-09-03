@@ -91,7 +91,7 @@ export default async function DebenturesTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-secondary divide-y bg-white  text-xs">
+              <tbody className="divide-y bg-white  text-xs">
                 {issuances?.map((issuance, index) => {
                   const buy = {
                     units: issuance.bseBuyOrders,

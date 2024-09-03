@@ -11,7 +11,7 @@ export default function YieldCard({ rating }: { rating: string }) {
         </h3>
       </CardHeader>
       <CardBody className="m-0 p-0">
-        <div className="text-small mr-6 flex flex-col items-center text-gray-500 ">
+        <div className="text-small mr-2 flex flex-col items-center text-gray-500 ">
           <div className="flex w-full flex-row text-xs">
             <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-2">
               0-3 Y

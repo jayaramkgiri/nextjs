@@ -1,6 +1,6 @@
 'use client';
 
-import Cards from '@/app/ui/overview/cards';
+import Cards from '@/app/ui/common/cards';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
