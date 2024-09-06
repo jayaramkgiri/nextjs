@@ -13,6 +13,7 @@
     "market": "node -r dotenv/config ./scripts/market.js"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@heroicons/react": "^2.0.18",

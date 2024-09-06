@@ -5,6 +5,9 @@ import { FaArrowDown } from 'react-icons/fa';
 import { currencyFormatter } from '@/app/lib/utils';
 import { Card, CardBody, CardHeader, Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
+import { FaLock } from 'react-icons/fa6';
+import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 function upArrow() {
   return (
@@ -36,6 +39,7 @@ export function BidAskCell({
   showRupee: boolean;
 }) {
   const [priceShow, setpriceShow] = useState(true);
+  const { user } = useUser();
 
   useEffect(() => {
     // Use setTimeout to update the message after 2000 milliseconds (2 seconds)
@@ -89,6 +93,11 @@ export function BidAskCell({
             closeDelay={500}
             content={
               <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
+                {!user && (
+                  <Link href="/api/auth/login">
+                    <FaLock className="hover:text-primary transtion-all absolute right-1/4 top-[55%] z-10 h-3 w-3 text-gray-500 duration-200 hover:scale-150 hover:cursor-pointer " />
+                  </Link>
+                )}
                 <CardHeader className="border-b border-solid border-gray-300 pb-1">
                   <p className="m-0  p-0 text-2xs font-bold text-green-500">
                     Buy
@@ -97,7 +106,8 @@ export function BidAskCell({
                 <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
                   <p className="m-0 p-0 text-2xs">Orders&ensp;: 2345</p>
                   <p className="m-0 p-0 text-2xs">
-                    Yield&ensp;&ensp;&ensp;: 8.16%
+                    Yield&ensp;&ensp;&ensp;:{' '}
+                    <em className={`${!user && 'blur-sm'}`}>8.16% </em>
                   </p>
                   <p className="m-0 p-0 text-2xs">Volume&nbsp;: 456 Cr</p>
                 </CardBody>
