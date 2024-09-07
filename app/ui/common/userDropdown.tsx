@@ -13,9 +13,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const UserDropdown = () => {
   const { user, error } = useUser();
+  const matches = useMediaQuery('(max-width:768px)');
+
   if (error) return <div>{error.message}</div>;
 
-  const matches = useMediaQuery('(max-width:768px)');
   return (
     (user || matches) && (
       <DropdownMenu>
