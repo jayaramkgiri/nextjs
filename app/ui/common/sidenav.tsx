@@ -15,7 +15,7 @@ export default async function SideNav() {
         href="/"
       > */}
       {/* <div className="h-[982px] w-[276px] bg-neutral-white overflow-y-auto shrink-0 flex flex-col items-start justify-start py-8 px-6 box-border gap-[16px] mq450:pt-5 mq450:pb-5 mq450:box-border mq825:pt-[21px] mq825:pb-[21px] mq825:box-border"> */}
-      <div className="mx-auto text-white md:w-[90%]">
+      <div className="mx-3 text-white md:mx-auto md:w-[90%]">
         <UnoBondsLogo
           logoImageLogo="/logo@2x.png"
           logoIconHeight="80px"

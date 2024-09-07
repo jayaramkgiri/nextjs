@@ -1,8 +1,12 @@
 import { FaIndianRupeeSign } from 'react-icons/fa6';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { BsInfoCircleFill } from 'react-icons/bs';
+import { FaLock } from 'react-icons/fa6';
+import Link from 'next/link';
+import { getSession } from '@auth0/nextjs-auth0';
 
-export default function CashflowsMobile() {
+export default async function CashflowsMobile() {
+  const user = await getSession();
   return (
     <Card className="mx-5 mb-2 rounded-lg text-xs shadow-md">
       <CardHeader className="m-0 flex w-auto flex-col gap-1 bg-gray-200 px-2 py-2 ">
@@ -16,6 +20,11 @@ export default function CashflowsMobile() {
         </div>
       </CardHeader>
       <CardBody className="flex w-full flex-row divide-x divide-solid divide-gray-200 bg-white p-0">
+        {!user && (
+          <Link href="/api/auth/login">
+            <FaLock className="hover:text-primary transtion-all absolute right-1/2 top-1/2 z-10 h-6 w-6 text-gray-500 duration-200 hover:scale-125 hover:cursor-pointer " />
+          </Link>
+        )}
         <div
           key="1"
           className="flex h-auto w-full flex-col divide-y divide-solid divide-gray-200 "
@@ -39,7 +48,9 @@ export default function CashflowsMobile() {
               return (
                 <div
                   key={index}
-                  className="m-0 flex h-auto flex-1 flex-row items-start justify-between self-stretch py-1"
+                  className={`m-0 flex h-auto flex-1 flex-row items-start justify-between self-stretch py-1 ${
+                    !user && 'blur-sm'
+                  }`}
                 >
                   <div className="relative inline-block w-1/4 shrink-0 self-stretch">
                     24 May 2024

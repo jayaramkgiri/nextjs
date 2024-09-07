@@ -27,7 +27,7 @@ export default async function RootLayout({
             <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-100 md:block" />
             <div className=" sticky left-0 top-0 hidden h-screen w-0.5 overflow-hidden bg-whitesmoke-200 md:block" />
             <div className="flex h-auto w-full flex-col gap-2 md:w-[90%] md:overflow-auto ">
-              <div className="absolute right-0 top-0">
+              <div className="absolute right-2 top-7 md:right-0 md:top-0">
                 <UserDropdown />
               </div>
               <div className="md:ml-10">{children}</div>
