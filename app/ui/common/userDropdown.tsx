@@ -22,7 +22,9 @@ export const UserDropdown = () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="mr-8 mt-3 p-0 focus:outline-none">
           <section className="flex gap-1 bg-white hover:cursor-pointer">
-            <Avatar size="md" src="/Profile.png" />
+            <div className="w-10">
+              <Avatar size="lg" src="/Profile.png" />
+            </div>
             {user && (
               <p className="my-auto  hidden w-20 items-start truncate p-0 text-2xs md:flex">
                 {user.name}

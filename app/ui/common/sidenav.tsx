@@ -24,7 +24,7 @@ export default async function SideNav() {
       </div>
       {/* </Link> */}
       <div className="flex h-auto flex-col md:h-full ">
-        <div className="mx-auto flex w-4/5 grow flex-row justify-between space-x-2 md:w-11/12 md:flex-col md:space-x-0 md:space-y-3">
+        <div className="mx-3 flex w-4/5 grow flex-row justify-between space-x-2 md:mx-auto md:w-11/12 md:flex-col md:space-x-0 md:space-y-3">
           <NavLinks />
           <div className="hidden h-auto w-full grow md:block"></div>
         </div>
