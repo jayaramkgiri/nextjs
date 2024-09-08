@@ -20,7 +20,7 @@ export const UserDropdown = () => {
   return (
     (user || matches) && (
       <DropdownMenu>
-        <DropdownMenuTrigger className="mr-8 mt-3 p-0 focus:outline-none">
+        <DropdownMenuTrigger className="mr-3 mt-3 p-0 focus:outline-none md:mr-8">
           <section className="flex gap-1 bg-white hover:cursor-pointer">
             <div className="w-10">
               <Avatar size="lg" src="/Profile.png" />
