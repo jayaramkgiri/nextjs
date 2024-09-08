@@ -13,30 +13,30 @@ export default function YieldCard({ rating }: { rating: string }) {
       <CardBody className="m-0 p-0">
         <div className="text-small mr-2 flex flex-col items-center text-gray-500 ">
           <div className="flex w-full flex-row text-xs">
-            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-2">
+            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-1">
               0-3 Y
             </div>
-            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-2">
+            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-1">
               3-5 Y
             </div>
-            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-2">
+            <div className="w-full border-b border-r border-solid border-gray-200 pb-2 pl-1">
               5-10 Y
             </div>
-            <div className="w-full border-b border-solid border-gray-200 pb-2 pl-2">
+            <div className="w-full border-b border-solid border-gray-200 pb-2 pl-1">
               10+ Y
             </div>
           </div>
           <div className="flex w-full flex-row text-xs">
-            <div className="w-full border-r border-solid border-gray-200 pl-2 pt-2">
+            <div className="w-full border-r border-solid border-gray-200 pl-1 pt-2">
               7.81%
             </div>
-            <div className="w-full border-r border-solid border-gray-200 pl-2 pt-2">
+            <div className="w-full border-r border-solid border-gray-200 pl-1 pt-2">
               8.81%
             </div>
-            <div className="w-full border-r border-solid border-gray-200 pl-2 pt-2">
+            <div className="w-full border-r border-solid border-gray-200 pl-1 pt-2">
               9.81%
             </div>
-            <div className=" w-full pl-2 pt-2">10.81%</div>
+            <div className=" w-full pl-1 pt-2">10.81%</div>
           </div>
         </div>
       </CardBody>

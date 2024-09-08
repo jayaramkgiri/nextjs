@@ -12,6 +12,7 @@ export default function IssuanceList({
   market: boolean;
 }) {
   const router = useRouter();
+  const faceValue = 1000000;
   return (
     <div onClick={() => router.push('/explore/debentures/1')}>
       <Card className="w-full rounded-lg p-2 text-xs shadow-md">
@@ -31,8 +32,10 @@ export default function IssuanceList({
             {issuance.company!.name}
           </div>
           {market && (
-            <div className="flex w-full gap-2">
-              <div className="flex w-1/2 gap-0">
+            <div
+              className={`flex w-full ${faceValue > 10000 && 'flex-col'} gap-2`}
+            >
+              <div className="flex w-full justify-start gap-2">
                 <div className="w-2/5  text-xs text-gray-500">Buy Price</div>
                 <BidAskCell
                   classNames="w-3/5"
@@ -42,7 +45,7 @@ export default function IssuanceList({
                   showRupee={false}
                 />
               </div>
-              <div className="flex w-1/2 gap-0">
+              <div className="flex w-full justify-start gap-2">
                 <div className="w-2/5 text-xs text-gray-500">Sell Price</div>
                 <BidAskCell
                   classNames="w-3/5"
