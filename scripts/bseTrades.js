@@ -3,10 +3,11 @@ const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const { formattedStringToNumber,
+const {
+  formattedStringToNumber,
   dateFormatter,
   highestBuyPrices,
-  lowestSellPrice
+  lowestSellPrice,
 } = require('./lib/helpers');
 
 async function fetchPageData(selector, page) {
@@ -197,7 +198,7 @@ async function deleteEarliestVersion() {
     try {
       await prisma.bseOrderBook.deleteMany({
         where: {
-          seqNo: seqNo
+          seqNo: seqNo,
         },
       });
       console.log(`Deleted version ${seqNo}`);
@@ -259,7 +260,7 @@ module.exports.migrateBseMarketData = async function () {
               marketDepth[bond.securityCode].TotalSQty,
             ),
             buyPrice: highestBuyPrices(marketDepth[bond.securityCode]),
-            sellPrice: lowestSellPrice(marketDepth[bond.securityCode])
+            sellPrice: lowestSellPrice(marketDepth[bond.securityCode]),
           };
           dataList.push(data);
         }
@@ -276,5 +277,4 @@ module.exports.migrateBseMarketData = async function () {
   } finally {
     await prisma.$disconnect();
   }
-}
-
+};

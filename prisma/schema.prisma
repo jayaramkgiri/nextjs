@@ -1,153 +1,112 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["relationJoins"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
-  relationMode = "prisma"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
+type CompaniesMcaData {
+  count      Int
+  module     String
+  result     CompaniesMcaDataResult[]
+  searchType String
+}
+
+type CompaniesMcaDataResult {
+  acntType            String
+  cmpnyEndDt          String
+  cmpnyNm             String
+  cmpnyOrgn           String
+  cmpnySts            String
+  cnNmbr              String
+  companyType         String
+  dateOfIncorporation String
+  prvsCmpnyNm         String
+  rcNm                String
+  rgstrtnNmbr         String
+  rocCode             String
+  state               String
+}
+
+type IssuancesCashFlowSchedule {
+  /// Multiple data types found: Float: 99%, Int: 1% out of 5447 sampled entries
+  interest     Json?
+  payment_date String
+  /// Multiple data types found: Float: 2.2%, Int: 97.8% out of 5447 sampled entries
+  principal    Json?
+  record_date  String?
+}
+
+type IssuancesLatestBseTrade {
+  turnover Float
+  wap      String
+  way      String
+}
+
+type IssuancesLatestNseTrade {
+  turnover Float
+  wap      String
+  way      String
+}
+
+
 model Company {
-  id         Int        @id @default(autoincrement())
-  createdAt  DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime   @updatedAt
-  cin        String?    @unique(map: "UQ_Company_Cin") @db.VarChar(255)
-  name       String?    @db.VarChar(255)
-  verified   Boolean?
-  verifiedAt DateTime?  @db.Timestamp(6)
-  rated      Boolean?
-  listed     Boolean?
-  issuances  Issuance[]
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  cin              String
+  created_at       DateTime          @db.Date
+  mca_data         CompaniesMcaData?
+  mca_sourced_date DateTime?         @db.Date
+  name             String
+  status           String?
+  updated_at       DateTime          @db.Date
+
+  @@map("companies")
 }
 
 model Issuance {
-  id                       BigInt    @id(map: "issuances_pkey") @default(autoincrement())
-  createdAt                DateTime  @default(now())
-  updatedAt                DateTime  @updatedAt
-  isin                     String?    @unique(map: "Issuance_index_2") @db.VarChar(255)
-  cin                      String?   @db.VarChar
-  description              String?   @db.VarChar
-  secured                  String?   @db.VarChar
-  guarantee                String?   @db.VarChar
-  convertibility           String?   @db.VarChar
-  seniority                String?   @db.VarChar
-  taxFree                  String?   @db.VarChar
-  faceValue                Float?
-  putOption                String?   @db.VarChar
-  callOption               String?   @db.VarChar
-  mode                     String?   @db.VarChar
-  allotmentDate            DateTime? @db.Date
-  perpetual                String?   @db.VarChar
-  totalAllotment           Float?
-  issuePrice               Float?
-  issueSize                Float?
-  greenShoeOption          String?   @db.VarChar
-  couponBasis              String?   @db.VarChar
-  couponRate               String?   @db.VarChar
-  couponType               String?   @db.VarChar
-  dayCountConvention       String?   @db.VarChar
-  interestPayment          String?   @db.VarChar
-  interestPaymentStartDate DateTime? @db.Date
-  interestPaymentEndDate   DateTime? @db.Date
-  redemptionType           String?   @db.VarChar
-  redemptionDate           DateTime? @db.Date
-  redemptionPremium        String?   @db.VarChar
-  ratingAtIssuance         String?   @db.VarChar
-  ratingAgencyAtIssuance   String?   @db.VarChar
-  ratedDateAtIssuance      DateTime? @db.Date
-  depository               String?   @db.VarChar
-  coupon                   Float?
-  dayCount                 String?        @db.VarChar
-  paymentFrequency         String?        @db.VarChar
-  bseScripName            String?        @db.VarChar(255)
-  bseBuyOrders             Int?
-  bseSellOrders            Int?
-  bseBuyPrice              Float?
-  bseSellPrice             Float?
-  totalBuyVolume             Float?
-  totalSellVolume            Float?
-  nseScripName            String?        @db.VarChar(255)
-  nseBuyOrders             Int?
-  nseSellOrders            Int?
-  nseBuyPrice              Float?
-  nseSellPrice             Float?
-  nseMaturityDate          DateTime?      @db.Date
-  bseMaturityDate          DateTime?      @db.Date
-  bseCreditRating          String?        @db.VarChar(255)
-  nseCreditRating          String?        @db.VarChar(255)
-  bseclose                 Float?
-  nseclose                 Float?
-  bseFaceValue             Float?
-  nseFaceValue             Float?
-  company                  Company?       @relation(fields: [cin], references: [cin])
-  bseOrderBook             BseOrderBook[]
-  nseOrderBook             NseOrderBook[]
+  id                   String                      @id @default(auto()) @map("_id") @db.ObjectId
+  allotment_date       DateTime                    @db.Date
+  bse_scrip            String?
+  cash_flow_schedule   IssuancesCashFlowSchedule[]
+  cin                  String
+  company_name         String
+  coupon               Float?
+  coupon_basis         String
+  coupon_type          String?
+  created_at           DateTime                    @db.Date
+  day_count_convention String?
+  face_value           Int?
+  interest_frequency   String?
+  isin                 String
+  issue_size           Unsupported("Decimal128")?
+  latest_bse_trade     IssuancesLatestBseTrade?
+  latest_nse_trade     IssuancesLatestNseTrade?
+  latest_rating        String?
+  latest_rating_agency String?
+  latest_rating_date   DateTime?                   @db.Date
+  latest_trade_date    DateTime?                   @db.Date
+  nsdl_data            Json
+  nse_data             Json
+  nse_scrip            String?
+  redemption_date      DateTime                    @db.Date
+  redemption_type      String?
+  updated_at           DateTime                    @db.Date
+
+  @@index([isin, id], map: "isin_1__id_1")
+  @@map("issuances")
 }
 
-model BseOrderBook {
-  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  seqNo        Int
-  isin         String    @db.VarChar(255)
-  scripName    String    @db.VarChar(255)
-  scripCode    String    @db.VarChar(255)
-  faceValue    Float?
-  maturityDate DateTime? @db.Date
-  creditRating String?   @db.VarChar(255)
-  close        Float?
-  open         Float?
-  high         Float?
-  low          Float?
-  totalBuyQty  Int?
-  totalSellQty Int?
-  buyPrice     Float?
-  sellPrice    Float?
-  issuance     Issuance @relation(fields: [isin], references: [isin])
-}
+model Yield {
+  id              String                    @id @default(auto()) @map("_id") @db.ObjectId
+  a_yield         Float
+  aa_yield        Float
+  aaa_yield       Float
+  bbb_yield       Float
+  calculated_date DateTime                  @db.Date
+  created_at      DateTime                  @db.Date
+  updated_at      DateTime                  @db.Date
 
-model NseOrderBook {
-  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  seqNo        Int
-  isin         String    @db.VarChar(255)
-  scripName    String    @db.VarChar(255)
-  faceValue    Float?
-  maturityDate DateTime? @db.Date
-  creditRating String?   @db.VarChar(255)
-  close        Float?
-  open         Float?
-  high         Float?
-  low          Float?
-  totalBuyQty  Int?
-  totalSellQty Int?
-  buyPrice     Float?
-  sellPrice    Float?
-  issuance     Issuance @relation(fields: [isin], references: [isin])
-}
-
-model orderBook {
-  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  exchange     String    @db.VarChar(255)
-  seqNo        Int
-  isin         String    @db.VarChar(255)
-  scripName    String    @db.VarChar(255)
-  scripCode    String?    @db.VarChar(255)
-  faceValue    Float?
-  maturityDate DateTime? @db.Date
-  creditRating String?   @db.VarChar(255)
-  close        Float?
-  open         Float?
-  high         Float?
-  low          Float?
-  totalBuyQty  Int?
-  totalSellQty Int?
-  buyPrice     Float?
-  sellPrice    Float?
+   @@map("yields")
 }
