@@ -35,7 +35,10 @@ function lowestSellPrice(orderBook) {
   // Find the highest buy price
   for (let i = 0; i < ask.length; i++) {
     if (ask[i] != null && typeof ask[i].price === 'number') {
-      if (lowestSPrice === null || (ask[i].price < lowestSPrice && ask[i].quantity !== 0)) {
+      if (
+        lowestSPrice === null ||
+        (ask[i].price < lowestSPrice && ask[i].quantity !== 0)
+      ) {
         lowestSPrice = ask[i].price;
       }
     }
@@ -53,8 +56,9 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
-    }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
+    cookies.find((c) => c.name === 'nseappid').value
+  }`;
 }
 
 async function fetchTradeList(cookie) {
@@ -177,17 +181,14 @@ module.exports.migrateNseMarketData = async function () {
             };
             // console.log('Pushing Date to DB');
             const isin = trade.meta.isin;
-            await prisma.issuance.update({
-              where: {
-                isin: isin,
-              },
-              data: data,
-            });
-            migratedIsins.push(trade.meta.isin);
+            migratedIsins.push(isin);
           } catch (e) {
             errorList.push(trade.meta.isin);
             // console.log(`Error pushing ${trade.meta.isin}`, e);
           }
+        } else {
+          errorList.push(trade.meta.isin);
+          // console.log(`Error pushing ${trade.meta.isin}`, e);
         }
       }
       console.log(`NSE Bond data migration completed for ${migratedIsins}`);
@@ -195,4 +196,5 @@ module.exports.migrateNseMarketData = async function () {
     }
   }
   await prisma.$disconnect();
+  return { success: migratedIsins, errors: errorList };
 };

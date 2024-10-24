@@ -11,32 +11,38 @@ const {
 } = require('./lib/helpers.cjs');
 
 async function fetchPageData(selector, page) {
-  await page.waitForSelector(selector);
-  const tableData = await page.evaluate((selector) => {
-    const rows = document.querySelector(selector).querySelectorAll('tr');
-    let pageData = [];
-    for (let row of rows) {
-      const cells = row.querySelectorAll('td.TTRow, td.TTRow_right');
-      if (cells && cells.length > 1) {
-        const marketData = {
-          securityCode: cells[0].textContent?.trim() || '',
-          securityName: cells[1].textContent?.trim() || '',
-          group: cells[2].textContent?.trim() || '',
-          ltpClose: parseFloat(cells[3].textContent?.trim() || '0'),
-          change: parseFloat(cells[4].textContent?.trim() || '0'),
-          changePercent: parseFloat(cells[5].textContent?.trim() || '0'),
-          ytmAtLtp: parseFloat(cells[6].textContent?.trim() || '0'),
-          openPrice: parseFloat(cells[7].textContent?.trim() || '0'),
-          highPrice: parseFloat(cells[8].textContent?.trim() || '0'),
-          lowPrice: parseFloat(cells[9].textContent?.trim() || '0'),
-          totalVolume: parseInt(cells[10].textContent?.trim() || '0', 10),
-          totalTurnover: parseFloat(cells[11].textContent?.trim() || '0'),
-        };
-        pageData.push(marketData);
+  let tableData;
+  try {
+    await page.waitForSelector(selector);
+    tableData = await page.evaluate((selector) => {
+      const rows = document.querySelector(selector).querySelectorAll('tr');
+      let pageData = [];
+      for (let row of rows) {
+        const cells = row.querySelectorAll('td.TTRow, td.TTRow_right');
+        if (cells && cells.length > 1) {
+          const marketData = {
+            securityCode: cells[0].textContent?.trim() || '',
+            securityName: cells[1].textContent?.trim() || '',
+            group: cells[2].textContent?.trim() || '',
+            ltpClose: parseFloat(cells[3].textContent?.trim() || '0'),
+            change: parseFloat(cells[4].textContent?.trim() || '0'),
+            changePercent: parseFloat(cells[5].textContent?.trim() || '0'),
+            ytmAtLtp: parseFloat(cells[6].textContent?.trim() || '0'),
+            openPrice: parseFloat(cells[7].textContent?.trim() || '0'),
+            highPrice: parseFloat(cells[8].textContent?.trim() || '0'),
+            lowPrice: parseFloat(cells[9].textContent?.trim() || '0'),
+            totalVolume: parseInt(cells[10].textContent?.trim() || '0', 10),
+            totalTurnover: parseFloat(cells[11].textContent?.trim() || '0'),
+          };
+          pageData.push(marketData);
+        }
       }
-    }
-    return pageData;
-  }, selector);
+      return pageData;
+    }, selector);
+  } catch (error) {
+    console.log(`Error fetching pageData for page ${page}`);
+    return null;
+  }
   return tableData;
 }
 
@@ -73,6 +79,9 @@ async function fetchBondData() {
 
   while (pageLoad == 200) {
     tableData = await fetchPageData(tableSelector, page);
+    if (tableData === null) {
+      continue;
+    }
     bondData = bondData.concat(tableData);
     pageNo = pageNo + 1;
     resp = await Promise.all([
@@ -181,17 +190,11 @@ module.exports.migrateBseMarketData = async function () {
   // console.log('Completed Fetching Bond Data');
   let migratedIsins = [];
   let errorList = [];
-  let securityInfoError = [];
 
   for (const bond of bondData) {
     try {
-      // console.log('Fetching Market Depth');
       const marketDepth = await fetchMarketDepth(bond);
-      // console.log('Completed Fetching Market Depth');
-
-      // console.log('Fetching Security Info');
       const securityInfo = await fetchSecurityInfo(bond);
-      // console.log('Completed Fetching Security Info');
       if (securityInfo && marketDepth) {
         const data = {
           bseScripName: bond.securityName,
@@ -206,26 +209,17 @@ module.exports.migrateBseMarketData = async function () {
         };
         // console.log('Pushing Date to DB');
         const isin = securityInfo.ISSebiIsin.trim();
-
-        await prisma.issuance.update({
-          where: {
-            isin: isin,
-          },
-          data: data,
-        });
-        migratedIsins.push(securityInfo.ISSebiIsin);
+        migratedIsins.push(isin);
+      } else {
+        errorList.push(bond.securityName);
+        console.error(`Error fetching bond ${bond.securityName}:`, error);
       }
     } catch (error) {
-      if (typeof securityInfo !== 'undefined' && securityInfo !== null && securityInfo.ISSebiIsin) {
-        errorList.push(securityInfo.ISSebiIsin);
-      } else {
-        securityInfoError.push(bond.securityCode);
-        // console.error(`Error migrating bond ${bond.securityName}:`, error);
-      }
+      errorList.push(bond.securityName);
+      console.error(`Exception fetching bond ${bond.securityName}:`, error);
     }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
-  console.log(`BSE Bond data migration completed for ${migratedIsins} \n`);
-  console.log(`BSE Bond data migration errored for ${errorList} \n`);
-  console.log(`BSE Bond data migration errored for ${securityInfoError} \n`);
   await prisma.$disconnect();
+  return { success: migratedIsins, errors: errorList };
 };
