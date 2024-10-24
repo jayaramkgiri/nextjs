@@ -8,7 +8,7 @@ const {
   dateFormatter,
   highestBuyPrices,
   lowestSellPrice,
-} = require('./lib/helpers');
+} = require('./lib/helpers.cjs');
 
 async function fetchPageData(selector, page) {
   await page.waitForSelector(selector);

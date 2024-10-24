@@ -8,7 +8,7 @@ const {
   dateFormatter,
   highestBuyPrices,
   lowestSellPrice,
-} = require('./lib/helpers');
+} = require('./lib/helpers.cjs');
 
 async function fetchPageData(selector, page) {
   await page.waitForSelector(selector);
@@ -72,6 +72,7 @@ async function fetchBondData() {
   }
 
   while (pageLoad == 200) {
+    console.log(`Page no: ${pageNo}`);
     tableData = await fetchPageData(tableSelector, page);
     bondData = bondData.concat(tableData);
     pageNo = pageNo + 1;
@@ -88,7 +89,7 @@ async function fetchBondData() {
   return bondData;
 }
 
-async function fetchMarketDepth(bondData) {
+async function fetchMarketDepth(securityCode) {
   const marketHeaders = {
     accept: 'application/json, text/plain, */*',
     'accept-encoding': 'gzip, deflate, br, zstd',
@@ -109,34 +110,28 @@ async function fetchMarketDepth(bondData) {
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   };
   let config = {};
-  let marketDepthList = {};
-  let errorList = [];
-  for (const bond of bondData) {
-    config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${bond.securityCode}`,
-      // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=939447`,
-      headers: marketHeaders,
-    };
-    try {
-      const marketDepth = await axios.request(config);
-      if (marketDepth.status == 200) {
-        marketDepthList[bond.securityCode] = marketDepth.data;
-      } else {
-        errorList.push(bond.securityCode);
-        console.log(`Error fetching marketData for ${bond.securityCode}`);
-      }
-    } catch (_e) {
-      console.log(`Error fetching marketData for ${bond.securityCode}`);
-      errorList.push(bond.securityCode);
+  let marketDepth = null;
+  config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=${securityCode}`,
+    // url: `https://api.bseindia.com/RealTimeBseIndiaAPI/api/MarketDepth/w?flag=&quotetype=EQ&scripcode=939447`,
+    headers: marketHeaders,
+  };
+  try {
+    const resp = await axios.request(config);
+    if (resp.status == 200) {
+      marketDepth = resp.data;
+    } else {
+      console.log(`Error fetching marketData for ${securityCode}`);
     }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  } catch (_e) {
+    console.log(`Error fetching marketData for ${securityCode}`);
   }
-  return { marketDepth: marketDepthList, errors: errorList };
+  return marketDepth;
 }
 
-async function fetchSecurityInfo(bondData) {
+async function fetchSecurityInfo(securityCode) {
   headers = {
     accept: 'application/json, text/plain, */*',
     'accept-encoding': 'gzip, deflate, br, zstd',
@@ -158,33 +153,27 @@ async function fetchSecurityInfo(bondData) {
   };
 
   let config = {};
-  let securityInfoList = {};
-  let errorList = [];
+  let securityInfo = null;
 
-  for (const bond of bondData) {
-    config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: `https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=${bond.securityCode}`,
-      // url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
-      headers: headers,
-    };
+  config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: `https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=${securityCode}`,
+    // url: 'https://api.bseindia.com/BseIndiaAPI/api/DebSecurityInfo/w?scripcode=975454',
+    headers: headers,
+  };
 
-    try {
-      const info = await axios.request(config);
-      if (info.status == 200) {
-        securityInfoList[bond.securityCode] = info.data.Table[0];
-      } else {
-        errorList.push(bond.securityCode);
-        console.log(`Error fetching marketData for ${bond.securityCode}`);
-      }
-    } catch (_e) {
-      console.log(`Error fetching marketData for ${bond.securityCode}`);
-      errorList.push(bond.securityCode);
+  try {
+    const info = await axios.request(config);
+    if (info.status == 200) {
+      securityInfo = info.data.Table[0];
+    } else {
+      console.log(`Error fetching marketData for ${securityCode}`);
     }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  } catch (_e) {
+    console.log(`Error fetching marketData for ${securityCode}`);
   }
-  return { securityInfo: securityInfoList, infoErrors: errorList };
+  return securityInfo;
 }
 
 async function deleteEarliestVersion() {
@@ -215,63 +204,46 @@ module.exports.migrateBseMarketData = async function () {
     console.log('Completed Fetching Bond Data');
 
     if (bondData.length > 0) {
-      console.log('Fetching Market Depth');
-      const { marketDepth, errors } = await fetchMarketDepth(bondData);
-      console.log('Completed Fetching Market Depth');
-
-      console.log('Fetching Security Info');
-      const { securityInfo, infoErrors } = await fetchSecurityInfo(bondData);
-      console.log('Completed Fetching Security Info');
-
-      if (errors.length > 0 || infoErrors.length > 0) {
-        console.log(`Error occured while fetching marketdepth for ${errors}`);
-        console.log(
-          `Error occured while fetching marketdepth for ${infoErrors}`,
-        );
-      }
       let dataList = [];
-      const maxSeqNo = await prisma.bseOrderBook.aggregate({
-        _max: {
-          seqNo: true,
-        },
-      });
-      const seqNo = (maxSeqNo._max.seqNo || 0) + 1;
 
       for (const bond of bondData) {
-        if (securityInfo[bond.securityCode] && marketDepth[bond.securityCode]) {
+        marketDepth = null;
+        securityInfo = null;
+        console.log('Fetching Market Depth');
+        marketDepth = await fetchMarketDepth(bond.securityCode);
+        console.log('Completed Fetching Market Depth');
+        console.log('Fetching Security Info');
+        securityInfo = await fetchSecurityInfo(bond.securityCode);
+        console.log('Completed Fetching Security Info');
+        if (securityInfo && marketDepth) {
           const data = {
-            isin: securityInfo[bond.securityCode].ISSebiIsin,
-            seqNo: seqNo,
+            isin: securityInfo.ISSebiIsin,
             scripName: bond.securityName,
             scripCode: bond.securityCode,
-            faceValue: securityInfo[bond.securityCode].ISFaceValue,
+            faceValue: securityInfo.ISFaceValue,
             maturityDate: dateFormatter(
-              securityInfo[bond.securityCode].ISMaturityDate,
+              securityInfo.ISMaturityDate,
             ),
-            creditRating: securityInfo[bond.securityCode].ISCreditRating,
+            creditRating: securityInfo.ISCreditRating,
             close: bond.ltpClose,
             open: bond.openPrice,
             high: bond.highPrice,
             low: bond.lowPrice,
             totalBuyQty: formattedStringToNumber(
-              marketDepth[bond.securityCode].TotalBQty,
+              marketDepth.TotalBQty,
             ),
             totalSellQty: formattedStringToNumber(
-              marketDepth[bond.securityCode].TotalSQty,
+              marketDepth.TotalSQty,
             ),
-            buyPrice: highestBuyPrices(marketDepth[bond.securityCode]),
-            sellPrice: lowestSellPrice(marketDepth[bond.securityCode]),
+            buyPrice: highestBuyPrices(marketDepth),
+            sellPrice: lowestSellPrice(marketDepth),
           };
           dataList.push(data);
         }
       }
       console.log('Pushing Date to DB');
-      await prisma.bseOrderBook.createMany({
-        data: dataList,
-      });
     }
     console.log('Bond data migration completed.');
-    await deleteEarliestVersion();
   } catch (error) {
     console.error('Error fetching or migrating bond data:', error);
   } finally {

@@ -8,7 +8,7 @@ const {
   dateFormatter,
   fetchSeriesInfo,
   fetchFaceValue,
-} = require('./lib/helpers');
+} = require('./lib/helpers.cjs');
 
 const prisma = new PrismaClient();
 
