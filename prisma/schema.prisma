@@ -110,3 +110,41 @@ model Yield {
 
    @@map("yields")
 }
+
+model Market {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  created_at           DateTime                  @default(now())
+  updated_at           DateTime                  @updatedAt
+  date                 DateTime                  @db.Date
+  isin                 String
+  cin                  String?
+  company_name         String?
+  description          String?
+  face_value           Int?
+  allotment_date       DateTime?                    @db.Date
+  redemption_date      DateTime?                   @db.Date
+  coupon               Float?
+  coupon_basis         String?
+  coupon_type          String?
+  latest_rating        String?
+  latest_rating_agency String?
+  latest_rating_date   DateTime?                   @db.Date
+  interest_frequency   String?
+  principal_frequency  String?
+  bse_scrip            String?
+  nse_scrip            String?
+  
+  open                 Float?
+  close                Float?
+  total_buy_order      Int?
+  total_sell_order     Int?
+  buyPrice             Float?
+  sellPrice            Float?
+
+  bse_scrape           Json?
+  nse_scrape           Json?
+
+  @@unique([date, isin])
+
+  @@map("markets")
+}

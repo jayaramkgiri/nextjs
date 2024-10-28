@@ -196,19 +196,39 @@ module.exports.migrateBseMarketData = async function () {
       const marketDepth = await fetchMarketDepth(bond);
       const securityInfo = await fetchSecurityInfo(bond);
       if (securityInfo && marketDepth) {
-        const data = {
-          bseScripName: bond.securityName,
-          bseFaceValue: securityInfo.ISFaceValue,
-          bseMaturityDate: dateFormatter(securityInfo.ISMaturityDate),
-          bseCreditRating: securityInfo.ISCreditRating,
-          bseclose: bond.ltpClose,
-          bseBuyOrders: formattedStringToNumber(marketDepth.TotalBQty),
-          bseSellOrders: formattedStringToNumber(marketDepth.TotalSQty),
-          bseBuyPrice: highestBuyPrices(marketDepth),
-          bseSellPrice: lowestSellPrice(marketDepth),
-        };
+        //   const data = {
+        //     bseScripName: bond.securityName,
+        //     bseFaceValue: securityInfo.ISFaceValue,
+        //     bseMaturityDate: dateFormatter(securityInfo.ISMaturityDate),
+        //     bseCreditRating: securityInfo.ISCreditRating,
+        //     bseclose: bond.ltpClose,
+        //     bseBuyOrders: formattedStringToNumber(marketDepth.TotalBQty),
+        //     bseSellOrders: formattedStringToNumber(marketDepth.TotalSQty),
+        //     bseBuyPrice: highestBuyPrices(marketDepth),
+        //     bseSellPrice: lowestSellPrice(marketDepth),
+        //   };
         // console.log('Pushing Date to DB');
+        bond['security_info'] = securityInfo;
+        bond['market_depth'] = marketDepth;
         const isin = securityInfo.ISSebiIsin.trim();
+
+        await prisma.market.upsert({
+          where: {
+            isin: isin,
+            date: new Date()
+          },
+          create: {
+            date: new Date(),
+            isin: isin,
+            created_at: new Date(),
+            updated_at: new Date(),
+            bse_scrape: bond
+          },
+          update: {
+            updated_at: new Date(),
+            bse_scrape: bond
+          }
+        })
         migratedIsins.push(isin);
       } else {
         errorList.push(bond.securityName);

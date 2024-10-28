@@ -56,9 +56,8 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
-    cookies.find((c) => c.name === 'nseappid').value
-  }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
+    }`;
 }
 
 async function fetchTradeList(cookie) {
@@ -160,27 +159,46 @@ module.exports.migrateNseMarketData = async function () {
 
         if (marketDepth) {
           try {
-            const data = {
-              nseScripName: `${trade.symbol}-${trade.series}`,
-              nseFaceValue: fetchFaceValue(trade, marketDepth),
-              nseMaturityDate: dateFormatter(trade.maturity_date),
-              nseCreditRating: trade.credit_rating,
-              nseclose: formattedStringToNumber(trade.close),
-              nseBuyOrders: fetchSeriesInfo(marketDepth.data, trade.series)
-                .marketDeptOrderBook.totalBuyQuantity,
-              nseSellOrders: fetchSeriesInfo(marketDepth.data, trade.series)
-                .marketDeptOrderBook.totalSellQuantity,
-              nseBuyPrice: highestBuyPrices(
-                fetchSeriesInfo(marketDepth.data, trade.series)
-                  .marketDeptOrderBook,
-              ),
-              nseSellPrice: lowestSellPrice(
-                fetchSeriesInfo(marketDepth.data, trade.series)
-                  .marketDeptOrderBook,
-              ),
-            };
+            // const data = {
+            //   nseScripName: `${trade.symbol}-${trade.series}`,
+            //   nseFaceValue: fetchFaceValue(trade, marketDepth),
+            //   nseMaturityDate: dateFormatter(trade.maturity_date),
+            //   nseCreditRating: trade.credit_rating,
+            //   nseclose: formattedStringToNumber(trade.close),
+            //   nseBuyOrders: fetchSeriesInfo(marketDepth.data, trade.series)
+            //     .marketDeptOrderBook.totalBuyQuantity,
+            //   nseSellOrders: fetchSeriesInfo(marketDepth.data, trade.series)
+            //     .marketDeptOrderBook.totalSellQuantity,
+            //   nseBuyPrice: highestBuyPrices(
+            //     fetchSeriesInfo(marketDepth.data, trade.series)
+            //       .marketDeptOrderBook,
+            //   ),
+            //   nseSellPrice: lowestSellPrice(
+            //     fetchSeriesInfo(marketDepth.data, trade.series)
+            //       .marketDeptOrderBook,
+            //   ),
+            // };
             // console.log('Pushing Date to DB');
+            trade['market_depth'] = marketDepth
             const isin = trade.meta.isin;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            await prisma.market.upsert({
+              where: {
+                date_isin: {
+                  isin: isin,
+                  date: today
+                }
+              },
+              create: {
+                date: today,
+                isin: isin,
+                nse_scrape: trade
+              },
+              update: {
+                nse_scrape: trade
+              }
+            })
             migratedIsins.push(isin);
           } catch (e) {
             errorList.push(trade.meta.isin);
