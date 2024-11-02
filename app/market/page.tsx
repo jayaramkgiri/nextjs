@@ -7,7 +7,7 @@ import YieldCard from '@/app/ui/market/yieldCard';
 import Cards from '@/app/ui/common/cards';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchMarketSummary, noOfPages } from '@/app/models/issuance';
+import { fetchMarketSummary, noOfPages } from '@/app/models/market.mjs';
 import { KiteConnect } from 'kiteconnect';
 
 export default async function Page({
@@ -36,16 +36,7 @@ export default async function Page({
     console.log('Profile:', profile);
   }
 
-  const totalPages = await noOfPages({
-    OR: [
-      {
-        totalBuyVolume: { not: 0 },
-      },
-      {
-        totalSellVolume: { not: 0 },
-      },
-    ],
-  });
+  const totalPages = await noOfPages();
   return (
     <div className="h:auto md:pr-6">
       <section className="m-2 hidden w-[85%] gap-2 md:flex">

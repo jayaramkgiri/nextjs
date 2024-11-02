@@ -1,16 +1,12 @@
-import { PrismaClient } from '@prisma/client'
+const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-export async function fetchYields(
-date = new Date()
-) {
+export async function fetchYields() {
   // noStore();
   try {
-    date.setHours(0, 0, 0, 0);
-
     const yields = await prisma.yield.findFirst({
-      where: {calculated_date: date}
+      orderBy: { calculated_date: 'desc' },
     });
     return yields;
   } catch (error) {

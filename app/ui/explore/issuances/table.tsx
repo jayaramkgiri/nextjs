@@ -1,16 +1,16 @@
-import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
+import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance.mjs';
 import TableRow from '@/app/ui/explore/table-row';
 import IssuanceList from './issuanceList';
 import BackToTopButton from '@/app/ui/explore/issuances/backToTopButton';
 
 export default async function DebenturesTable({
-  query,
-  currentPage,
+  query = '',
+  currentPage = 1,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances({}, currentPage);
+  const issuances = await fetchIssuances(query, currentPage);
 
   return (
     <div className="w-full pt-0">
@@ -59,7 +59,13 @@ export default async function DebenturesTable({
                     Coupon Rate
                   </th>
                   <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Rating
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
                     Payment Frequency
+                  </th>
+                  <th scope="col" className="sticky px-3 py-5 font-medium ">
+                    Issue Size
                   </th>
                 </tr>
               </thead>
@@ -69,7 +75,7 @@ export default async function DebenturesTable({
                   issuances.map((issuance, index) => {
                     return (
                       <TableRow
-                        key={Number(issuance.id)}
+                        key={issuance.isin}
                         isinHover={false}
                         sno={index}
                         currentPage={currentPage}
@@ -77,14 +83,16 @@ export default async function DebenturesTable({
                         itemsPerPage={ITEMS_PER_PAGE}
                         padding={2}
                         cells={[
-                          issuance.company!.name,
+                          issuance.company_name,
                           issuance.isin,
-                          issuance.faceValue,
-                          issuance.allotmentDate,
-                          issuance.redemptionDate,
-                          issuance.couponBasis,
-                          issuance.couponRate,
-                          issuance.paymentFrequency,
+                          issuance.face_value,
+                          issuance.allotment_date,
+                          issuance.redemption_date,
+                          issuance.coupon_basis,
+                          issuance.coupon,
+                          issuance.latest_rating,
+                          issuance.interest_frequency,
+                          issuance.issue_size,
                         ]}
                         clickable={true}
                       />

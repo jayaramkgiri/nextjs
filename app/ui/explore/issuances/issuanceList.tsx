@@ -29,7 +29,7 @@ export default function IssuanceList({
         </CardHeader>
         <CardBody className="flex w-full flex-col gap-2">
           <div className="text-xxs font-normal text-blue-600">
-            {issuance.company!.name}
+            {issuance.company_name}
           </div>
           {market && (
             <div
@@ -60,27 +60,27 @@ export default function IssuanceList({
           <div className="flex w-full gap-2">
             <div className="flex w-full gap-0">
               <div className="w-full text-xs text-gray-500">Face Value</div>
-              <div className="text-primary w-full text-xs">1,000</div>
+              <div className="w-full text-xs text-primary">1,000</div>
             </div>
             <div className="flex w-full gap-0">
               <div className="w-full text-xs text-gray-500">Coupon</div>
-              <div className="text-primary w-full text-xs">Fixed 11.2%</div>
+              <div className="w-full text-xs text-primary">Fixed 11.2%</div>
             </div>
           </div>
           <div className="flex w-full gap-2">
             <div className="flex w-full gap-0">
               <div className="w-full text-xs text-gray-500">Allotment</div>
-              <div className="text-primary w-full text-xs">29 Jun 2019</div>
+              <div className="w-full text-xs text-primary">29 Jun 2019</div>
             </div>
             <div className="flex w-full gap-0">
               <div className="w-full text-xs text-gray-500">Maturity</div>
-              <div className="text-primary w-full text-xs">31 Jul 2032</div>
+              <div className="w-full text-xs text-primary">31 Jul 2032</div>
             </div>
           </div>
           <div className="flex w-1/2 gap-2">
             <div className="flex w-full gap-0">
               <div className="w-full text-xs text-gray-500">Rating</div>
-              <div className="text-primary w-full text-xs">Crisil AA</div>
+              <div className="w-full text-xs text-primary">Crisil AA</div>
             </div>
           </div>
         </CardBody>

@@ -3,7 +3,7 @@ import { inter } from '@/app/ui/fonts.cjs';
 import SideNav from '@/app/ui/common/sidenav';
 import { UserDropdown } from './ui/common/userDropdown';
 import { headers } from 'next/headers';
-import { fetchMarketSummary } from '@/app/models/issuance';
+import { fetchMarketSummary } from '@/app/models/market.mjs';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export default async function RootLayout({
