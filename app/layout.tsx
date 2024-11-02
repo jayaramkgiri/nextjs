@@ -1,5 +1,5 @@
 import '@/app/ui/global.css';
-import { inter } from '@/app/ui/fonts';
+import { inter } from '@/app/ui/fonts.cjs';
 import SideNav from '@/app/ui/common/sidenav';
 import { UserDropdown } from './ui/common/userDropdown';
 import { headers } from 'next/headers';

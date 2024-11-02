@@ -6,7 +6,7 @@ export const ITEMS_PER_PAGE = 100;
 export async function fetchIssuances(
   query: object = {},
   currentPage: number = 1,
-  orderBy: object = { company: { name: 'asc' } }
+  orderBy: object = { company_name:  'asc' }
 ) {
   // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -16,12 +16,8 @@ export async function fetchIssuances(
       skip: offset,
       take: ITEMS_PER_PAGE,
       where: query,
-      include: {
-        company: true
-      },
       orderBy: orderBy,
     });
-    issuances.forEach((iss: any) => iss['issuerName'] = iss.company.name)
     return issuances;
   } catch (error) {
     console.error('Database Error:', error);

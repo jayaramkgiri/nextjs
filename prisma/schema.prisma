@@ -54,11 +54,11 @@ type IssuancesLatestNseTrade {
 
 model Company {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
-  cin              String
+  cin              String?
   created_at       DateTime          @db.Date
   mca_data         CompaniesMcaData?
   mca_sourced_date DateTime?         @db.Date
-  name             String
+  name             String?
   status           String?
   updated_at       DateTime          @db.Date
 
@@ -67,19 +67,19 @@ model Company {
 
 model Issuance {
   id                   String                      @id @default(auto()) @map("_id") @db.ObjectId
-  allotment_date       DateTime                    @db.Date
+  allotment_date       DateTime?                    @db.Date
   bse_scrip            String?
   cash_flow_schedule   IssuancesCashFlowSchedule[]
-  cin                  String
-  company_name         String
+  cin                  String?
+  company_name         String?
   coupon               Float?
-  coupon_basis         String
+  coupon_basis         String?
   coupon_type          String?
   created_at           DateTime                    @db.Date
   day_count_convention String?
   face_value           Int?
   interest_frequency   String?
-  isin                 String
+  isin                 String?
   issue_size           Unsupported("Decimal128")?
   latest_bse_trade     IssuancesLatestBseTrade?
   latest_nse_trade     IssuancesLatestNseTrade?
@@ -87,10 +87,10 @@ model Issuance {
   latest_rating_agency String?
   latest_rating_date   DateTime?                   @db.Date
   latest_trade_date    DateTime?                   @db.Date
-  nsdl_data            Json
-  nse_data             Json
+  nsdl_data            Json?
+  nse_data             Json?
   nse_scrip            String?
-  redemption_date      DateTime                    @db.Date
+  redemption_date      DateTime?                    @db.Date
   redemption_type      String?
   updated_at           DateTime                    @db.Date
 
@@ -138,9 +138,10 @@ model Market {
   close                Float?
   total_buy_order      Int?
   total_sell_order     Int?
-  buyPrice             Float?
-  sellPrice            Float?
-
+  buy_price            Float?
+  sell_price           Float?
+  buy_volume           Float?
+  sell_volume          Float?
   bse_scrape           Json?
   nse_scrape           Json?
 

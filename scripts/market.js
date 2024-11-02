@@ -2,30 +2,59 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-const { migrateBseMarketData } = require('./bseTradesNew');
-const { migrateNseMarketData } = require('./nseTradesNew');
+const { migrateBseMarketData } = require('./bseTrades.cjs');
+const { migrateNseMarketData } = require('./nseTrades.cjs');
 
-async function migrateMarketData() {
-  // await prisma.issuance.updateMany({
-  //   data: {
-  //     nseBuyOrders: null,
-  //     nseSellOrders: null,
-  //     nseBuyPrice: null,
-  //     nseSellPrice: null,
-  //     nseclose: null,
-  //     bseBuyOrders: null,
-  //     bseSellOrders: null,
-  //     bseBuyPrice: null,
-  //     bseSellPrice: null,
-  //     bseclose: null,
-  //     totalBuyVolume: null,
-  //     totalSellVolume: null,
-  //   },
-  // });
+const {
+  bseOpenClose,
+  nseOpenClose,
+  bseBuyOrderSellOrder,
+  nseBuyOrderSellOrder,
+  bseBuyPriceSellPrice,
+  nseBuyPriceSellPrice,
+  mergeOpenClose,
+  mergeBuyOrderSellOrder,
+  mergeBuyPriceSellPrice,
+} = require('./lib/helpers.cjs');
+
+function marketData(iss, key1, key2) {
+  let value = null;
+  if (iss.bse_scrape === null) {
+    value = eval(`nse${key1}${key2}(iss.nse_scrape)`);
+  } else if (iss.nse_scrape === null) {
+    value = eval(`bse${key1}${key2}(iss.bse_scrape)`);
+  } else {
+    value = eval(
+      `merge${key1}${key2}(bse${key1}${key2}(iss.bse_scrape), nse${key1}${key2}(iss.nse_scrape))`,
+    );
+  }
+  return value;
+}
+
+async function migrateMarketData(date = new Date()) {
   await Promise.all([migrateBseMarketData(), migrateNseMarketData()]);
-
-  await prisma.$queryRaw`UPDATE "Issuance" SET "totalBuyVolume"=((coalesce("bseBuyOrders",0) * coalesce("bseBuyPrice", 0 )) + (coalesce("nseBuyOrders", 0) * coalesce("nseBuyPrice", 0)));`;
-  await prisma.$queryRaw`UPDATE "Issuance" SET "totalSellVolume"=((coalesce("bseSellOrders",0) * coalesce("bseSellPrice", 0 )) + (coalesce("nseSellOrders", 0) * coalesce("nseSellPrice", 0)));`;
+  date.setHours(0, 0, 0, 0);
+  const trading_iss = await prisma.market.findMany({ where: { date: date } });
+  for (const iss of trading_iss) {
+    const openClose = marketData(iss, 'Open', 'Close');
+    const buyOrderSellOrder = marketData(iss, 'BuyOrder', 'SellOrder');
+    const buyPriceSellPrice = marketData(iss, 'BuyPrice', 'SellPrice');
+    await prisma.market.update({
+      where: { id: iss.id },
+      data: {
+        open: openClose['open'],
+        close: openClose['close'],
+        total_buy_order: buyOrderSellOrder['buyOrder'],
+        total_sell_order: buyOrderSellOrder['sellOrder'],
+        buy_price: buyPriceSellPrice['buyPrice'],
+        sell_price: buyPriceSellPrice['sellPrice'],
+        buy_volume:
+          buyPriceSellPrice['buyPrice'] * buyOrderSellOrder['buyOrder'],
+        sell_volume:
+          buyPriceSellPrice['sellPrice'] * buyOrderSellOrder['sellOrder'],
+      },
+    });
+  }
 }
 
 migrateMarketData();

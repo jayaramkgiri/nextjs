@@ -12,41 +12,6 @@ const {
 
 const prisma = new PrismaClient();
 
-function highestBuyPrices(orderBook) {
-  let highestBPrice = null;
-
-  let bid = orderBook.bid;
-  // Find the highest buy price
-  for (let i = 0; i < bid.length; i++) {
-    if (bid[i] != null && typeof bid[i].price === 'number') {
-      if (highestBPrice === null || bid[i].price > highestBPrice) {
-        highestBPrice = bid[i].price;
-      }
-    }
-  }
-
-  return highestBPrice;
-}
-
-function lowestSellPrice(orderBook) {
-  let lowestSPrice = null;
-
-  let ask = orderBook.ask;
-  // Find the highest buy price
-  for (let i = 0; i < ask.length; i++) {
-    if (ask[i] != null && typeof ask[i].price === 'number') {
-      if (
-        lowestSPrice === null ||
-        (ask[i].price < lowestSPrice && ask[i].quantity !== 0)
-      ) {
-        lowestSPrice = ask[i].price;
-      }
-    }
-  }
-
-  return lowestSPrice;
-}
-
 async function getCookie() {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
@@ -56,8 +21,9 @@ async function getCookie() {
 
   cookies = await page.cookies();
   await browser.close();
-  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${cookies.find((c) => c.name === 'nseappid').value
-    }`;
+  return `nsit=${cookies.find((c) => c.name === 'nsit').value}; nseappid=${
+    cookies.find((c) => c.name === 'nseappid').value
+  }`;
 }
 
 async function fetchTradeList(cookie) {
@@ -140,6 +106,31 @@ async function fetchMarketDepth(cookie, symbol) {
   return marketDepth;
 }
 
+async function createParams(isin, nse_scrape, date) {
+  iss = await prisma.issuance.findFirst({ where: { isin: isin } });
+  return {
+    isin: isin,
+    date: date,
+    cin: iss.cin,
+    company_name: iss.company_name,
+    description: iss.description,
+    face_value: iss.face_value,
+    allotment_date: iss.allotment_date,
+    redemption_date: iss.redemption_date,
+    coupon: iss.coupon,
+    coupon_basis: iss.coupon_basis,
+    coupon_type: iss.coupon_type,
+    latest_rating: iss.latest_rating,
+    latest_rating_agency: iss.latest_rating_agency,
+    latest_rating_date: iss.latest_rating_date,
+    interest_frequency: iss.interest_frequency,
+    principal_frequency: iss.principal_frequency,
+    bse_scrip: iss.bse_scrip,
+    nse_scrip: iss.nse_scrip,
+    bse_scrape: nse_scrape,
+  };
+}
+
 module.exports.migrateNseMarketData = async function () {
   let migratedIsins = [];
   let errorList = [];
@@ -179,34 +170,38 @@ module.exports.migrateNseMarketData = async function () {
             //   ),
             // };
             // console.log('Pushing Date to DB');
-            trade['market_depth'] = marketDepth
+            trade['market_depth'] = marketDepth;
             const isin = trade.meta.isin;
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            await prisma.market.upsert({
-              where: {
-                date_isin: {
-                  isin: isin,
-                  date: today
-                }
-              },
-              create: {
-                date: today,
-                isin: isin,
-                nse_scrape: trade
-              },
-              update: {
-                nse_scrape: trade
-              }
-            })
+
+            iss = await prisma.market.findFirst({
+              where: { date: today, isin: isin },
+            });
+
+            if (iss !== null) {
+              await prisma.market.update({
+                where: {
+                  id: iss.id,
+                },
+                data: {
+                  nse_scrape: trade,
+                },
+              });
+            } else {
+              await prisma.market.create({
+                data: await createParams(isin, trade, today),
+              });
+            }
+            console.log(`Success pushing ${isin}`);
             migratedIsins.push(isin);
           } catch (e) {
             errorList.push(trade.meta.isin);
-            // console.log(`Error pushing ${trade.meta.isin}`, e);
+            console.log(`Error pushing ${trade.meta.isin}`, e);
           }
         } else {
           errorList.push(trade.meta.isin);
-          // console.log(`Error pushing ${trade.meta.isin}`, e);
+          console.log(`Error pushing ${trade.meta.isin}`);
         }
       }
       console.log(`NSE Bond data migration completed for ${migratedIsins}`);

@@ -184,6 +184,31 @@ async function fetchSecurityInfo(bond) {
   return securityInfo;
 }
 
+async function createParams(isin, bse_scrape, date) {
+  iss = await prisma.issuance.findFirst({ where: { isin: isin } });
+  return {
+    isin: isin,
+    date: date,
+    cin: iss.cin,
+    company_name: iss.company_name,
+    description: iss.description,
+    face_value: iss.face_value,
+    allotment_date: iss.allotment_date,
+    redemption_date: iss.redemption_date,
+    coupon: iss.coupon,
+    coupon_basis: iss.coupon_basis,
+    coupon_type: iss.coupon_type,
+    latest_rating: iss.latest_rating,
+    latest_rating_agency: iss.latest_rating_agency,
+    latest_rating_date: iss.latest_rating_date,
+    interest_frequency: iss.interest_frequency,
+    principal_frequency: iss.principal_frequency,
+    bse_scrip: iss.bse_scrip,
+    nse_scrip: iss.nse_scrip,
+    bse_scrape: bse_scrape,
+  };
+}
+
 module.exports.migrateBseMarketData = async function () {
   // console.log('Fetching Bond Data');
   const bondData = await fetchBondData();
@@ -211,24 +236,27 @@ module.exports.migrateBseMarketData = async function () {
         bond['security_info'] = securityInfo;
         bond['market_depth'] = marketDepth;
         const isin = securityInfo.ISSebiIsin.trim();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        iss = await prisma.market.findFirst({
+          where: { date: today, isin: isin },
+        });
 
-        await prisma.market.upsert({
-          where: {
-            isin: isin,
-            date: new Date()
-          },
-          create: {
-            date: new Date(),
-            isin: isin,
-            created_at: new Date(),
-            updated_at: new Date(),
-            bse_scrape: bond
-          },
-          update: {
-            updated_at: new Date(),
-            bse_scrape: bond
-          }
-        })
+        if (iss !== null) {
+          await prisma.market.update({
+            where: {
+              id: iss.id,
+            },
+            data: {
+              bse_scrape: bond,
+            },
+          });
+        } else {
+          await prisma.market.create({
+            data: createParams(isin, bond, today),
+          });
+        }
+        console.log(`Success pushing ${isin}`);
         migratedIsins.push(isin);
       } else {
         errorList.push(bond.securityName);
