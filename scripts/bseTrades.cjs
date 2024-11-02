@@ -253,7 +253,7 @@ module.exports.migrateBseMarketData = async function () {
           });
         } else {
           await prisma.market.create({
-            data: createParams(isin, bond, today),
+            data: await createParams(isin, bond, today),
           });
         }
         console.log(`Success pushing ${isin}`);
