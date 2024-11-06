@@ -3,13 +3,6 @@ require('any-date-parser');
 const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
-const {
-  formattedStringToNumber,
-  dateFormatter,
-  fetchSeriesInfo,
-  fetchFaceValue,
-} = require('./lib/helpers.cjs');
-
 const prisma = new PrismaClient();
 
 async function getCookie() {
@@ -127,7 +120,7 @@ async function createParams(isin, nse_scrape, date) {
     principal_frequency: iss.principal_frequency,
     bse_scrip: iss.bse_scrip,
     nse_scrip: iss.nse_scrip,
-    bse_scrape: nse_scrape,
+    nse_scrape: nse_scrape,
   };
 }
 

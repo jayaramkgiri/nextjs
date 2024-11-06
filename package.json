@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
@@ -40,7 +40,7 @@
     "indian-number-format": "^1.0.5",
     "install": "^0.13.0",
     "jsdom": "^24.1.0",
-    "kiteconnect": "^1.2.2",
+    "kiteconnect": "^5.0.1",
     "lucide-react": "^0.438.0",
     "material-ui-popup-state": "^5.1.2",
     "mongoose": "^8.7.2",

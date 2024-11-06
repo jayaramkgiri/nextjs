@@ -15,7 +15,7 @@ export default function TableRow({
   isinHover = false,
   clickable = true,
 }: {
-  key: string;
+  key: string | null;
   currentPage: number;
   showSno: boolean;
   sno: number;

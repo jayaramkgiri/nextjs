@@ -32,10 +32,11 @@ function marketData(iss, key1, key2) {
 }
 
 async function migrateMarketData(date = new Date()) {
-  await Promise.all([migrateBseMarketData(), migrateNseMarketData()]);
+  // await Promise.all([migrateBseMarketData(), migrateNseMarketData()]);
   date.setHours(0, 0, 0, 0);
   const trading_iss = await prisma.market.findMany({ where: { date: date } });
   for (const iss of trading_iss) {
+    try {
     const openClose = marketData(iss, 'Open', 'Close');
     const buyOrderSellOrder = marketData(iss, 'BuyOrder', 'SellOrder');
     const buyPriceSellPrice = marketData(iss, 'BuyPrice', 'SellPrice');
@@ -54,6 +55,8 @@ async function migrateMarketData(date = new Date()) {
           buyPriceSellPrice['sellPrice'] * buyOrderSellOrder['sellOrder'],
       },
     });
+  } catch (error) {
+    console.log(`Error updating market data for ${iss.isin} -> ${error}`);
   }
 }
 

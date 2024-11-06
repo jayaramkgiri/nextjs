@@ -1,4 +1,8 @@
-import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance.mjs';
+import {
+  fetchIssuances,
+  ITEMS_PER_PAGE,
+  humanize_rating,
+} from '@/app/models/issuance.mjs';
 import TableRow from '@/app/ui/explore/table-row';
 import IssuanceList from './issuanceList';
 import BackToTopButton from '@/app/ui/explore/issuances/backToTopButton';
@@ -11,6 +15,7 @@ export default async function DebenturesTable({
   currentPage: number;
 }) {
   const issuances = await fetchIssuances(query, currentPage);
+  debugger;
 
   return (
     <div className="w-full pt-0">
@@ -64,9 +69,6 @@ export default async function DebenturesTable({
                   <th scope="col" className="sticky px-3 py-5 font-medium ">
                     Payment Frequency
                   </th>
-                  <th scope="col" className="sticky px-3 py-5 font-medium ">
-                    Issue Size
-                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y overflow-x-auto bg-white text-xs">
@@ -90,9 +92,8 @@ export default async function DebenturesTable({
                           issuance.redemption_date,
                           issuance.coupon_basis,
                           issuance.coupon,
-                          issuance.latest_rating,
+                          humanize_rating(issuance),
                           issuance.interest_frequency,
-                          issuance.issue_size,
                         ]}
                         clickable={true}
                       />

@@ -3,7 +3,7 @@ import Search from '@/app/ui/search';
 import Table from '@/app/ui/explore/companies/table';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { noOfPages } from '@/app/models/company';
+import { noOfPages } from '@/app/models/company.mjs';
 import TopNav from '@/app/ui/explore/top-nav';
 
 export default async function Page({
@@ -15,6 +15,7 @@ export default async function Page({
   };
 }) {
   const query = searchParams?.query || '';
+  const totalPages = await noOfPages();
   const currentPage = Number(searchParams?.page) || 1;
   return (
     <>
@@ -28,7 +29,7 @@ export default async function Page({
       <section className="hidden w-[90%] bg-white pb-3 md:block">
         <div className="flex justify-between">
           <Search placeholder="Search" />
-          <Pagination totalPages={await noOfPages()} />
+          <Pagination totalPages={totalPages} />
         </div>
       </section>
       <section className="hidden h-full md:block">
@@ -45,7 +46,7 @@ export default async function Page({
             <Search placeholder="Search" />
           </div>
           <div className="flex w-full flex-col justify-end">
-            <Pagination totalPages={await noOfPages()} />
+            <Pagination totalPages={totalPages} />
           </div>
           <Suspense
             key={query + currentPage}
@@ -54,7 +55,7 @@ export default async function Page({
             <Table query={query} currentPage={currentPage} />
           </Suspense>
           <div className="flex flex-col justify-end">
-            <Pagination totalPages={await noOfPages()} />
+            <Pagination totalPages={totalPages} />
           </div>
         </div>
       </section>

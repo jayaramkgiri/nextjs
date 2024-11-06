@@ -1,4 +1,4 @@
-import { fetchCompanies, ITEMS_PER_PAGE } from '@/app/models/company';
+import { fetchCompanies, ITEMS_PER_PAGE } from '@/app/models/company.mjs';
 import TableRow from '@/app/ui/explore/table-row';
 import BackToTopButton from '@/app/ui/explore/issuances/backToTopButton';
 import CompaniesList from '@/app/ui/explore/companies/companiesList';
@@ -10,7 +10,7 @@ export default async function CompaniesTable({
   query: string;
   currentPage: number;
 }) {
-  const companies = await fetchCompanies(currentPage);
+  const companies = await fetchCompanies(query, currentPage);
 
   return (
     <div className="w-full pt-0">
@@ -48,7 +48,6 @@ export default async function CompaniesTable({
               </thead>
               <tbody className=" divide-y overflow-x-auto  bg-white text-xs font-medium">
                 {companies?.map((company: any, index: number) => {
-                  company['issuanceCount'] = company._count['issuances'];
                   return (
                     <TableRow
                       key={company.id}
@@ -63,7 +62,7 @@ export default async function CompaniesTable({
                         company.cin,
                         {
                           url: `/explore/debentures?cin=${company.cin}`,
-                          value: company._count['issuances'],
+                          value: company.active_issuances,
                         },
                       ]}
                       clickable={false}

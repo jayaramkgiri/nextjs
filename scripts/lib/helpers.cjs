@@ -8,9 +8,17 @@ module.exports = {
   },
 
   bseOpenClose: function (bse_scrape) {
+    let open = null;
+    let close = null;
+    if (bse_scrape.open === null) {
+      open = openPrice;
+    }
+    if (bse_scrape.close === null) {
+      open = ltpClose;
+    }
     return {
-      open: module.exports.formattedStringToNumber(bse_scrape.openPrice),
-      close: module.exports.formattedStringToNumber(bse_scrape.ltpClose),
+      open: module.exports.formattedStringToNumber(open),
+      close: module.exports.formattedStringToNumber(close),
     };
   },
 

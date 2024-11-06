@@ -60,6 +60,7 @@ model Company {
   mca_sourced_date DateTime?         @db.Date
   name             String?
   status           String?
+  active_issuances Int?
   updated_at       DateTime          @db.Date
 
   @@map("companies")

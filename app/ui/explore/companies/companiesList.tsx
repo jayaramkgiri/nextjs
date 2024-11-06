@@ -14,7 +14,7 @@ export default function CompaniesList({ company }: { company: any }) {
             <p className="m-0 py-1 text-xxs font-normal text-neutral-500">
               CIN:
             </p>
-            <p className="text-primary m-0 py-1 text-xxs font-normal ">
+            <p className="m-0 py-1 text-xxs font-normal text-primary ">
               {company.cin}
             </p>
           </div>
@@ -29,12 +29,12 @@ export default function CompaniesList({ company }: { company: any }) {
                 href={`/explore/debentures?cin=${company.cin}`}
                 className="text-[#35353A]  underline"
               >
-                {company._count['issuances']}
+                {company.active_issuances}
               </Link>
             </div>
             <div className="flex w-1/3 gap-0">
               <div className="w-full text-xs text-gray-500">Rating</div>
-              <div className="text-primary w-full text-xs">BBB-</div>
+              <div className="w-full text-xs text-primary">BBB-</div>
             </div>
           </div>
         </CardBody>

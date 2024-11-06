@@ -1,4 +1,5 @@
-import { fetchIssuances, ITEMS_PER_PAGE } from '@/app/models/issuance';
+import { fetchMarkets, ITEMS_PER_PAGE } from '@/app/models/market.mjs';
+import { humanize_rating } from '@/app/models/issuance.mjs';
 
 import TableRow from '@/app/ui/explore/table-row';
 import { currencyFormatter } from '@/app/lib/utils';
@@ -12,27 +13,7 @@ export default async function DebenturesTable({
   query: string;
   currentPage: number;
 }) {
-  const issuances = await fetchIssuances(
-    {
-      OR: [
-        {
-          totalBuyVolume: { not: 0 },
-        },
-        {
-          totalSellVolume: { not: 0 },
-        },
-      ],
-    },
-    currentPage,
-    [
-      {
-        totalBuyVolume: 'desc',
-      },
-      {
-        totalSellVolume: 'desc',
-      },
-    ],
-  );
+  const issuances = await fetchMarkets(null, query, currentPage);
 
   return (
     <div className="w-full pt-0">
@@ -94,18 +75,18 @@ export default async function DebenturesTable({
               <tbody className="divide-y bg-white  text-xs">
                 {issuances?.map((issuance, index) => {
                   const buy = {
-                    units: issuance.bseBuyOrders,
-                    price: issuance.bseBuyPrice,
-                    closePrice: issuance.bseclose,
+                    units: issuance.total_buy_order,
+                    price: issuance.buy_price,
+                    closePrice: issuance.close,
                   };
                   const sell = {
-                    units: issuance.bseSellOrders,
-                    price: issuance.bseSellPrice,
-                    closePrice: issuance.bseclose,
+                    units: issuance.total_sell_order,
+                    price: issuance.sell_price,
+                    closePrice: issuance.close,
                   };
                   return (
                     <TableRow
-                      key={Number(issuance.id)}
+                      key={issuance.id}
                       sno={index}
                       showSno={true}
                       itemsPerPage={ITEMS_PER_PAGE}
@@ -113,21 +94,15 @@ export default async function DebenturesTable({
                       padding={0}
                       cells={[
                         issuance.isin,
-                        issuance.company!.name,
+                        issuance.company_name,
                         buy,
                         sell,
-                        currencyFormatter(
-                          issuance.faceValue ||
-                            issuance.bseFaceValue ||
-                            issuance.nseFaceValue,
-                        ),
-                        issuance.bseCreditRating || issuance.nseCreditRating,
-                        issuance.allotmentDate,
-                        issuance.redemptionDate ||
-                          issuance.bseMaturityDate ||
-                          issuance.nseMaturityDate,
-                        issuance.couponBasis,
-                        issuance.couponRate,
+                        currencyFormatter(issuance.face_value),
+                        humanize_rating(issuance),
+                        issuance.allotment_date,
+                        issuance.redemption_date,
+                        issuance.coupon_basis,
+                        issuance.coupon,
                       ]}
                       isinHover={true}
                       clickable={true}

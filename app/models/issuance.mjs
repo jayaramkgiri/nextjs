@@ -3,6 +3,17 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 export const ITEMS_PER_PAGE = 100;
+
+const AGENCY_MAP = {
+  'CARE RATINGS LIMITED': 'CARE',
+  'ICRA LIMITED': 'ICRA',
+  'CRISIL RATINGS LIMITED': 'CRISIL',
+  'ACUITE RATINGS AND RESEARCH LIMITED': 'ACUITE',
+  'INDIA RATING AND RESEARCH PRIVATE LIMITED': 'INDIA RATINGS',
+  'INFOMERICS VALUATION AND RATING PRIVATE LIMITED': 'INFOMERICS',
+  'BRICKWORK RATINGS INDIA PRIVATE LIMITED': 'BRICKWORKS',
+};
+
 export async function fetchIssuances(
   query = '',
   currentPage = 1,
@@ -55,6 +66,19 @@ export async function fetchIssuances(
     console.error('Database Error:', error);
     throw new Error('Failed to fetch Issuances.');
   }
+}
+
+export function humanize_rating(issuance) {
+  let rating = '';
+  if (
+    issuance.latest_rating !== null &&
+    issuance.latest_rating_agency !== null
+  ) {
+    rating = `${AGENCY_MAP[issuance.latest_rating_agency]} ${
+      issuance.latest_rating
+    }`;
+  }
+  return rating;
 }
 
 export async function noOfPages() {

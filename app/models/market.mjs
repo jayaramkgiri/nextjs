@@ -4,13 +4,16 @@ const prisma = new PrismaClient();
 
 export const ITEMS_PER_PAGE = 100;
 export async function fetchMarkets(
-  date = new Date(),
+  date = null,
   query = '',
   currentPage = 1,
   orderBy = { sell_volume: 'desc' },
 ) {
   // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  if (date === null) {
+    date = await lastMarketUpdatedDate();
+  }
   date.setHours(0, 0, 0, 0);
   try {
     const markets = await prisma.market.findMany({
@@ -54,9 +57,13 @@ export async function fetchMarkets(
   }
 }
 
-export async function fetchMarketSummary(date = new Date()) {
+export async function fetchMarketSummary(date = null) {
   // noStore();
+
   try {
+    if (date === null) {
+      date = await lastMarketUpdatedDate();
+    }
     date.setHours(0, 0, 0, 0);
     const aggregate = await prisma.market.aggregate({
       where: { date: date },
@@ -75,8 +82,15 @@ export async function fetchMarketSummary(date = new Date()) {
   }
 }
 
-export async function noOfPages(date = new Date()) {
+async function lastMarketUpdatedDate() {
+  return (await prisma.market.findFirst({ orderBy: { date: 'desc' } })).date;
+}
+
+export async function noOfPages(date = null) {
   // noStore();
+  if (date === null) {
+    date = await lastMarketUpdatedDate();
+  }
   try {
     date.setHours(0, 0, 0, 0);
     const marketsCount = await prisma.market.count({ where: { date: date } });

@@ -3,12 +3,6 @@ const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const {
-  formattedStringToNumber,
-  dateFormatter,
-  highestBuyPrices,
-  lowestSellPrice,
-} = require('./lib/helpers.cjs');
 
 async function fetchPageData(selector, page) {
   let tableData;
