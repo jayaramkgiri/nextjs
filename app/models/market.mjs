@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-import { ratingOutlookList } from '@/lib/utils'
+import { ratingOutlookList } from '@/lib/utils';
 
 export const ITEMS_PER_PAGE = 100;
 export async function fetchMarkets(
@@ -9,14 +9,18 @@ export async function fetchMarkets(
   query = '',
   currentPage = 1,
   sort = 'sell_volume',
-  filter = ''
+  filter = '',
 ) {
   // noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  let orderBy = { sell_volume: 'desc' };
   if (date === null) {
     date = await lastMarketUpdatedDate();
   }
   date.setHours(0, 0, 0, 0);
+  if (sort === 'buy_volume') {
+    orderBy = { buy_volume: 'desc' };
+  }
   try {
     const markets = await prisma.market.findMany({
       skip: offset,
@@ -51,7 +55,7 @@ export async function fetchMarkets(
           },
         ],
       },
-      orderBy: { [sort]: 'desc' },
+      orderBy: orderBy,
     });
     return markets;
   } catch (error) {
