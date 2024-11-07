@@ -17,7 +17,6 @@ export async function fetchMarkets(
     date = await lastMarketUpdatedDate();
   }
   date.setHours(0, 0, 0, 0);
-  console.log(`@@@@@@@@@@@@@${filter}`);
   try {
     const markets = await prisma.market.findMany({
       skip: offset,

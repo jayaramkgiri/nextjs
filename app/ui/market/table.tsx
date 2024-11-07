@@ -25,7 +25,7 @@ export default async function DebenturesTable({
         <div className="inline-block w-full align-middle">
           <div className="rounded-lg ">
             <div className="mt-3 flex flex-col gap-2 md:hidden">
-              {issuances.map((issuance, index) => {
+              {issuances.map((issuance: any, index: number) => {
                 return (
                   <IssuanceList key={index} issuance={issuance} market={true} />
                 );
@@ -78,7 +78,7 @@ export default async function DebenturesTable({
                   </tr>
                 </thead>
                 <tbody className="divide-y bg-white  text-xs">
-                  {issuances?.map((issuance, index) => {
+                  {issuances?.map((issuance: any, index: number) => {
                     const buy = {
                       units: issuance.total_buy_order,
                       price: issuance.buy_price,

@@ -23,7 +23,7 @@ export default async function DebenturesTable({
         <div className="inline-block w-full align-middle">
           <div className="rounded-lg ">
             <div className="mt-3 flex flex-col gap-2 md:hidden">
-              {issuances.map((issuance, index) => {
+              {issuances.map((issuance: any, index: number) => {
                 return (
                   <IssuanceList key={index} issuance={issuance} market={false} />
                 );
@@ -75,7 +75,7 @@ export default async function DebenturesTable({
                 <tbody className="divide-y overflow-x-auto bg-white text-xs">
                   {issuances &&
                     issuances.length > 0 &&
-                    issuances.map((issuance, index) => {
+                    issuances.map((issuance: any, index: number) => {
                       return (
                         <TableRow
                           key={issuance.isin}
