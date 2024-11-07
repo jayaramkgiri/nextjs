@@ -68,31 +68,31 @@ export default function Sort() {
       >
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'all'}
+          value={''}
         >
           All
         </MenuItem>
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'aaa'}
+          value={'AAA'}
         >
           AAA
         </MenuItem>
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'aa'}
+          value={'AA'}
         >
           AA
         </MenuItem>
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'a'}
+          value={'A'}
         >
           A
         </MenuItem>
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'bbb'}
+          value={'BBB'}
         >
           BBB
         </MenuItem>

@@ -9,11 +9,15 @@ import BackToTopButton from '../explore/issuances/backToTopButton';
 export default async function DebenturesTable({
   query,
   currentPage,
+  sort,
+  filter
 }: {
   query: string;
   currentPage: number;
+  sort: string;
+  filter: string;
 }) {
-  const issuances = await fetchMarkets(null, query, currentPage);
+  const issuances = await fetchMarkets(null, query, currentPage, sort, filter);
 
   return (
     <div className="w-full pt-0">

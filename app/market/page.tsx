@@ -15,12 +15,16 @@ export default async function Page({
 }: {
   searchParams?: {
     query?: string;
+    sort?: string;
+    filter?: string;
     page?: string;
     request_token?: string;
   };
 }) {
   const kc = new KiteConnect({ api_key: process.env.KITE_API_KEY! });
   const query = searchParams?.query || '';
+  const sort = searchParams?.sort || '';
+  const filter = searchParams?.filter || '';
   const currentPage = Number(searchParams?.page) || 1;
   const marketSummary = await fetchMarketSummary();
 
@@ -70,7 +74,7 @@ export default async function Page({
           key={query + currentPage}
           fallback={<InvoicesTableSkeleton />}
         >
-          <Table query={query} currentPage={currentPage} />
+          <Table query={query} currentPage={currentPage} sort={sort} filter={filter} />
         </Suspense>
       </section>
       <section className="h-full md:hidden">
@@ -94,7 +98,7 @@ export default async function Page({
             key={query + currentPage}
             fallback={<InvoicesTableSkeleton />}
           >
-            <Table query={query} currentPage={currentPage} />
+            <Table query={query} currentPage={currentPage} sort={sort} filter={filter} />
           </Suspense>
           <div className="flex flex-col justify-end">
             <Pagination totalPages={totalPages} />

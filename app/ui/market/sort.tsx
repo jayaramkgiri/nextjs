@@ -27,7 +27,7 @@ export default function Sort() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [sortValue, setSortValue] = useState('sellVolume');
+  const [sortValue, setSortValue] = useState('sell_volume');
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -40,7 +40,7 @@ export default function Sort() {
   );
 
   useEffect(() => {
-    const sort = searchParams.get('sort') || 'sellVolume';
+    const sort = searchParams.get('sort') || 'sell_volume';
     setSortValue(sort);
   }, [searchParams]);
 
@@ -65,27 +65,15 @@ export default function Sort() {
       >
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'sellVolume'}
+          value={'sell_volume'}
         >
           Sell Volume
         </MenuItem>
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'sellYield'}
-        >
-          Sell Yield
-        </MenuItem>
-        <MenuItem
-          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'buyVolume'}
+          value={'buy_volume'}
         >
           Buy Volume
-        </MenuItem>
-        <MenuItem
-          sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={'buyYield'}
-        >
-          Buy Yield
         </MenuItem>
       </Select>
     </div>
