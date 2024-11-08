@@ -10,7 +10,8 @@
     "seed": "node -r dotenv/config ./scripts/seed.js",
     "bse": "node -r dotenv/config ./scripts/bseTrades.js",
     "nse": "node -r dotenv/config ./scripts/nseTrades.js",
-    "market": "node -r dotenv/config ./scripts/market.js"
+    "market": "node -r dotenv/config ./scripts/market.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
