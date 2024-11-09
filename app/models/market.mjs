@@ -64,7 +64,7 @@ export async function fetchMarkets(
   }
 }
 
-export async function fetchMarketSummary(date = null) {
+export async function fetchMarketSummary(date = null, query = '', filter = '') {
   // noStore();
 
   try {
@@ -73,7 +73,36 @@ export async function fetchMarketSummary(date = null) {
     }
     date.setUTCHours(0, 0, 0, 0);
     const aggregate = await prisma.market.aggregate({
-      where: { date: date },
+      where: {
+        date: date,
+        latest_rating: { in: ratingOutlookList(filter) },
+        OR: [
+          {
+            company_name: {
+              contains: query, // Partial match in `name`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            isin: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            latest_rating_agency: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            latest_rating: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+        ],
+      },
       _sum: {
         total_buy_order: true,
         total_sell_order: true,
@@ -93,14 +122,45 @@ async function lastMarketUpdatedDate() {
   return (await prisma.market.findFirst({ orderBy: { date: 'desc' } })).date;
 }
 
-export async function noOfPages(date = null) {
+export async function noOfPages(date = null, query = '', filter = '') {
   // noStore();
   if (date === null) {
     date = await lastMarketUpdatedDate();
   }
   try {
     date.setUTCHours(0, 0, 0, 0);
-    const marketsCount = await prisma.market.count({ where: { date: date } });
+    const marketsCount = await prisma.market.count({
+      where: {
+        date: date,
+        latest_rating: { in: ratingOutlookList(filter) },
+        OR: [
+          {
+            company_name: {
+              contains: query, // Partial match in `name`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            isin: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            latest_rating_agency: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            latest_rating: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+        ],
+      },
+    });
     return Math.floor(marketsCount / ITEMS_PER_PAGE) + 1;
   } catch (error) {
     console.error('Database Error:', error);

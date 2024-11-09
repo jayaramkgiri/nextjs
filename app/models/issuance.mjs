@@ -81,10 +81,27 @@ export function humanize_rating(issuance) {
   return rating;
 }
 
-export async function noOfPages() {
+export async function noOfPages(query) {
   // noStore();
   try {
-    const issuancesCount = await prisma.company.count();
+    const issuancesCount = await prisma.company.count({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: query, // Partial match in `name`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            cin: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+        ],
+      },
+    });
     return Math.floor(issuancesCount / ITEMS_PER_PAGE) + 1;
   } catch (error) {
     console.error('Database Error:', error);

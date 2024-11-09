@@ -39,15 +39,19 @@ export default function Sort() {
   );
 
   useEffect(() => {
-    const filter = searchParams.get('filter') || 'all';
+    const filter = searchParams.get('filter') || 'All';
     setFilterValue(filter);
   }, [searchParams]);
 
   const handleChange = (event: { target: { value: string } }) => {
     setFilterValue(event.target.value);
-    router.push(
-      pathname + '?' + createQueryString('filter', event.target.value),
-    );
+    if (event.target.value === 'All') {
+      router.push(pathname);
+    } else {
+      router.push(
+        pathname + '?' + createQueryString('filter', event.target.value),
+      );
+    }
   };
 
   return (
@@ -62,13 +66,14 @@ export default function Sort() {
         className="m-0 p-0"
         labelId="demo-customized-select-label"
         id="demo-customized-select"
+        defaultValue={''}
         value={filterValue}
         onChange={handleChange}
         input={<BootstrapInput />}
       >
         <MenuItem
           sx={{ fontFamily: 'Inter', fontWeight: 500, fontSize: 12 }}
-          value={''}
+          value={'All'}
         >
           All
         </MenuItem>

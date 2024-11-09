@@ -26,7 +26,7 @@ export default async function Page({
   const sort = searchParams?.sort || '';
   const filter = searchParams?.filter || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const marketSummary = await fetchMarketSummary();
+  const marketSummary = await fetchMarketSummary(null, query, filter);
 
   console.log(searchParams?.request_token);
   if (searchParams?.request_token !== undefined) {
@@ -40,7 +40,7 @@ export default async function Page({
     console.log('Profile:', profile);
   }
 
-  const totalPages = await noOfPages();
+  const totalPages = await noOfPages(null, query, filter);
   return (
     <div className="h:auto md:pr-6">
       <section className="m-2 hidden w-[85%] gap-2 md:flex">
@@ -74,7 +74,12 @@ export default async function Page({
           key={query + currentPage}
           fallback={<InvoicesTableSkeleton />}
         >
-          <Table query={query} currentPage={currentPage} sort={sort} filter={filter} />
+          <Table
+            query={query}
+            currentPage={currentPage}
+            sort={sort}
+            filter={filter}
+          />
         </Suspense>
       </section>
       <section className="h-full md:hidden">
@@ -98,7 +103,12 @@ export default async function Page({
             key={query + currentPage}
             fallback={<InvoicesTableSkeleton />}
           >
-            <Table query={query} currentPage={currentPage} sort={sort} filter={filter} />
+            <Table
+              query={query}
+              currentPage={currentPage}
+              sort={sort}
+              filter={filter}
+            />
           </Suspense>
           <div className="flex flex-col justify-end">
             <Pagination totalPages={totalPages} />

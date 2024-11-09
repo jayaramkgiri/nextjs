@@ -15,7 +15,7 @@ export default async function Page({
   };
 }) {
   const query = searchParams?.query || '';
-  const totalPages = await noOfPages();
+  const totalPages = await noOfPages(query);
   const currentPage = Number(searchParams?.page) || 1;
   return (
     <>

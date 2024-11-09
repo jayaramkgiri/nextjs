@@ -37,10 +37,27 @@ export async function fetchCompanies(query = '', currentPage = 1) {
   }
 }
 
-export async function noOfPages() {
+export async function noOfPages(query = '') {
   // noStore();
   try {
-    const companiesCount = await prisma.company.count();
+    const companiesCount = await prisma.company.count({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: query, // Partial match in `name`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+          {
+            cin: {
+              contains: query, // Partial match in `description`
+              mode: 'insensitive', // Case-insensitive
+            },
+          },
+        ],
+      },
+    });
     return Math.floor(companiesCount / ITEMS_PER_PAGE) + 1;
   } catch (error) {
     console.error('Database Error:', error);
