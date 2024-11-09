@@ -33,7 +33,7 @@ function marketData(iss, key1, key2) {
 
 async function migrateMarketData(date = new Date()) {
   await Promise.all([migrateBseMarketData(), migrateNseMarketData()]);
-  date.setHours(0, 0, 0, 0);
+  date.setUTCHours(0, 0, 0, 0);
   const trading_iss = await prisma.market.findMany({ where: { date: date } });
   for (const iss of trading_iss) {
     try {

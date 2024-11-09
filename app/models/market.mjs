@@ -17,7 +17,7 @@ export async function fetchMarkets(
   if (date === null) {
     date = await lastMarketUpdatedDate();
   }
-  date.setHours(0, 0, 0, 0);
+  date.setUTCHours(0, 0, 0, 0);
   if (sort === 'buy_volume') {
     orderBy = { buy_volume: 'desc' };
   }
@@ -71,7 +71,7 @@ export async function fetchMarketSummary(date = null) {
     if (date === null) {
       date = await lastMarketUpdatedDate();
     }
-    date.setHours(0, 0, 0, 0);
+    date.setUTCHours(0, 0, 0, 0);
     const aggregate = await prisma.market.aggregate({
       where: { date: date },
       _sum: {
@@ -99,7 +99,7 @@ export async function noOfPages(date = null) {
     date = await lastMarketUpdatedDate();
   }
   try {
-    date.setHours(0, 0, 0, 0);
+    date.setUTCHours(0, 0, 0, 0);
     const marketsCount = await prisma.market.count({ where: { date: date } });
     return Math.floor(marketsCount / ITEMS_PER_PAGE) + 1;
   } catch (error) {

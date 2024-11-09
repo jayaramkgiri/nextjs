@@ -231,7 +231,7 @@ module.exports.migrateBseMarketData = async function () {
         bond['market_depth'] = marketDepth;
         const isin = securityInfo.ISSebiIsin.trim();
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        today.setUTCHours(0, 0, 0, 0);
         iss = await prisma.market.findFirst({
           where: { date: today, isin: isin },
         });

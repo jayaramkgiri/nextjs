@@ -166,7 +166,7 @@ module.exports.migrateNseMarketData = async function () {
             trade['market_depth'] = marketDepth;
             const isin = trade.meta.isin;
             const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            today.setUTCHours(0, 0, 0, 0);
 
             iss = await prisma.market.findFirst({
               where: { date: today, isin: isin },
