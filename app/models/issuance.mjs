@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const ITEMS_PER_PAGE = 100;
 
-const AGENCY_MAP = {
+export const AGENCY_MAP = {
   'CARE RATINGS LIMITED': 'CARE',
   'ICRA LIMITED': 'ICRA',
   'CRISIL RATINGS LIMITED': 'CRISIL',
@@ -79,6 +79,16 @@ export function humanize_rating(issuance) {
     }`;
   }
   return rating;
+}
+
+
+export async function fetchIssuanceById(isin) {
+  try {
+    const issuance = await prisma.issuance.findFirst({where: {isin: isin}})
+    return issuance;
+  } catch(error) {
+    console.error('Database Error:', error);
+  }
 }
 
 export async function noOfPages(query) {

@@ -67,6 +67,7 @@ export default async function CompaniesTable({
                           },
                         ]}
                         clickable={false}
+                        clickPath={''}
                       />
                     );
                   })}

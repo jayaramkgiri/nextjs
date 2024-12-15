@@ -97,6 +97,7 @@ export default async function DebenturesTable({
                             issuance.interest_frequency,
                           ]}
                           clickable={true}
+                          clickPath={`/explore/debentures/${issuance.isin}`}
                         />
                       );
                     })}

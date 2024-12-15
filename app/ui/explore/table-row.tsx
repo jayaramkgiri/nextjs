@@ -14,6 +14,7 @@ export default function TableRow({
   padding = 1,
   isinHover = false,
   clickable = true,
+  clickPath
 }: {
   key: string | null;
   currentPage: number;
@@ -24,6 +25,7 @@ export default function TableRow({
   padding: number;
   isinHover: boolean;
   clickable: boolean;
+  clickPath: string;
 }) {
   function tableData(cell: any, index: number) {
     let value = null;
@@ -87,7 +89,7 @@ export default function TableRow({
       className={`text-sm group h-auto border-b border-solid border-gray-200 ${
         clickable && 'cursor-pointer'
       } ${clickable && 'hover:bg-gray-100'} py-${padding}`}
-      onClick={() => clickable && router.push('/explore/debentures/1')}
+      onClick={() => clickable && router.push(clickPath)}
     >
       {showSno && (
         <td

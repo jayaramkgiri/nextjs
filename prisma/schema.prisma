@@ -117,6 +117,7 @@ model Market {
   created_at           DateTime                  @default(now())
   updated_at           DateTime                  @updatedAt
   date                 DateTime                  @db.Date
+  version              Int
   isin                 String
   cin                  String?
   company_name         String?
@@ -145,6 +146,7 @@ model Market {
   sell_volume          Float?
   bse_scrape           Json?
   nse_scrape           Json?
+  market_depth         Json?
 
   @@unique([date, isin])
 

@@ -17,6 +17,7 @@ export async function fetchMarkets(
   if (date === null) {
     date = await lastMarketUpdatedDate();
   }
+  let version = await fetchLatestVersion(date);
   date.setUTCHours(0, 0, 0, 0);
   if (sort === 'buy_volume') {
     orderBy = { buy_volume: 'desc' };
@@ -27,6 +28,31 @@ export async function fetchMarkets(
       take: ITEMS_PER_PAGE,
       where: {
         date: date,
+        version: version,
+        OR: [
+          {
+            buy_price: {
+              not: null,
+            }
+          },
+          {
+            sell_price: {
+              not: null,
+            }
+          },
+        ],
+        OR: [
+          {
+            total_buy_order: {
+              gt: 0,
+            }
+          },
+          {
+            total_sell_order: {
+              gt: 0,
+            }
+          },
+        ],
         latest_rating: { in: ratingOutlookList(filter) },
         OR: [
           {
@@ -122,17 +148,48 @@ async function lastMarketUpdatedDate() {
   return (await prisma.market.findFirst({ orderBy: { date: 'desc' } })).date;
 }
 
+async function fetchLatestVersion(date) {
+  let versions = (await prisma.market.findMany({where: {date: date}, distinct: ['version'], select: {version: true}})).map((r) => r['version']).sort()
+  return versions[versions.length -1 ]
+}
+
 export async function noOfPages(date = null, query = '', filter = '') {
   // noStore();
   if (date === null) {
     date = await lastMarketUpdatedDate();
   }
+  let version = await fetchLatestVersion(date)
   try {
     date.setUTCHours(0, 0, 0, 0);
     const marketsCount = await prisma.market.count({
       where: {
         date: date,
         latest_rating: { in: ratingOutlookList(filter) },
+        version: version,
+        OR: [
+          {
+            buy_price: {
+              not: null,
+            }
+          },
+          {
+            sell_price: {
+              not: null,
+            }
+          },
+        ],
+        OR: [
+          {
+            total_buy_order: {
+              gt: 0,
+            }
+          },
+          {
+            total_sell_order: {
+              gt: 0,
+            }
+          },
+        ],
         OR: [
           {
             company_name: {

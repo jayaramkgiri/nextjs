@@ -111,6 +111,7 @@ export default async function DebenturesTable({
                         ]}
                         isinHover={true}
                         clickable={true}
+                        clickPath={`/explore/debentures/${issuance.isin}`}
                       />
                     );
                   })}
