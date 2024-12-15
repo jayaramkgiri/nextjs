@@ -46,7 +46,7 @@ export default async function Page({ params }) {
             <div className="m-0 flex w-1/2 self-stretch px-0">
             {issuance.latest_rating && (
               <p className="text-md font-semibold text-neutral-600">
-                `${AGENCY_MAP[issuance.latest_rating_agency]} ${issuance.latest_rating}`
+                {`${AGENCY_MAP[issuance.latest_rating_agency]} ${issuance.latest_rating}`}
               </p>)
             }
             </div>
@@ -83,7 +83,7 @@ export default async function Page({ params }) {
             <div className="m-0 flex w-1/4 self-stretch px-0">
             {issuance.latest_rating && (
               <p className="text-md font-semibold text-neutral-600">
-                `${AGENCY_MAP[issuance.latest_rating_agency]} ${issuance.latest_rating}`
+                {`${AGENCY_MAP[issuance.latest_rating_agency]} ${issuance.latest_rating}`}
               </p>)
             }
             </div>
