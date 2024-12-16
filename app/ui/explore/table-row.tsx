@@ -52,6 +52,7 @@ export default function TableRow({
             <BidAskCell
               units={cell.units}
               price={cell.price}
+              volume={cell.volume}
               closePrice={cell.closePrice}
               classNames=""
               showRupee={true}

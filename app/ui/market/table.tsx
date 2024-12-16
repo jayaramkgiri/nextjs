@@ -82,11 +82,13 @@ export default async function DebenturesTable({
                     const buy = {
                       units: issuance.total_buy_order,
                       price: issuance.buy_price,
+                      volume: issuance.buy_volume,
                       closePrice: issuance.close,
                     };
                     const sell = {
                       units: issuance.total_sell_order,
                       price: issuance.sell_price,
+                      volume: issuance.sell_volume,
                       closePrice: issuance.close,
                     };
                     return (

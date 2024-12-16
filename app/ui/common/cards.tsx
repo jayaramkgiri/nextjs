@@ -4,14 +4,14 @@ import { FaIndianRupeeSign } from 'react-icons/fa6';
 
 export default function Cards({
   cardType,
-  marketSummary,
-}: {
+  marketSummary
+  }: {
   cardType: string;
   marketSummary: {
-    total_buy_order: number;
-    total_sell_order: number;
-    buy_volume: number;
-    sell_volume: number;
+    total_buy_order: number | null;
+    total_sell_order: number | null;
+    buy_volume: number | null;
+    sell_volume: number | null ;
   };
 }) {
   // const [units, setUnits] = useState<number>();
@@ -49,15 +49,15 @@ export default function Cards({
           </div>
           <p className="m-0 text-[12px]">
             {cardType === 'bid'
-              ? (marketSummary.buy_volume / 10000000).toFixed(2)
-              : (marketSummary.sell_volume / 10000000).toFixed(2)}{' '}
+              ? (marketSummary.buy_volume! / 10000000).toFixed(2)
+              : (marketSummary.sell_volume! / 10000000).toFixed(2)}{' '}
             Cr
           </p>
         </div>
         <div className="ml-1 text-xxs text-dimgray md:text-2xs ">
           {cardType === 'bid'
-            ? marketSummary.total_buy_order
-            : marketSummary.total_sell_order}{' '}
+            ? (marketSummary.total_buy_order !== null ? marketSummary.total_buy_order : 0)
+            : (marketSummary.total_sell_order !== null ? marketSummary.total_sell_order : 0)} {' '}
           units
         </div>
       </div>

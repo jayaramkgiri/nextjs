@@ -28,12 +28,14 @@ function downArrow() {
 export function BidAskCell({
   units,
   price,
+  volume,
   closePrice,
   classNames = '',
   showRupee = true,
 }: {
   units: number | null;
   price: number | null;
+  volume: number | null;
   closePrice: number | null;
   classNames: string;
   showRupee: boolean;
@@ -93,7 +95,7 @@ export function BidAskCell({
             closeDelay={500}
             content={
               <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
-                {!user && (
+                {/* {!user && (
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -102,19 +104,19 @@ export function BidAskCell({
                   >
                     <FaLock className="hover:text-primary transtion-all absolute right-1/4 top-[55%] z-10 h-3 w-3 text-gray-500 duration-200 hover:scale-150 hover:cursor-pointer " />
                   </div>
-                )}
+                )} */}
                 <CardHeader className="border-b border-solid border-gray-300 pb-1">
                   <p className="m-0  p-0 text-2xs font-bold text-green-500">
                     Buy
                   </p>
                 </CardHeader>
                 <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
-                  <p className="m-0 p-0 text-2xs">Orders&ensp;: 2345</p>
-                  <p className="m-0 p-0 text-2xs">
+                  <p className="m-0 p-0 text-2xs">Orders&ensp;: {units}</p>
+                  {/* <p className="m-0 p-0 text-2xs">
                     Yield&ensp;&ensp;&ensp;:{' '}
                     <em className={`${!user && 'blur-sm'}`}>8.16% </em>
-                  </p>
-                  <p className="m-0 p-0 text-2xs">Volume&nbsp;: 456 Cr</p>
+                  </p> */}
+                  <p className="m-0 p-0 text-2xs">Volume&nbsp;: {(volume! / 100000).toFixed(2)} Lakhs</p>
                 </CardBody>
               </Card>
             }

@@ -78,10 +78,16 @@ export async function fetchMarketSummary(date = null, query = '', filter = '') {
       date = await lastMarketUpdatedDate();
     }
     date.setUTCHours(0, 0, 0, 0);
+    let version = await fetchLatestVersion(date);
     const aggregate = await prisma.market.aggregate({
       where: {
         date: date,
         latest_rating: { in: ratingOutlookList(filter) },
+        version: version,
+        NOT: [
+          { buy_price: null },
+          { sell_price: null},
+        ],
         OR: [
           {
             company_name: {
