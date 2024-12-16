@@ -40,6 +40,7 @@ export default function IssuanceList({
                 <BidAskCell
                   classNames="w-3/5"
                   units={1007686}
+                  volume={1000000}
                   price={10999999.12}
                   closePrice={10999999}
                   showRupee={false}
@@ -50,6 +51,7 @@ export default function IssuanceList({
                 <BidAskCell
                   classNames="w-3/5"
                   units={1007686}
+                  volume={1000000}
                   price={10999999.12}
                   closePrice={10999999}
                   showRupee={false}
