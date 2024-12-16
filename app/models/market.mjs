@@ -29,29 +29,9 @@ export async function fetchMarkets(
       where: {
         date: date,
         version: version,
-        OR: [
-          {
-            buy_price: {
-              not: null,
-            }
-          },
-          {
-            sell_price: {
-              not: null,
-            }
-          },
-        ],
-        OR: [
-          {
-            total_buy_order: {
-              gt: 0,
-            }
-          },
-          {
-            total_sell_order: {
-              gt: 0,
-            }
-          },
+        NOT: [
+          { buy_price: null },
+          { sell_price: null},
         ],
         latest_rating: { in: ratingOutlookList(filter) },
         OR: [
@@ -166,29 +146,9 @@ export async function noOfPages(date = null, query = '', filter = '') {
         date: date,
         latest_rating: { in: ratingOutlookList(filter) },
         version: version,
-        OR: [
-          {
-            buy_price: {
-              not: null,
-            }
-          },
-          {
-            sell_price: {
-              not: null,
-            }
-          },
-        ],
-        OR: [
-          {
-            total_buy_order: {
-              gt: 0,
-            }
-          },
-          {
-            total_sell_order: {
-              gt: 0,
-            }
-          },
+        NOT: [
+          { buy_price: null },
+          { sell_price: null},
         ],
         OR: [
           {
