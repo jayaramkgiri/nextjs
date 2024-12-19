@@ -9,10 +9,12 @@ import CashflowsMobile from '@/app/ui/explore/issuances/cashflowsMobile';
 import BackPage from '@/app/ui/explore/issuances/backPage';
 import { notFound } from 'next/navigation';
 import {fetchIssuanceById, AGENCY_MAP} from '@/app/models/issuance.mjs';
+import {fetchMarketdepth} from '@/app/models/market.mjs';
 
 export default async function Page({ params }) {
   const id = params.id;
   const issuance = await fetchIssuanceById(id);
+  const depth = await fetchMarketdepth(issuance.isin);
 
   if (!issuance) {
     notFound();
@@ -97,9 +99,11 @@ export default async function Page({ params }) {
           {/* <div className="h-[100vh-104px] w-2/5">
             <Cashflows />
           </div> */}
-          <div className="h-[100vh-104px] w-3/5">
-            <MarketDepth isin={issuance.isin}/>
-          </div>
+          {depth && (
+            <div className="h-[100vh-104px] w-3/5">
+              <MarketDepth depth={depth}/>
+            </div>)
+          }
         </div>
       </div>
     </>

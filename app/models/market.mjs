@@ -190,3 +190,51 @@ export async function noOfPages(date = null, query = '', filter = '') {
     throw new Error('Failed to fetch Market data.');
   }
 }
+
+export async function fetchMarketdepth(isin, date = null){
+  if (date === null) {
+    date = await lastMarketUpdatedDate();
+  }
+  let version = await fetchLatestVersion(date);
+  let market = await prisma.market.findFirst({where: {date: date, version: version, isin: isin}})
+  let depth = null;
+  if(market !== null && market.market_depth !== null) {
+    depth = formatMarketDepth(market.market_depth);
+  } 
+  return depth;
+}
+
+function formatMarketDepth(depth) {
+  let buy = {};
+  let sell = {};
+  if (Object.keys(depth.bse).length === 0 && Object.keys(depth.nse).length === 0) {
+    return null;
+  } else
+  {
+    if(Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.buy).length === 0) {
+      buy = depth.nse.buy;
+    } else if (Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.buy).length === 0) {
+      buy = depth.bse.buy;
+    } else {
+      buy =  [...depth.bse.buy, ...depth.nse.buy]
+    }
+    if(Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.sell).length === 0) {
+      sell = depth.nse.sell;
+    } else if (Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.sell).length === 0) {
+      sell = depth.bse.sell;
+    } else {
+      sell =  [...depth.bse.sell, ...depth.nse.sell]
+    }
+  }
+  if(buy && buy.length > 0) {
+    buy = buy.filter(s => s.quantity > 0).sort((a,b) => a.price > b.price)
+  }
+  if(sell && sell.length > 0) {
+    sell = sell.filter(s => s.quantity > 0).sort((a,b) => a.price < b.price)
+  }
+  return {
+    buy: buy,
+    sell: sell
+  }
+}
+

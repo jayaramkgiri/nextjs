@@ -5,9 +5,11 @@ import { Card, CardHeader, CardBody } from '@nextui-org/react';
 import { FaLock } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import {formatNumberToReadable} from '@/lib/utils';
 
-export default function MarketDepth() {
+export default function MarketDepth({depth}: {depth: any}) {
   const { user } = useUser();
+
   return (
     <Card className="rounded-lg shadow-md">
       <CardHeader className="shadow-t-lg m-0 rounded-t-lg bg-gray-200 text-inherit font-semibold text-neutral-600">
@@ -15,7 +17,7 @@ export default function MarketDepth() {
           <p className="text-md m-0 p-0 text-inherit font-semibold text-neutral-600">
             MARKET DEPTH
           </p>
-          <div className="m-0 flex px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
+          {/* <div className="m-0 flex px-0 pb-0 pt-2 text-inherit text-xs font-semibold text-neutral-600">
             <p className="m-0">Interest Accrued: </p>
             <div className="flex flex-row items-start justify-start pl-3">
               <div className="pr-[2px] pt-[2px] text-[10px]">
@@ -23,7 +25,7 @@ export default function MarketDepth() {
               </div>
               567
             </div>
-          </div>
+          </div> */}
         </div>
       </CardHeader>
       <CardBody className="mt-0 rounded-lg pt-0 shadow-md">
@@ -54,14 +56,14 @@ export default function MarketDepth() {
                   <div className=" inline-block w-2/5 shrink-0 font-semibold">
                     Price
                   </div>
-                  <div className=" inline-block w-1/5 shrink-0 font-semibold">
+                  <div className=" inline-block w-2/5 shrink-0 font-semibold">
                     Volume
                   </div>
-                  <div className=" inline-block w-1/5 shrink-0  font-semibold">
+                  {/* <div className=" inline-block w-1/5 shrink-0  font-semibold">
                     Yield
-                  </div>
+                  </div> */}
                 </div>
-                {new Array(10).fill('').map((_, index) => {
+                {depth.buy && (depth.buy.length > 0) && depth.buy.map((buy:{quantity: number, price: number}, index:number) => {
                   return (
                     <div
                       key={index}
@@ -70,22 +72,22 @@ export default function MarketDepth() {
                       }`}
                     >
                       <div className="relative inline-block w-1/5 shrink-0 self-stretch">
-                        1445
+                        {buy.quantity}
                       </div>
                       <div className="flex w-2/5 flex-col items-start justify-start gap-2 self-stretch">
                         <div className="flex flex-row items-start justify-start">
                           <div className="h-auto p-[2px]">
                             <FaIndianRupeeSign />
                           </div>
-                          100024.56
+                          {buy.price}
                         </div>
                       </div>
-                      <div className="relative inline-block w-1/5 shrink-0 self-stretch">
-                        14.45 Cr
+                      <div className="relative inline-block w-2/5 shrink-0 self-stretch">
+                        {formatNumberToReadable(buy.quantity * buy.price)}
                       </div>
-                      <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                      {/* <div className="relative inline-block w-1/5 shrink-0 self-stretch">
                         9.88%
-                      </div>
+                      </div> */}
                     </div>
                   );
                 })}
@@ -98,14 +100,14 @@ export default function MarketDepth() {
                   <div className="relative inline-block w-2/5 shrink-0 self-stretch font-semibold">
                     Price
                   </div>
-                  <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
+                  <div className="relative inline-block w-2/5 shrink-0 self-stretch font-semibold">
                     Volume
                   </div>
-                  <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
+                  {/* <div className="relative inline-block w-1/5 shrink-0 self-stretch font-semibold">
                     Yield
-                  </div>
+                  </div> */}
                 </div>
-                {new Array(10).fill('').map((_, index) => {
+                {depth.sell && (depth.sell.length > 0) && depth.sell.map((sell:{quantity: number, price: number}, index:number)  => {
                   return (
                     <div
                       key={index}
@@ -114,22 +116,22 @@ export default function MarketDepth() {
                       }`}
                     >
                       <div className="relative inline-block w-1/5 shrink-0 self-stretch">
-                        1445
+                      {sell.quantity}
                       </div>
                       <div className="flex w-2/5 flex-col items-start justify-start gap-2 self-stretch">
                         <div className="flex flex-row items-start justify-start">
                           <div className="h-auto p-[2px]">
                             <FaIndianRupeeSign />
                           </div>
-                          100024.56
+                          {sell.price}
                         </div>
                       </div>
-                      <div className="relative inline-block w-1/5 shrink-0 self-stretch">
-                        14.45 Cr
+                      <div className="relative inline-block w-2/5 shrink-0 self-stretch">
+                        {formatNumberToReadable(sell.quantity * sell.price)}
                       </div>
-                      <div className="relative inline-block w-1/5 shrink-0 self-stretch">
+                      {/* <div className="relative inline-block w-1/5 shrink-0 self-stretch">
                         9.88%
-                      </div>
+                      </div> */}
                     </div>
                   );
                 })}
