@@ -136,7 +136,7 @@ async function lastMarketUpdatedDate() {
 
 async function fetchLatestVersion(date) {
   let versions = (await prisma.market.findMany({where: {date: date}, distinct: ['version'], select: {version: true}})).map((r) => r['version']).sort()
-  return versions[versions.length -1 ]
+  return versions[versions.length - 2 ]
 }
 
 export async function noOfPages(date = null, query = '', filter = '') {
@@ -213,14 +213,14 @@ function formatMarketDepth(depth) {
   {
     if(Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.buy).length === 0) {
       buy = depth.nse.buy;
-    } else if (Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.buy).length === 0) {
+    } else if (Object.keys(depth.nse).length === 0 || Object.keys(depth.nse.buy).length === 0) {
       buy = depth.bse.buy;
     } else {
       buy =  [...depth.bse.buy, ...depth.nse.buy]
     }
     if(Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.sell).length === 0) {
       sell = depth.nse.sell;
-    } else if (Object.keys(depth.bse).length === 0 || Object.keys(depth.bse.sell).length === 0) {
+    } else if (Object.keys(depth.nse).length === 0 || Object.keys(depth.nse.sell).length === 0) {
       sell = depth.bse.sell;
     } else {
       sell =  [...depth.bse.sell, ...depth.nse.sell]

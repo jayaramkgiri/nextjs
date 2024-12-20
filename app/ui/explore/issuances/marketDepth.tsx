@@ -47,7 +47,7 @@ export default function MarketDepth({depth}: {depth: any}) {
             </div>
           </div>
           <div className=" flex h-72 w-full flex-col bg-white p-0 text-xs">
-            <div className="flex w-full flex-row justify-start divide-x divide-solid divide-gray-200 pb-0">
+            <div className="flex w-full h-full flex-row justify-start divide-x divide-solid divide-gray-200 pb-0">
               <div className="w-1/2">
                 <div className="m-2 flex h-6 flex-row items-start justify-between self-stretch text-darkgray">
                   <div className=" inline-block w-1/5 shrink-0 font-semibold">
