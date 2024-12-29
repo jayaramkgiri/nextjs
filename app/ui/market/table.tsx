@@ -84,12 +84,14 @@ export default async function DebenturesTable({
                       price: issuance.buy_price,
                       volume: issuance.buy_volume,
                       closePrice: issuance.close,
+                      buy: true
                     };
                     const sell = {
                       units: issuance.total_sell_order,
                       price: issuance.sell_price,
                       volume: issuance.sell_volume,
                       closePrice: issuance.close,
+                      buy: false
                     };
                     return (
                       <TableRow
@@ -112,6 +114,7 @@ export default async function DebenturesTable({
                           issuance.coupon,
                         ]}
                         isinHover={true}
+                        hoverData={{bseScrip: issuance.bse_scrip, nseScrip: issuance.nse_scrip}}
                         clickable={true}
                         clickPath={`/explore/debentures/${issuance.isin}`}
                       />

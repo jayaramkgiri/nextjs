@@ -80,6 +80,7 @@ export default async function DebenturesTable({
                         <TableRow
                           key={issuance.isin}
                           isinHover={false}
+                          hoverData={null}
                           sno={index}
                           currentPage={currentPage}
                           showSno={true}
@@ -94,7 +95,7 @@ export default async function DebenturesTable({
                             issuance.coupon_basis,
                             issuance.coupon,
                             humanize_rating(issuance),
-                            issuance.interest_frequency,
+                            issuance.interest_frequency
                           ]}
                           clickable={true}
                           clickPath={`/explore/debentures/${issuance.isin}`}

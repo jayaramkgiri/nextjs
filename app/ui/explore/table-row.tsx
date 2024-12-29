@@ -13,6 +13,7 @@ export default function TableRow({
   cells,
   padding = 1,
   isinHover = false,
+  hoverData = null,
   clickable = true,
   clickPath
 }: {
@@ -24,6 +25,7 @@ export default function TableRow({
   cells: any[];
   padding: number;
   isinHover: boolean;
+  hoverData: any;
   clickable: boolean;
   clickPath: string;
 }) {
@@ -56,6 +58,7 @@ export default function TableRow({
               closePrice={cell.closePrice}
               classNames=""
               showRupee={true}
+              buy={cell.buy}
             />
           </td>
         ) : (
@@ -116,10 +119,10 @@ export default function TableRow({
               <Card className="rounded-lg border border-solid border-gray-200 bg-white p-2">
                 <CardBody className="flex flex-col gap-1 text-xxs font-semibold text-gray-500">
                   <p className="m-0 p-0 text-2xs">
-                    BSE Scrip&ensp;:&ensp;938742
+                    BSE Scrip&ensp;:&ensp;{hoverData.bseScrip}
                   </p>
                   <p className="m-0 p-0 text-2xs">
-                    NSE Scrip&ensp;:&ensp;871REC28-N9
+                    NSE Scrip&ensp;:&ensp;{hoverData.nseScrip}
                   </p>
                 </CardBody>
               </Card>

@@ -44,6 +44,7 @@ export default function IssuanceList({
                   price={10999999.12}
                   closePrice={10999999}
                   showRupee={false}
+                  buy={true}
                 />
               </div>
               <div className="flex w-full justify-start gap-2">
@@ -55,6 +56,7 @@ export default function IssuanceList({
                   price={10999999.12}
                   closePrice={10999999}
                   showRupee={false}
+                  buy={false}
                 />
               </div>
             </div>

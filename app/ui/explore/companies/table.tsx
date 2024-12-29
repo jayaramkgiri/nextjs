@@ -53,6 +53,7 @@ export default async function CompaniesTable({
                       <TableRow
                         key={company.id}
                         isinHover={false}
+                        hoverData={null}
                         showSno={true}
                         currentPage={currentPage}
                         sno={index}

@@ -32,6 +32,7 @@ export function BidAskCell({
   closePrice,
   classNames = '',
   showRupee = true,
+  buy,
 }: {
   units: number | null;
   price: number | null;
@@ -39,6 +40,7 @@ export function BidAskCell({
   closePrice: number | null;
   classNames: string;
   showRupee: boolean;
+  buy: boolean;
 }) {
   const [priceShow, setpriceShow] = useState(true);
   const { user } = useUser();
@@ -106,8 +108,8 @@ export function BidAskCell({
                   </div>
                 )} */}
                 <CardHeader className="border-b border-solid border-gray-300 pb-1">
-                  <p className="m-0  p-0 text-2xs font-bold text-green-500">
-                    Buy
+                  <p className={`m-0  p-0 text-2xs font-bold ${buy ? 'text-green-500' : 'text-indianred'}`}>
+                    {`${buy ? 'Buy' : 'Sell'}`}
                   </p>
                 </CardHeader>
                 <CardBody className="flex flex-col gap-1 pt-1 text-xxs font-semibold text-gray-500">
