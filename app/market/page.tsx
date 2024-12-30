@@ -9,6 +9,7 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchMarketSummary, noOfPages } from '@/app/models/market.mjs';
 import { KiteConnect } from 'kiteconnect';
+import {fetchYields} from '@/app/models/yield.mjs';
 
 export default async function Page({
   searchParams,
@@ -41,13 +42,14 @@ export default async function Page({
   }
 
   const totalPages = await noOfPages(null, query, filter);
+  const yields:Array<any> = await fetchYields();
   return (
     <div className="h:auto md:pr-6">
       <section className="m-2 hidden w-[85%] gap-2 md:flex">
-        <YieldCard rating={'AAA'} />
-        <YieldCard rating={'AA'} />
-        <YieldCard rating={'A'} />
-        <YieldCard rating={'BBB'} />
+        <YieldCard rating={'AAA'} yields={yields}/>
+        <YieldCard rating={'AA'} yields={yields}/>
+        <YieldCard rating={'A'} yields={yields}/>
+        <YieldCard rating={'BBB'} yields={yields}/>
       </section>
       <section className="hidden h-full md:block">
         <section className="m-0 h-auto bg-white pb-3 ">

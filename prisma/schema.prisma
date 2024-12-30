@@ -106,6 +106,7 @@ model Yield {
   aaa_yield       Float
   bbb_yield       Float
   calculated_date DateTime                  @db.Date
+  tenor_bucket    String
   created_at      DateTime                  @db.Date
   updated_at      DateTime                  @db.Date
 
