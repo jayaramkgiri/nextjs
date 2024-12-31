@@ -136,7 +136,13 @@ async function lastMarketUpdatedDate() {
 
 async function fetchLatestVersion(date) {
   let versions = (await prisma.market.findMany({where: {date: date}, distinct: ['version'], select: {version: true}})).map((r) => r['version']).sort()
-  return versions[versions.length - 2 ]
+  let version = null
+  if (versions.length <= 1){
+    version = versions[0];
+  } else {
+    version = versions[versions.length - 2 ];
+  }
+  return version;
 }
 
 export async function noOfPages(date = null, query = '', filter = '') {
